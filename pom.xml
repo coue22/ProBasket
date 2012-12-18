@@ -115,7 +115,21 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>3.6.3.Final</version>
 		</dependency>
- 
+		
+		<!-- MyBatis con spring -->
+		<dependency>
+    		<groupId>org.mybatis</groupId>
+    		<artifactId>mybatis</artifactId>
+    		<version>3.0.4</version>
+		</dependency>
+		 <dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		
+		
+		
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
