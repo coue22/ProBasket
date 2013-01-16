@@ -1,0 +1,299 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.personal.basket.ctes.*" %>
+
+	
+<%
+HttpSession objSesion = request.getSession(false);
+String identificado = (String)objSesion.getAttribute(ConstantesSesion.IDENTIFICADO);
+if (identificado == null || identificado.length()<1){
+	identificado = Ctes.NO;
+}
+%>
+
+<html>
+   	
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Homeeee</title>
+
+	<link media="screen" href="css/estilos.css" type="text/css" rel="stylesheet"/>
+	<link href="css/redmond/jquery-ui-1.9.0.custom.css" type="text/css" rel="stylesheet">
+	<script src="js/jquery-1.8.2.js"></script>
+	<script src="js/jquery-ui-1.9.0.custom.js"></script>
+	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	
+<style>
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		/*margin: 2px;*/
+		position: relative;
+		/*padding: 4px 0;*/
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 1px;
+	}
+</style>
+	
+<script>
+
+
+	$.ajaxSetup({
+	    cache: false
+	});
+	
+	
+	function evaluarOpcion(opc){
+		//alert("opcion: " + opc);
+		if (opc == 'Jugadores'){
+			document.formMostrarJugadores.submit();		
+		} else if (opc == 'Equipo'){
+			document.formMostrarEquipo.submit();
+		}
+	}
+	
+	function Registrarse(){
+		alert("HACERLA");
+	}
+	
+	function detalleJugador(codJug){
+		alert("CodJug: " + codJug);
+	}	
+	
+	
+	function CerrarSesion(){
+		document.formCerrarSesion.submit();	
+	}	
+	
+
+	
+	$(document).ready(function(){	
+
+		
+		// Make a nice striped effect on the table
+		$("#table-2 tr:even").addClass("alt");
+		// Initialise the second table specifying a dragClass and an onDrop function that will display an alert
+		$("#table-2").tableDnD({
+		    onDragClass: "myDragClass",
+		    onDrop: function(table, row) {
+	            var rows = table.tBodies[0].rows;
+	            var debugStr = "Row dropped was "+row.id+". New order: ";
+	            for (var i=0; i<rows.length; i++) {
+	                debugStr += rows[i].id+" ";
+	            }
+		        $("#debugArea").html(debugStr);
+		    },
+			onDragStart: function(table, row) {
+				$("#debugArea").html("Started dragging row "+row.id);
+			}
+		});
+
+	    
+
+		
+/*
+		var availableTags = [
+			"ActionScript",
+			"AppleScript",
+			"Asp",
+			"BASIC",
+			"C",
+			"C++",
+			"Clojure",
+			"COBOL",
+			"ColdFusion",
+			"Erlang",
+			"Fortran",
+			"Groovy",
+			"Haskell",
+			"Java",
+			"JavaScript",
+			"Lisp",
+			"Perl",
+			"PHP",
+			"Python",
+			"Ruby",
+			"Scala",
+			"Scheme"
+		];
+		$( "#autocomplete" ).autocomplete({
+			source: availableTags
+		});
+
+*/
+
+	    
+		
+		
+		/*
+	    $("#fLogin").submit(function() {
+
+	        if (($("input#nombre").val() != "") &&  ($("input#contra").val() != "")) {
+	          $("span#error").text("Validando...").show();
+	          return true;
+	        }
+	        
+	        if ($("input#nombre").val() == ""){
+	        	$("span#error").text("Rellene el login.").show().fadeOut(3000);
+	        	return false;
+	        }
+	        
+	        if ($("input#contra").val() == ""){ 
+	        	$("span#error").text("Rellene la password.").show().fadeOut(3000);
+	        	return false;
+	        }
+	        
+	        return false;
+	        
+	      });
+	      */
+
+	    /*
+	    $("#fcrearLiga").submit(function() {
+alert("asdfasdf");
+	        if (($("input#nombreLiga").val() != "") &&  ($("input#contraLiga").val() != "")) {
+	          $("span#error").text("Validando...").show();
+	          return true;
+	        }
+	        
+	        if ($("input#nombreLiga").val() == ""){
+	        	$("span#error").text("Rellene el login.").show().fadeOut(3000);
+	        	return false;
+	        }
+	        
+	        if ($("input#contraLiga").val() == ""){ 
+	        	$("span#error").text("Rellene la password.").show().fadeOut(3000);
+	        	return false;
+	        }
+	        
+	        return false;
+	        
+	      });
+	    */
+
+	    
+
+		
+	/* Este viene de arriba*/
+	});
+   
+</script>
+	
+</head>
+
+<body>
+	
+	<div id="cont">
+	
+		<div id="header">
+
+ 				<a target="_self" href="inicio.html" title="....." class="miLogo">
+  					<img src="img/logo_tcm423-208626.gif" alt="bbva" />
+ 				</a>
+ 			
+				<h2>XXXXXXXXXXXX</h2>
+		
+				<% if (identificado.equals(Ctes.SI)) { %>
+					<a class="miRegistro" onclick="CerrarSesion();" href="#">Cerrar Sesión</a>
+				<%}else{%>	
+					<a class="miRegistro" onclick="Registrarse();" href="#">Registrarse</a>
+				<%}%>
+				
+
+ 		</div>
+ 		
+ 		
+ 		<% if (identificado.equals(Ctes.SI)) { %>
+			<div id="menu">
+				<h3>Menu</h3>
+				<ul>
+					<c:forEach var="fila" items="${OpcionesMenu}" varStatus="status">
+						<li><a onclick="evaluarOpcion('${fila.nombre}');" href="#">${fila.nombre}</a></li>
+					</c:forEach>			
+				</ul>	
+	 		</div>
+ 		<%}else{%>
+ 			<form name="fLogin" id="fLogin" action="login" method="POST" >
+	 			<div id="menu">
+	 				<h3>Identificacion</h3>
+					
+						<p>Usuario
+							<input type="text" name="nombre" id="nombre" value="" maxlength="15" size="15" class="input" />
+						</p>
+					
+						<p>Contraseña
+							<input type="password" name="contra" id="contra" value="" maxlength="15" size="15" class="input" />
+						</p>
+					
+						<p>
+						<input type="submit" name="Submit" value="Identificarse" maxlength="10" size="10" class="input" />
+						</p>
+						
+						<span id="error"></span>
+				</div> 		
+			</form>
+ 		<%}%>
+ 		
+	
+	
+		<div id="contenido">
+		    
+		    <!-- pantalla de cuando SI está identificado -->
+			<% if (identificado.equals(Ctes.SI)) { %>
+			
+				
+				
+			<%}else{%>
+			
+				<!-- pantalla de cuando NO está identificado -->
+				<!-- 
+				<div id="migas">Jugadores<span class="estado"></span></div><div class="saltolinea">&nbsp;</div><div class="tableDemo"><table id="table-2"><caption>Jugadores</caption><thead><tr><th></th><th>Jugador</th><th>Posicion</th><th>Nacion.</th><th>Altura</th><th>Peso</th><th>Acciones</th></tr></thead><tbody><tr><td><ul id="icons" class="ui-widget ui-helper-clearfix"><li class="ui-state-default ui-corner-all" title="jug"><span class="ui-icon ui-icon-person"></span></li></ul></td><td><a onclick="detalleJugador('00001');" href="#">Avila, Luis</td><td>BASE</td><td>Español</td><td>192 Cm. </td><td>90 Kg. </td><td><ul id="icons" class="ui-widget ui-helper-clearfix"><li class="ui-state-default ui-corner-all" title="despedir" onclick=alert('00001');><span class="ui-icon ui-icon-circle-close"></span></li><li class="ui-state-default ui-corner-all" title="Capitán: Puntuación doble" onclick=alert('00001');><span class="ui-icon ui-icon-battery-3"></span></li></ul></td></tr><tr class="odd"><td><ul id="icons" class="ui-widget ui-helper-clearfix"><li class="ui-state-default ui-corner-all" title="jug"><span class="ui-icon ui-icon-person"></span></li></ul></td><td><a onclick="detalleJugador('00002');" href="#">Fish, Charles</td><td>BASE</td><td>Americano</td><td>184 Cm. </td><td>82 Kg. </td><td><ul id="icons" class="ui-widget ui-helper-clearfix"><li class="ui-state-default ui-corner-all" title="despedir" onclick=alert('00002');><span class="ui-icon ui-icon-circle-close"></span></li></ul></td></tr><tr><td><ul id="icons" class="ui-widget ui-helper-clearfix"><li class="ui-state-default ui-corner-all" title="jug"><span class="ui-icon ui-icon-person"></span></li></ul></td><td><a onclick="detalleJugador('00003');" href="#">Diaz de Miguel, Javier</td><td>ALERO</td><td>Español</td><td>201 Cm. </td><td>99 Kg. </td><td><ul id="icons" class="ui-widget ui-helper-clearfix"><li class="ui-state-default ui-corner-all" title="despedir" onclick=alert('00003');><span class="ui-icon ui-icon-circle-close"></span></li></ul></td></tr></tbody></table></div>
+				 -->
+
+			<%}%>
+			
+		</div>
+	
+
+	
+	</div>
+	
+	<jsp:include page="PlantillaPiePagina.jsp" />
+  	 
+<!--
+
+ 
+<h2 class="demoHeaders">Autocomplete</h2>
+<div>
+	<input id="autocomplete" title="type &quot;a&quot;">
+</div>
+	
+ -->
+	
+
+
+
+
+<form name="formMostrarJugadores" action="jugadores" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<form name="formMostrarEquipo" action="equipo" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+ 
+<form name="formCerrarSesion" action="cerrarSesion" method="POST">
+	<!-- <input type="hidden" name="cerrarSesion" id="cerrarSesion" value="S" /> -->
+</form>
+
+
+
+</body>
+</html>

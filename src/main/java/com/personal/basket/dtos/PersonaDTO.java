@@ -1,19 +1,23 @@
 package com.personal.basket.dtos;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.personal.basket.estructuras.DatosPersonales;
+import com.personal.basket.dtos.DatosPersonalesDTO;
 
 public class PersonaDTO implements Serializable{
 
 	/**
 	 * 
 	 */
+	
+	
 	private static final long serialVersionUID = 1L;
 	
+	/*
 	// Propiedades personales.
-	private DatosPersonales				datosPersonales;
+	private DatosPersonalesDTO				datosPersonales;
 	
 	// Propiedades para el juego.
 	private EquipoDTO					equipo;		// Contiene el equipo propio.
@@ -22,13 +26,14 @@ public class PersonaDTO implements Serializable{
 	
 		
 	
-	public DatosPersonales getDatosPersonales() {
+	
+
+	public DatosPersonalesDTO getDatosPersonales() {
 		return datosPersonales;
 	}
-	public void setDatosPersonales(DatosPersonales datosPersonales) {
+	public void setDatosPersonales(DatosPersonalesDTO datosPersonales) {
 		this.datosPersonales = datosPersonales;
 	}
-	
 	public EquipoDTO getEquipo() {
 		return equipo;
 	}
@@ -49,6 +54,6 @@ public class PersonaDTO implements Serializable{
 		this.liga = liga;
 	}
 	
-	
+	*/
 	
 }

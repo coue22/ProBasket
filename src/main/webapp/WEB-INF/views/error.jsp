@@ -3,6 +3,7 @@
 <%
 HttpSession objSesion = request.getSession(false);
 String detError = (String)objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR);
+String opError = (String)objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR);
 
 %>
 
@@ -31,7 +32,11 @@ String detError = (String)objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)
 
  		<jsp:include page="PlantillaCabecera.jsp" />
 	
-
+		<div id="contenido">
+			<h3>Operacion</h3>
+			<P> <%=opError%> </P>
+		</div>
+		
 		<div id="contenido">
 			<h3>Error</h3>
 			<P> <%=detError%> </P>

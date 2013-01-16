@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.personal.basket.dtos.*;
 
 public interface ICatalogoServicios {
-
+ 
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
 	// 								TABS INICIALES										   //
@@ -22,13 +22,16 @@ public interface ICatalogoServicios {
 	// ----------------------------------------------------------------------------------- //	
 	public ArrayList<MenuDTO> mostrarMenu()throws Exception;
 	public ArrayList<MenuDTO> mostrarMenuNoLiga()throws Exception;
+	public ArrayList<MenuDTO> mostrarMenuAdministrador()throws Exception;
 	
+	
+
+
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
-	// 								OPERACIONES DE MENU									   //
+	// 								OPERACIONES DE EQUIPO								   //
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
-	public ArrayList<JugadorDTO> mostrarJugadores()throws Exception;
 	public EquipoDTO mostrarEquipo()throws Exception;
 
 	
@@ -39,7 +42,7 @@ public interface ICatalogoServicios {
 	// ----------------------------------------------------------------------------------- //	
 	
 	public boolean registrarse(String log, String pass)throws Exception;
-	public boolean loggearse(String log, String pass)throws Exception;
+	public DatosPersonalesDTO loggearse(String log, String pass)throws Exception;
 	//public DetalleServicioDTO recuperarDetalleServicio(String identificador) throws Exception;
 	
 }

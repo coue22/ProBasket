@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.personal.basket.estructuras.*;
 import com.personal.basket.ctes.Constantes;
+import com.personal.basket.ctes.Ctes;
+import com.personal.basket.dtos.DatosPersonalesDTO;
 import com.personal.basket.dtos.EquipoDTO;
 import com.personal.basket.dtos.JugadorDTO;
 import com.personal.basket.dtos.MenuDTO;
@@ -23,22 +24,21 @@ public class CatalogoServicios implements ICatalogoServicios{
 	public ArrayList<MenuDTO> mostrarMenu()throws Exception{
 		
 		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
-	
 		
 		MenuDTO mDTO1 = new MenuDTO();
-		mDTO1.setIdentificador("001");
+		mDTO1.setIdentificador(Ctes.MENU_JUGADORES);
 		mDTO1.setNombre("Jugadores");
 		
 		MenuDTO mDTO2 = new MenuDTO();
-		mDTO2.setIdentificador("002");
+		mDTO2.setIdentificador(Ctes.MENU_EQUIPO);
 		mDTO2.setNombre("Equipo");
 				
 		MenuDTO mDTO3 = new MenuDTO();
-		mDTO3.setIdentificador("003");
+		mDTO3.setIdentificador(Ctes.MENU_LIGA);
 		mDTO3.setNombre("Liga");
 		
 		MenuDTO mDTO4 = new MenuDTO();
-		mDTO4.setIdentificador("004");
+		mDTO4.setIdentificador(Ctes.MENU_PARTIDOS);
 		mDTO4.setNombre("Partidos");
 		
 		lMenu.add(mDTO1);
@@ -54,67 +54,46 @@ public class CatalogoServicios implements ICatalogoServicios{
 		
 		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
 
-		MenuDTO mDTO5 = new MenuDTO();
-		mDTO5.setIdentificador("005");
-		mDTO5.setNombre("Crear Liga");
-				
+		MenuDTO mDTO1 = new MenuDTO();
+		mDTO1.setIdentificador(Ctes.MENU_NOLIGA_CREAR_LIGA);
+		mDTO1.setNombre("Crear Liga");			
 
-		MenuDTO mDTO6 = new MenuDTO();
-		mDTO6.setIdentificador("006");
-		mDTO6.setNombre("Apuntarse a una Liga");
+		MenuDTO mDTO2 = new MenuDTO();
+		mDTO2.setIdentificador(Ctes.MENU_NOLIGA_INSCRIBIRSE_LIGA);
+		mDTO2.setNombre("Apuntarse a una Liga");
 
-		lMenu.add(mDTO5);
-		lMenu.add(mDTO6);
+		lMenu.add(mDTO1);
+		lMenu.add(mDTO2);
 
 		
 		return lMenu;
 	}	
 	
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	// 								OPERACIONES DE MENU									   //
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	public ArrayList<JugadorDTO> mostrarJugadores()throws Exception{
+	public ArrayList<MenuDTO> mostrarMenuAdministrador()throws Exception{
 		
-		ArrayList<JugadorDTO> lJugadores = new ArrayList<JugadorDTO>();
-		
-		JugadorDTO j1 = new JugadorDTO();
-		j1.setCodigo("00001");
-		j1.setNombre("Luis");
-		j1.setApellido("Avila");
-		j1.setPuesto(Constantes.BASE);
-		j1.setAltura("192");
-		j1.setPeso("90");
-		j1.setNacionalidad(Constantes.ESP);
+		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
 
-		JugadorDTO j2 = new JugadorDTO();
-		j2.setCodigo("00002");
-		j2.setNombre("Charles");
-		j2.setApellido("Fish");
-		j2.setPuesto(Constantes.BASE);
-		j2.setAltura("184");
-		j2.setPeso("82");
-		j2.setNacionalidad(Constantes.USA);
-		
-		JugadorDTO j3 = new JugadorDTO();
-		j3.setCodigo("00003");
-		j3.setNombre("Javier");
-		j3.setApellido("Diaz de Miguel");
-		j3.setPuesto(Constantes.ALERO);
-		j3.setAltura("201");
-		j3.setPeso("99");
-		j3.setNacionalidad(Constantes.ESP);
-		
+		MenuDTO mDTO1 = new MenuDTO();
+		mDTO1.setIdentificador(Ctes.MENU_ADMIN_EQUIPOS);
+		mDTO1.setNombre("Admin. Equipo");
 
+
+		MenuDTO mDTO2 = new MenuDTO();
+		mDTO2.setIdentificador(Ctes.MENU_ADMIN_JUGADORES);
+		mDTO2.setNombre("Admin. Jugadores");
 		
-		lJugadores.add(j1);
-		lJugadores.add(j2);
-		lJugadores.add(j3);
-		return lJugadores;
-	}
+		lMenu.add(mDTO1);
+		lMenu.add(mDTO2);
+		
+		return lMenu;
+	}		
 	
-	
+
+	// ----------------------------------------------------------------------------------- //
+	// ----------------------------------------------------------------------------------- //
+	// 								OPERACIONES DE EQUIPO								   //
+	// ----------------------------------------------------------------------------------- //
+	// ----------------------------------------------------------------------------------- //
 	public EquipoDTO mostrarEquipo()throws Exception{
 		
 		EquipoDTO eq1 = new EquipoDTO();
@@ -132,22 +111,36 @@ public class CatalogoServicios implements ICatalogoServicios{
 	// ----------------------------------------------------------------------------------- //	
 	
 	public boolean registrarse(String log, String pass)throws Exception{
-		DatosPersonales dPers = new DatosPersonales();
+		DatosPersonalesDTO dPers = new DatosPersonalesDTO();
 		dPers.setLogin(log);
 		dPers.setPassword(pass);
+		
 		// Aqui se debe llamar al metodo SQL para registrarse en BBDD.
 		
 		return true;
 	}
-	
-	public boolean loggearse(String log, String pass)throws Exception{
-		DatosPersonales dPers = new DatosPersonales();
+
+	public DatosPersonalesDTO loggearse(String log, String pass)throws Exception{
+		
+		DatosPersonalesDTO dPers = new DatosPersonalesDTO();
 		dPers.setLogin(log);
 		dPers.setPassword(pass);
+		
 		// Aqui se debe llamar al metodo SQL para logearse en BBDD.
 		
-		return true;
+		// Se trae el id_liga y todo lo necesario.
+		dPers.setLogado(true); // Esto es una prueba
+		
+		dPers.setIdLiga("0001");// Esto es una prueba (Ctes.NO_ASIGNADO_LIGA)
+		//dPers.setIdLiga(Ctes.NO_ASIGNADO_LIGA);// Esto es una prueba (Ctes.NO_ASIGNADO_LIGA)
+		
+		dPers.setIdEquipo("00001");// Esto es una prueba (Ctes.NO_ASIGNADO_EQUIPO)
+		//dPers.setIdEquipo(Ctes.NO_ASIGNADO_EQUIPO);// Esto es una prueba (Ctes.NO_ASIGNADO_EQUIPO)
+		
+		dPers.setAdministrador(false); // Para indicar que es un usuario de administracion.
+		 
+		return dPers;
 	}
-	
+
 	
 }

@@ -177,6 +177,68 @@ margin:2px 0 10px 10px;
 	
 }
 
+
+#menuPeticion{
+	float: left;
+}
+
+#menuPeticion h3{
+	border: 0 none;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	padding: 10px;
+	color: #FFF;
+	background-attachment: scroll;
+	background-color: #009ee5;
+	background-image: none;
+	background-repeat: repeat;
+	background-position: 0 0;
+	height: 13px;
+	position: relative;
+	text-align: center;
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 10px;
+	font:bold;
+	}
+
+
+#menuPeticion input{
+	font:"Berlin Sans FB";
+	font-size: 12px;
+    border: 1px solid #006;
+    background: #ccfefe;
+    margin-top:0px;
+    display: inline;
+    padding-right: 10px;
+}
+#menuPeticion a{
+	color:#0076ac;
+	text-decoration: none;
+	font-size: 13px;
+	font-size-adjust:inherit;
+	padding-left:0px;
+	padding-top:15px:
+}
+#menuPeticion a:hover{
+	color:#00b050;
+	text-decoration: none;
+	font-size: 13px;
+	font-size-adjust:inherit;
+	padding-left:0px;
+	padding-top:15px:
+}
+#menuPeticion span.resaltarTorcido{
+	font-style: oblique;
+	color: red; 
+}
+
+#menuPeticion span.resaltar{
+	color: red; 
+}
+
+
 #menu{
 	width: 150px;
 	float: left;
@@ -653,5 +715,7 @@ clear:both;
 }
 
  	
+
+
 
 	

@@ -8,15 +8,21 @@ String identificado = (String)objSesion.getAttribute(ConstantesSesion.IDENTIFICA
 if (identificado == null || identificado.length()<1){
 	identificado = Ctes.NO;
 }
-%>
 
+/*
+String errorCrearLiga = (String)request.getAttribute("errorCrearLiga");
+if (errorCrearLiga == null || errorCrearLiga.length()<1){
+	errorCrearLiga = "";
+}
+*/
+%>
 
 
 <html>
    	
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Homeeee</title>
+<title>Crear Liga</title>
 
 	<link media="screen" href="css/estilos.css" type="text/css" rel="stylesheet"/>
 	<link href="css/redmond/jquery-ui-1.9.0.custom.css" type="text/css" rel="stylesheet">
@@ -25,12 +31,26 @@ if (identificado == null || identificado.length()<1){
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
 	
 <script language="JavaScript">
-	function eliminarJugador(idJugEliminar){
+
+/*
+	function crearLiga()
+	{
+		var nbliga=document.getElementById('InsertaNBLiga');
 		
-		alert("Jugador a eliminar:" + idJugEliminar);
-		document.formEliminarJugadores.idJugEliminar.value=idJugEliminar;
-		document.formEliminarJugadores.submit();	
-	}	
+		//Se valida que el nombre de la liga
+		if (nbliga.value=='' )
+		{
+			alert("El nombre de la liga debe ir relleno.");
+			
+		}else{
+		
+			document.formConfirmarLiga.nbLiga.value=InsertaNBLiga.value;
+			document.formConfirmarLiga.pwdLiga.value=InsertaPWDLiga.value;
+			document.formConfirmarLiga.submit();
+		}
+	}
+*/
+
 </script>
 
 <style>
@@ -67,29 +87,25 @@ if (identificado == null || identificado.length()<1){
 		<div id="contenido">
 		
 			<% if (identificado.equalsIgnoreCase(Ctes.SI)){ %>
-			
 
 				<div class="tableDemo">
 				<!-- <div id="debugArea" style="float: right">&nbsp;</div>"; -->
 				<table id="table-2">
 				
-					<caption> Jugadores </caption>
+					<caption> LIGAS </caption>
 					
 					<thead>
 						<tr>
 						<th></th>
-						<th>Jugador</th>
-						<th>Posicion</th>
-						<th>Nacion.</th>
-						<th>Altura</th>
-						<th>Peso</th>
-						<th>Acciones</th>
+						<th>Codigo</th>
+						<th>Nombre</th>
+						<th>¿Es publica?</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 					
-					<c:forEach var="fila" items="${OpcionJugadores}" varStatus="status">
+					<c:forEach var="fila" items="${OpcionInscribirLiga_RecuperarLigas}" varStatus="status">
 						
 						
 						
@@ -100,34 +116,31 @@ if (identificado == null || identificado.length()<1){
 				  				</ul>
 				  			</td>
 				  
-				  			<td>${fila.apellido}, ${fila.nombre}</td>
-				  			<td>${fila.puesto}</td>
-				  			<td>${fila.nacionalidad}</td>
-				  			<td>${fila.altura} Cm. </td>
-				  			<td>${fila.peso} Kg. </td>
-				  			
-				  			<td>
-				  				<ul id="icons" class="ui-widget ui-helper-clearfix">
-			  					<li class="ui-state-default ui-corner-all" title="despedir" onclick="eliminarJugador('${fila.codigo}');"><span class="ui-icon ui-icon-circle-close"></span></li>
-			  				
-			  						<c:if test="${status.count == 1}">
-				  						<li class="ui-state-default ui-corner-all" title="Capitán: Puntuacion doble" onclick="alert('${fila.codigo}');";><span class="ui-icon ui-icon-battery-3"></span></li>
-				  					</c:if>
-				  				
-				  				</ul>
-				  			</td>
+				  			<td>${fila.codigo}</td>
+				  			<td>${fila.nombre}</td>
+			  			
+				  			<td>${fila.ligaPublica}</td>
+
+<!-- 				  			<td> -->
+<!-- 				  				<ul id="icons" class="ui-widget ui-helper-clearfix"> -->
+<%-- 			  					<li class="ui-state-default ui-corner-all" title="modificar" onclick="modificarEquipo('${fila.codigo}','${fila.nombre}','${fila.siglas}');"><span class="ui-icon ui-icon-circle-close"></span></li> --%>
+<!-- 				  				</ul> -->
+<!-- 				  			</td> -->
 				  			
 				  
-				  		</tr>		  
+				  		</tr>
 	
-						
-					</c:forEach>					
-						
+
+													
+					</c:forEach>
+					
+
 						
 					</tbody>
 					
 				</table>
-				</div>					
+				</div>	
+				
 				
 			<% }else{ %>
 			
@@ -150,10 +163,14 @@ if (identificado == null || identificado.length()<1){
 	
 	<jsp:include page="PlantillaPiePagina.jsp" />
 	
-<form name="formEliminarJugadores" action="jugadores" method="POST">
-	<input type="hidden" name="operacion" value="ELIMINAR" />
-	<input type="hidden" name="idJugEliminar" value="" />	
-</form>
+
+
+<!-- <form name="formConfirmarLiga" action="crearLiga" method="POST"> -->
+<!--  	<input type="hidden" name="operacion" value="CREAR_LIGA" /> -->
+
+<!-- 	<input type="hidden" name="nbLiga" value="" /> -->
+<!-- 	<input type="hidden" name="pwdLiga" value="" /> -->
+<!-- </form> -->
   	
 
 </body>

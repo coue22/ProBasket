@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class JugadorDTO implements Serializable{
 
+	
 	/**
 	 * 
 	 */
@@ -18,7 +19,9 @@ public class JugadorDTO implements Serializable{
 	private String nacionalidad;
 	
 	
-	
+	private int temporadaInicio;
+	private int temporadaFin;	
+
 	
 	public String getCodigo() {
 		return codigo;
@@ -62,6 +65,19 @@ public class JugadorDTO implements Serializable{
 	public void setNacionalidad(String nacionalidad) {
 		this.nacionalidad = nacionalidad;
 	}
+	public int getTemporadaInicio() {
+		return temporadaInicio;
+	}
+	public void setTemporadaInicio(int temporadaInicio) {
+		this.temporadaInicio = temporadaInicio;
+	}
+	public int getTemporadaFin() {
+		return temporadaFin;
+	}
+	public void setTemporadaFin(int temporadaFin) {
+		this.temporadaFin = temporadaFin;
+	}
+
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.personal.basket.dtos;
 
+
 import java.io.Serializable;
 
 public class MenuDTO implements Serializable{

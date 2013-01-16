@@ -1,0 +1,37 @@
+<!DOCTYPE sqlMapConfig
+   PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+   "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<mapper namespace="com.personal.basket.dao.PersonaMapper">
+
+	<select id="findByPK" resulttype="com.personal.basket.model.Persona" parametertype="long">
+		select * from persona where id_persona=#{id}
+	</select>
+	
+	<select id="getAll" resulttype="com.personal.basket.model.Persona">
+		select * from persona
+	</select>
+	
+	<insert id="insert" parametertype="com.personal.basket.model.Persona">
+		<selectkey order="BEFORE" keyproperty="idPersona" resulttype="long">
+			SELECT nextVal('persona_sequence')
+		</selectkey>
+		insert into persona
+		(id_persona,apellidos,direccion,nombre)
+		values
+		(#{idPersona},#{apellidos},#{direccion},#{nombre})
+	</insert>
+	
+	<update id="update" parametertype="com.personal.basket.model.Persona">
+		update persona set
+		apellidos = #{apellidos},
+		direccion = #{direccion},
+		nombre = #{nombre}
+		where id_persona = #{idPersona}
+	</update>
+	
+	<delete id="remove" parametertype="com.personal.basket.model.Persona">
+		delete from persona where id_persona = #{idPersona}
+    </delete>
+    
+</mapper>

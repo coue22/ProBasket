@@ -143,11 +143,25 @@ $(document).ready(function(){
 
 	function evaluarOpcion(opc){
 		//alert("opcion: " + opc);
-		if (opc == 'Jugadores'){
-			document.formMostrarJugadores.submit();		
-		} else if (opc == 'Equipo'){
+		
+		if (opc == '001'){
+			document.formMostrarJugadores.submit();
+		} else if (opc == '002'){
 			document.formMostrarEquipo.submit();
+		} else if (opc == '003'){
+			alert("No implementado yet.");
+		} else if (opc == '004'){
+			alert("No implementado yet.");			
+		} else if (opc == '101'){
+			document.formMostrarCrearLiga.submit();
+		}else if (opc == '102'){
+			document.formMostrarInscribirseLiga.submit();
+		}else if (opc == '201'){
+			document.formAdminEquipos.submit();
+		}else if (opc == '202'){
+			document.formAdminJugadores.submit();
 		}
+		
 	}
 	
 </script>
@@ -178,7 +192,7 @@ $(document).ready(function(){
 				<h3>Menu</h3>
 				<ul>
 					<c:forEach var="fila" items="<%=menuPrincipal%>" varStatus="status"> 
-						<li><a onclick="evaluarOpcion('${fila.nombre}');" href="#">${fila.nombre}</a></li>
+						<li><a onclick="evaluarOpcion('${fila.identificador}');" href="#">${fila.nombre}</a></li>
 					</c:forEach>			
 				</ul>	
 	 		</div>
@@ -222,10 +236,33 @@ $(document).ready(function(){
 <form name="formMostrarJugadores" action="jugadores" method="POST">
 	<input type="hidden" name="XXXX" />
 </form>
-
 <form name="formMostrarEquipo" action="equipo" method="POST">
 	<input type="hidden" name="XXXX" />
 </form>
+
+
+
+<form name="formMostrarCrearLiga" action="crearLiga" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<form name="formMostrarInscribirseLiga" action="inscribirseLiga" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+
+
+<form name="formAdminEquipos" action="adminEquipos" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+<form name="formAdminJugadores" action="adminJugadores" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+
+
+
+
 
  
 <form name="formCerrarSesion" action="cerrarSesion" method="POST">

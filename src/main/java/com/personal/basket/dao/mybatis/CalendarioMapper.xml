@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.CalendarioMapper" >
+    
+    <resultMap id="result" type="com.personal.basket.model.Calendario">
+        <result property="id" column="id"/>
+        <result property="nombre" column="nombre"/>
+        <result property="descripcion" column="descripcion"/>
+    </resultMap>
+
+    <select id="getAll" parameterType="int" resultMap="result">
+        SELECT id, nombre, descripcion FROM prop_calendarios;
+    </select>
+
+
+<!--     <select resulttype="com.personal.basket.model.Calendario" id="getAll">  -->
+<!--     	select * from prop_calendarios  -->
+<!--     </select> -->
+    
+    
+<!--     <resultMap id="result" type="user"> -->
+<!--         <result property="id" column="id"/> -->
+<!--         <result property="name" column="name"/> -->
+<!--         <result property="standard" column="standard"/> -->
+<!--         <result property="age" column="age"/> -->
+<!--         <result property="sex" column="sex"/> -->
+<!--     </resultMap> -->
+
+
+<!--   <insert id="save" parameterType="com.personal.basket.model.Calendario" > -->
+<!--     insert into contoh (nama, alamat) -->
+<!--     values (#{nama,jdbcType=VARCHAR}, #{alamat,jdbcType=VARCHAR}) -->
+<!--   </insert> -->
+
+
+<!-- http://www.javacodegeeks.com/2012/02/mybatis-3-spring-integration-tutorial.html -->
+</mapper>
+
