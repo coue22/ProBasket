@@ -1,6 +1,7 @@
 package com.personal.basket.dtos;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class DatosPersonalesDTO implements Serializable {
 	
@@ -18,6 +19,8 @@ public class DatosPersonalesDTO implements Serializable {
 	private boolean			logado;
 	private String			idLiga;
 	private String			idEquipo;
+	
+	private Map<String, String> mapConfiguracion;
 	
 	
 	
@@ -60,6 +63,14 @@ public class DatosPersonalesDTO implements Serializable {
 	public void setIdEquipo(String idEquipo) {
 		this.idEquipo = idEquipo;
 	}
+	public Map<String, String> getMapConfiguracion() {
+		return mapConfiguracion;
+	}
+	public void setMapConfiguracion(Map<String, String> mapConfiguracion) {
+		this.mapConfiguracion = mapConfiguracion;
+	}
+	
+	
 	
 	
 	

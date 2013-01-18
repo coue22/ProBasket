@@ -40,6 +40,9 @@ public class Ctes {
 	
 	public static final String NO_ASIGNADO_LIGA	 			= "0000";
 	public static final String NO_ASIGNADO_EQUIPO	 		= "00000";
+	public static final String MAPA_CONFIGURACION	 		= "MAPA_CONFIGURACION";
+		public static final String MAPA_CONFIGURACION_TEMPORADA	 		= "temporada";
+		public static final String MAPA_CONFIGURACION_JORNADA	 		= "jornada";
 	
 	//public static final String OPCMENU_COMUN			= "OpcionesMenuComun";
 	

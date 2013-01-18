@@ -10,8 +10,12 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		
-<!-- http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=MybatisMavenSpring -->
-		
+<!-- 	http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=MybatisMavenSpring -->
+<!-- 	http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=spring_persistence -->
+<!-- 	http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=mybatis-generator-core -->
+
+<!-- <beans:import resource="jdbc.properties"/>  -->
+
 	<context:annotation-config />
 
 <!-- 	<context:component-scan base-package="com.autentia.tutoriales" /> -->
@@ -33,33 +37,100 @@
 		<beans:constructor-arg index="0" ref="dataSource" />
 	</beans:bean>
 
-<!-- 
-basketServer
-root
-password "la de siempre"
--->
-	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<!-- ESTE ES DEL TIPO 1 -->
+<!-- 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!-- 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<beans:property name="url" value="jdbc:mysql://localhost:3306/probasket" />  -->
+<!-- 		<beans:property name="username" value="root" /> -->
+<!-- 		<beans:property name="password" value="maguy22" /> -->
+<!-- 	</beans:bean> -->
+	
+<!-- ESTE ES DEL TIPO 3 -->
+    <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<beans:property name="url" value="jdbc:mysql://localhost:3306/test" /> 
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/probasket" /> 
 		<beans:property name="username" value="root" />
 		<beans:property name="password" value="maguy22" />
-	</beans:bean>
 
-<!-- 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
-<!-- 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> -->
-<!-- 		<beans:property name="url" value="jdbc:oracle:thin:@GLPROJECTS:1925" /> -->
-<!-- 		<beans:property name="username" value="bisa30" /> -->
-<!-- 		<beans:property name="password" value="bisa30" /> -->
-<!-- 	</beans:bean> -->
+        <beans:property name="initialSize"  value="6"/>  
 
-	<!-- A partir de este punto ponemos la definición de las interfaces mappers--> 
-<!-- 	<beans:bean id="personaMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> -->
-<!-- 		<beans:property name="mapperInterface" value="com.personal.basket.dao.PersonaMapper" /> -->
-<!-- 		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
-<!-- 	</beans:bean> -->
+        <beans:property name="maxActive"        value="10"/>  
+    </beans:bean>  
 
-	<beans:bean id="calendarioMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<beans:property name="mapperInterface" value="com.personal.basket.dao.CalendarioMapper" />
+
+<!-- OPCIONES DE DATASOURCE  -->
+<!-- OPCIONES DE DATASOURCE  -->
+<!-- OPCIONES DE DATASOURCE  -->
+<!-- OPCIONES DE DATASOURCE  -->
+<!-- OPCIONES DE DATASOURCE  -->
+
+
+<!--  TIPO1
+        DataSource que trabaja directamente con el driver JDBC en donde cada vez que se CREA y devuelve una conexión distinta.  
+        Es decir, no es un pool de conexiones en donde las conexiones están abiertas y preparadas para ser entregadas según  
+        la aplicación lo va solicitando => El rendimiento baja considerablemente.  
+          
+        Le recomiendo que mire el siquiente tutorial:   
+        http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=pool_performance  
+      
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+        <property name="driverClassName" value="${datasource.jdbcDriver}"/>  
+        <property name="url"          value="${datasource.url}"/>  
+        <property name="username"         value="${datasource.username}"/>  
+        <property name="password"         value="${datasource.password}"/>  
+    </bean>     
+-->
+
+<!--  TIPO2
+        Igual que el anterior pero Singleton, es decir, siempre devuelve la misma conexión, así que el rendimiento aun bajará más, adiós a   
+        usar transacciones, en aplicaciones servidoras o multihilo, etc...pero bueno, lo pongo por si alguna vez interesa.. para aplicaciones   
+        sencillitas de escritorio está hasta bien :-)   
+     
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">  
+        <property name="driverClassName" value="${datasource.jdbcDriver}"/>  
+        <property name="url"          value="${datasource.url}"/>  
+        <property name="username"         value="${datasource.username}"/>  
+        <property name="password"         value="${datasource.password}"/>  
+    </bean>  
+--> 
+ 
+<!--   TIPO3 (con pool de conexiones)
+        DataSource que hace uso del famoso pool de conexiones DBCP (http://commons.apache.org/dbcp)       
+        Nota: Normalmente, usará un DataSource creado por el servidor de aplicaciones y contenedor de servlet y accederá a el por JNDI.  
+          
+        Pero bueno nunca se sabe, para una aplicación de escritorio tipo servidor o cliente multihilo quizás sea interesante...  
+        
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
+        <property name="driverClassName" value="${datasource.jdbcDriver}"/>  
+        <property name="url"          value="${datasource.url}"/>  
+        <property name="username"         value="${datasource.username}"/>  
+        <property name="password"         value="${datasource.password}"/>  
+
+        <property name="initialSize"  value="6"/>  
+
+        <property name="maxActive"        value="10"/>  
+    </bean>  
+-->
+
+<!--   TIPO4
+        DataSource al que accedemos a través de JNDI.  
+        Como este ejemplo no corre sobre un servidor de aplicaciones... lo comentamos para que no falle  
+        la inicialización de Spring, lo dejo comentado a modo didáctico       
+          
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+        <property name="jndiName" value="${datasource.jndiName}"/>  
+    </bean>  
+-->  
+    
+<!-- Mapeo de las tablas -->
+<!-- Mapeo de las tablas -->
+<!-- Mapeo de las tablas -->
+<!-- Mapeo de las tablas -->
+<!-- Mapeo de las tablas -->
+	
+
+	<beans:bean id="configuracionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.ConfiguracionMapper" />
 		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</beans:bean>
 	

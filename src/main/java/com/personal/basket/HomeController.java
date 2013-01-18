@@ -38,6 +38,7 @@ import com.personal.basket.servicios.CatalogoServicios;
 import com.personal.basket.servicios.ServiciosAdministracion;
 import com.personal.basket.servicios.ServiciosJugadores;
 import com.personal.basket.servicios.ServiciosGestionLigas;
+import com.personal.basket.util.util;
 
 /**
  * Handles requests for the application home page.
@@ -202,13 +203,19 @@ public class HomeController {
 		System.out.println("nombreLogin: " + request.getParameter("nombre"));
 		System.out.println("passwordLogin:" + request.getParameter("contra") );
 		
+		
+		// Se llama al servicio para logarse y se establecen algunas variables de sesion
+		// asociadas al usuario.
 		try {
-			DatosPersonalesDTO dPers = catalogoServicio.loggearse(request.getParameter("nombreReg"), 
-														 request.getParameter("contraReg"));
 			
 			sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
 			sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
 			sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.NO);
+			
+			DatosPersonalesDTO dPers = catalogoServicio.loggearse(request.getParameter("nombreReg"), 
+														 request.getParameter("contraReg"));
+			
+
 			
 			// Si esta logado, entonces puede tener liga y si tiene liga entonces puede tener equipo.
 			// Se establecen constantes de sesion.
@@ -224,6 +231,9 @@ public class HomeController {
 					}
 				}
 			}
+			
+			// Se guarda el mapa con lo que hay en la tabla de configuracion.
+			sesion.setAttribute(Ctes.MAPA_CONFIGURACION, dPers.getMapConfiguracion());
 
 			System.out.println("Persona logada?:" + dPers.isLogado()+ " y esta Logado: " + sesion.getAttribute(ConstantesSesion.IDENTIFICADO));
 			System.out.println("Codigo Liga:" + dPers.getIdLiga()+ " y pertenece Liga: " + sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA));
@@ -243,8 +253,22 @@ public class HomeController {
 			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, ConstantesSesion.DETALLE_ERROR_TEXTO );
 			return "error";
 		}
-			
 		
+			
+		// Muestra en la consola todo lo que contiene el mapa de configuración.
+		Map<String, String> mConfig = (Map<String, String>) sesion.getAttribute(Ctes.MAPA_CONFIGURACION);
+		try {
+			System.out.println("jorn:" + util.getValorMapa(mConfig, Ctes.MAPA_CONFIGURACION_JORNADA));
+			System.out.println("temp:" + util.getValorMapa(mConfig, Ctes.MAPA_CONFIGURACION_TEMPORADA));
+		} catch (Exception e1) {
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al logarse. No se han podido cargar correctamente las variables de configuracion.");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e1.getMessage() + "-->" + e1.getStackTrace());
+			return "error";
+		}
+		
+
+		
+		// Se decide lo que se va a pintar en la vista.
 		ArrayList<MenuDTO> lMenu = null;
 
 		try {

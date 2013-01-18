@@ -39,7 +39,7 @@
 	</interceptors>
 	
 
-<!-- 	<context:import resource="mybatis.xml"/> -->
+<!-- 	<beans:import resource="mybatis.xml"/> -->
 
 	 
 </beans:beans>

@@ -15,37 +15,24 @@ import com.personal.basket.model.Calendario;
 @Service("servicioJugadores")
 public class ServiciosJugadores implements IServiciosJugadores{
 
+
     //@Resource  
     //@Autowired
     //PersonaMapper personaMapper;
+	
+/*
 	@Autowired
     CalendarioMapper calendarioMapper;
-  
-	
-	
-	
-    /*
-	public PersonaMapper getPersonaMapper() {
-		return personaMapper;
-	}
-	*/
-    
-	/*
-	public CalendarioMapper getCalendarioMapper() {
-		return calendarioMapper;
-	}
-	*/
+
 
 	public CalendarioMapper getCalendarioMapper() {
 		return calendarioMapper;
 	}
-
-
 
 	public void setCalendarioMapper(CalendarioMapper calendarioMapper) {
 		this.calendarioMapper = calendarioMapper;
 	}
-
+*/
 
 
 	// ----------------------------------------------------------------------------------- //
@@ -85,7 +72,7 @@ public class ServiciosJugadores implements IServiciosJugadores{
 		j3.setNacionalidad(Constantes.ESP);
 		
 		
-
+/*
 		//personaMapper.getAll();
 		List<Calendario> lCal = calendarioMapper.getAll();
 		for (int i = 0 ; i<lCal.size(); i++){
@@ -93,7 +80,7 @@ public class ServiciosJugadores implements IServiciosJugadores{
 			
 			System.out.println(cal.getNombre());
 		}
-
+*/
 		
 		
 		lJugadores.add(j1);

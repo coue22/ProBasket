@@ -1,19 +1,28 @@
 package com.personal.basket.servicios;
 
-import java.util.ArrayList;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.personal.basket.ctes.Constantes;
 import com.personal.basket.ctes.Ctes;
+import com.personal.basket.dao.ConfiguracionMapper;
 import com.personal.basket.dtos.DatosPersonalesDTO;
 import com.personal.basket.dtos.EquipoDTO;
-import com.personal.basket.dtos.JugadorDTO;
 import com.personal.basket.dtos.MenuDTO;
+import com.personal.basket.model.Configuracion;
+
 
 @Service("catalogoServicio")
 public class CatalogoServicios implements ICatalogoServicios{
 
+	@Autowired
+	ConfiguracionMapper configuracionMapper;
 	
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
@@ -122,6 +131,8 @@ public class CatalogoServicios implements ICatalogoServicios{
 
 	public DatosPersonalesDTO loggearse(String log, String pass)throws Exception{
 		
+
+		
 		DatosPersonalesDTO dPers = new DatosPersonalesDTO();
 		dPers.setLogin(log);
 		dPers.setPassword(pass);
@@ -138,7 +149,20 @@ public class CatalogoServicios implements ICatalogoServicios{
 		//dPers.setIdEquipo(Ctes.NO_ASIGNADO_EQUIPO);// Esto es una prueba (Ctes.NO_ASIGNADO_EQUIPO)
 		
 		dPers.setAdministrador(false); // Para indicar que es un usuario de administracion.
+		
+		
+		// Se llama a base de datos para recuperar los valores de la tabla configuracion
+		Map <String, String> mAux = new HashMap<String, String>();
+		List<Configuracion> lConfig = configuracionMapper.getAll();
+		for (int i = 0; i<lConfig.size(); i++){
+			Configuracion conf = lConfig.get(i);
+			//System.out.println(conf.getParametro() + "--" + conf.getValor());
+			mAux.put(conf.getParametro(), conf.getValor());
+		}
+		dPers.setMapConfiguracion(mAux);
 		 
+		
+		
 		return dPers;
 	}
 
