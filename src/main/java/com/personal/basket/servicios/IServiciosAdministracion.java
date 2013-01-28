@@ -3,7 +3,7 @@ package com.personal.basket.servicios;
 
 import java.util.ArrayList;
 
-import com.personal.basket.dtos.EquipoDTO;
+import com.personal.basket.dtos.EquipoRealDTO;
 import com.personal.basket.dtos.JugadorDTO;
 
 
@@ -14,13 +14,13 @@ public interface IServiciosAdministracion {
 	
 	
 	// Equipo catalogo
-	public ArrayList<EquipoDTO> mostrarCatalogoEquipos()throws Exception;
+	public ArrayList<EquipoRealDTO> mostrarCatalogoEquipos()throws Exception;
 	
 	// Eliminacion de un equipo no se contempla. Eso no debe ocurrir nunca porque puede joder 
 	// el aplicativo
 	
-	public boolean modificarEquipoCatalogo(EquipoDTO eDTO)throws Exception;
-	public boolean insertarEquipoCatalogo(EquipoDTO eDTO)throws Exception;
+	public boolean modificarEquipoCatalogo(EquipoRealDTO eDTO)throws Exception;
+	public boolean insertarEquipoCatalogo(EquipoRealDTO eDTO)throws Exception;
 	
 	
 	// Jugadores Catalogo

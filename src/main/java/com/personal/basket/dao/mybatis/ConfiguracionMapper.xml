@@ -3,7 +3,7 @@
 
 <mapper namespace="com.personal.basket.dao.ConfiguracionMapper" >
     
-    <resultMap id="result" type="com.personal.basket.model.Configuracion">
+    <resultMap id="result" type="com.personal.basket.model.ConfiguracionDTO">
         <result property="parametro" column="parametro"/>
         <result property="valor" column="valor"/>
     </resultMap>

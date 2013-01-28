@@ -10,7 +10,7 @@ public class Ctes {
 	public static final String OPCMENU_JUGADORES 			= "OpcionJugadores";
 		public static final String JUGADORES_ELIMINAR 		= "ELIMINAR";
 	
-	
+	public static final String CONFIRMAR_REGISTRO 			= "CONFIRMAR_REGISTRO";
 	
 	public static final String OPCMENU_EQUIPO	 			= "OpcionEquipo";
 	
@@ -31,15 +31,27 @@ public class Ctes {
 	
 	// Crear Liga
 	public static final String CREAR_LIGA	 				= "CREAR_LIGA";
+	// Inscrirse en liga (Buscar liga y Inscribirse en liga)
+	public static final String BUSCAR_LIGA	 				= "BUSCAR_LIGA";
+	public static final String INSCRIBIR_LIGA	 			= "INSCRIBIR_LIGA";
 	
 	// Inscribirse en la liga
-	public static final String OPCMENU_INSCRIBIR_LIGA_RECUPERAR_LIGAS	 			= "OpcionInscribirLiga_RecuperarLigas";
+	public static final String OPCMENU_LIGAS_RECUPERADAS	 			= "ligas_recuperadas";
+	public static final String OPCMENU_HAY_LIGAS_RECUPERADAS	 		= "hay_ligas_recuperadas";
 	
 	
 	
 	
-	public static final String NO_ASIGNADO_LIGA	 			= "0000";
-	public static final String NO_ASIGNADO_EQUIPO	 		= "00000";
+	public static final String NO_ASIGNADO_LIGA	 			= "0000000000";
+	public static final String NO_ASIGNADO_EQUIPO	 		= "0000000000";
+	public static final String NO_ASIGNADO_ROLE	 			= "000";
+		public static final String ROLE_CAPITAN	 			= "001";
+		public static final String ROLE_ANOTADOR 			= "002";
+		public static final String ROLE_DEFENSOR 			= "003";
+	public static final String NO_ASIGNADO_ECONOMIA			= "0000000000";	
+		public static final double ECONOMIA_INICIAL			= 4000000;
+		
+	
 	public static final String MAPA_CONFIGURACION	 		= "MAPA_CONFIGURACION";
 		public static final String MAPA_CONFIGURACION_TEMPORADA	 		= "temporada";
 		public static final String MAPA_CONFIGURACION_JORNADA	 		= "jornada";
@@ -50,15 +62,14 @@ public class Ctes {
 	//public static final String CERRAR_SESION	 		= "cerrarSesion";
 	
 	// OPCIONES DE MENUS
-	public static final String MENU_JUGADORES	 					= "001";
-	public static final String MENU_EQUIPO	 						= "002";
-	public static final String MENU_LIGA	 						= "003";
-	public static final String MENU_PARTIDOS	 					= "004";
+	public static final String MENU_EQUIPO	 						= "001";
+	public static final String MENU_LIGA	 						= "002";
 	
 	public static final String MENU_NOLIGA_CREAR_LIGA	 			= "101";
 	public static final String MENU_NOLIGA_INSCRIBIRSE_LIGA			= "102";
 		
 	public static final String MENU_ADMIN_EQUIPOS	 				= "201";
 	public static final String MENU_ADMIN_JUGADORES	 				= "202";
+	
 	
 }

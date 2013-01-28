@@ -1,31 +1,43 @@
-/**
- * Equipos Reales. Es el catalogo de equipos reales. 
- */
-
 package com.personal.basket.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class EquipoDTO implements Serializable {
 
-	
+/**
+ * 
+ * @author iballesteros
+ *
+ */
+public class EquipoDTO implements Serializable{
+
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
+
 	
-	private String codigo;
+	private String codigoEquipo;
 	private String nombre;
-	private String siglas;
-	private int temporadaInicio;
-	private int temporadaFin;
+
+	private int posicion; //Posicion en la tabla
+	private double puntuacionTotal; // Puntos acumulados
+	
+	// PK
+	// Liga a la que pertence el equipo
+	//	Ctes.NO_ASIGNADO_LIGA --> Si no tiene asignada liga por el momento
+	//	Un codigo con el codigo de la liga si pertenece a una liga.
+	private String	codigoLiga; 
+	
+
 	
 	
-	public String getCodigo() {
-		return codigo;
+	public String getCodigoEquipo() {
+		return codigoEquipo;
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCodigoEquipo(String codigoEquipo) {
+		this.codigoEquipo = codigoEquipo;
 	}
 	public String getNombre() {
 		return nombre;
@@ -33,24 +45,28 @@ public class EquipoDTO implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getSiglas() {
-		return siglas;
+	public int getPosicion() {
+		return posicion;
 	}
-	public void setSiglas(String siglas) {
-		this.siglas = siglas;
+	public void setPosicion(int posicion) {
+		this.posicion = posicion;
 	}
-	public int getTemporadaInicio() {
-		return temporadaInicio;
+	public double getPuntuacionTotal() {
+		return puntuacionTotal;
 	}
-	public void setTemporadaInicio(int temporadaInicio) {
-		this.temporadaInicio = temporadaInicio;
+	public void setPuntuacionTotal(double puntuacionTotal) {
+		this.puntuacionTotal = puntuacionTotal;
 	}
-	public int getTemporadaFin() {
-		return temporadaFin;
+	public String getCodigoLiga() {
+		return codigoLiga;
 	}
-	public void setTemporadaFin(int temporadaFin) {
-		this.temporadaFin = temporadaFin;
+	public void setCodigoLiga(String codigoLiga) {
+		this.codigoLiga = codigoLiga;
 	}
+
+
+	
+
 	
 	
 }

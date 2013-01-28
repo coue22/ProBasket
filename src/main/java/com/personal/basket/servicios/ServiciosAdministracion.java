@@ -1,5 +1,10 @@
 package com.personal.basket.servicios;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,32 +14,70 @@ import org.springframework.stereotype.Service;
 import com.personal.basket.ctes.Constantes;
 import com.personal.basket.dao.CalendarioMapper;
 import com.personal.basket.dao.PersonaMapper;
-import com.personal.basket.dtos.EquipoDTO;
+import com.personal.basket.dtos.EquipoRealDTO;
 import com.personal.basket.dtos.JugadorDTO;
 import com.personal.basket.model.Calendario;
+
 
 @Service("servicioAdministracion")
 public class ServiciosAdministracion implements IServiciosAdministracion{
 
-	// Son variables de solo lectura. (Unicas para todas las peticiones web.)
-	private int temporadaInicio;
-	private int temporadaFin;
-	
-	
-	public int getTemporadaInicio() {
-		return temporadaInicio;
-	}
-	public int getTemporadaFin() {
-		return temporadaFin;
-	}
 
 
 
 	public void InicializarConfiguracion()throws Exception{
 		
-		// Se realiza la lectura de bbdd (Tabla llamada Configuracion)
-		temporadaInicio = 2012;
-		temporadaFin = 2013;
+		// AQUI SE DEBEN REALIZAR LOS INSERT. YA SE ESTA haciendo la llamada en el controller.
+		// SE HACEN A TRAVES DE MYBATIS
+		// Tabla Operacion, 
+		// Tabla Role, 
+		// EquipoReal, 
+		// Jugador
+		
+		// Configuracion (ConfiguracionDTO y Configuracion)
+			// Lectura de un fichero de datos para insertarlo en la tabla.
+		
+
+		
+			//ListaFicheros = File.filter ("lengua_*.txt")
+						
+
+		  
+		  
+		//InputStream is = this.getClass().getClassLoader().getResourceAsStream("./resources/archivo.txt");
+		//System.out.println(is.read());
+				
+		//URL inputStream  = Thread.currentThread().getContextClassLoader().getResource("WEB-INF//archivo.txt");
+		//inputStream.
+		
+		//String rutaRelativaApp = getServletContext().getRealPath("/") + "fichero.txt";
+		
+	      //File archivo = null;
+	      //FileReader fr = null;
+	      //BufferedReader br = null;
+	      
+	      
+	      //String archivo="/WEB-INF/archivo.txt"; 
+	      
+	      //InputStream inputStream  = getServletContext().getResourceAsStream(archivo);
+	      
+	      //ServletContext.getRealPath("WEB-INF");
+	      
+	      /*
+	      //Thread.currentThread().getContextClassLoader().getResource("NOMBRE");
+	      Thread.currentThread().getContextClassLoader().getResource("WEB-INF//archivo.txt");
+	      
+
+	      archivo = new File ("//WEB-INF//archivo.txt");
+	      fr = new FileReader (archivo);
+	      br = new BufferedReader(fr);
+
+	      // Lectura del fichero
+	      String linea;
+	      while((linea=br.readLine())!=null)
+	    	  System.out.println(linea);		
+		*/
+
 	}
 	
 	// ----------------------------------------------------------------------------------- //
@@ -43,40 +86,40 @@ public class ServiciosAdministracion implements IServiciosAdministracion{
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
 	// OK
-	public ArrayList<EquipoDTO> mostrarCatalogoEquipos()throws Exception{
+	public ArrayList<EquipoRealDTO> mostrarCatalogoEquipos()throws Exception{
 		
 		// Debe ir a BBDD a recuperar todos los equipos cuya temporada
 		// sea "temporadaInicio" y "temporadaFin".
 		
-		ArrayList<EquipoDTO> lEquipo = new ArrayList<EquipoDTO>();
+		ArrayList<EquipoRealDTO> lEquipo = new ArrayList<EquipoRealDTO>();
 		
-		EquipoDTO e1 = new EquipoDTO();
-		e1.setCodigo("00001");
+		EquipoRealDTO e1 = new EquipoRealDTO();
+		e1.setCodigoEquipoReal("00001");
 		e1.setNombre("Baloncesto Fuenlabrada");
 		e1.setSiglas("MCF");
-		e1.setTemporadaInicio(temporadaInicio);
-		e1.setTemporadaFin(temporadaFin);
+		//e1.setTemporadaInicio(temporadaInicio);
+		//e1.setTemporadaFin(temporadaFin);
 		
-		EquipoDTO e2 = new EquipoDTO();
-		e2.setCodigo("00002");
+		EquipoRealDTO e2 = new EquipoRealDTO();
+		e2.setCodigoEquipoReal("00002");
 		e2.setNombre("Real Madrid");
 		e2.setSiglas("RM");
-		e2.setTemporadaInicio(temporadaInicio);
-		e2.setTemporadaFin(temporadaFin);		
+		//e2.setTemporadaInicio(temporadaInicio);
+		//e2.setTemporadaFin(temporadaFin);		
 		
-		EquipoDTO e3 = new EquipoDTO();
-		e3.setCodigo("00003");
+		EquipoRealDTO e3 = new EquipoRealDTO();
+		e3.setCodigoEquipoReal("00003");
 		e3.setNombre("Barcelona");
 		e3.setSiglas("FCB");
-		e3.setTemporadaInicio(temporadaInicio);
-		e3.setTemporadaFin(temporadaFin);		
+		//e3.setTemporadaInicio(temporadaInicio);
+		//e3.setTemporadaFin(temporadaFin);		
 		
-		EquipoDTO e4 = new EquipoDTO();
-		e4.setCodigo("00004");
+		EquipoRealDTO e4 = new EquipoRealDTO();
+		e4.setCodigoEquipoReal("00004");
 		e4.setNombre("Cajasol");
 		e4.setSiglas("CAJ");
-		e4.setTemporadaInicio(temporadaInicio);
-		e4.setTemporadaFin(temporadaFin);			
+		//e4.setTemporadaInicio(temporadaInicio);
+		//e4.setTemporadaFin(temporadaFin);			
 		
 		lEquipo.add(e1);
 		lEquipo.add(e2);
@@ -87,10 +130,10 @@ public class ServiciosAdministracion implements IServiciosAdministracion{
 	}
 	
 	// OK	
-	public boolean modificarEquipoCatalogo(EquipoDTO eDTO)throws Exception{
+	public boolean modificarEquipoCatalogo(EquipoRealDTO eDTO)throws Exception{
 		
 		// Se llama para modificar en base de datos
-		System.out.println("Codigo: " + eDTO.getCodigo());
+		System.out.println("Codigo: " + eDTO.getCodigoEquipoReal());
 		System.out.println("Nombre: " + eDTO.getNombre());
 		System.out.println("Siglas: " + eDTO.getSiglas());
 		
@@ -102,7 +145,7 @@ public class ServiciosAdministracion implements IServiciosAdministracion{
 	}
 	
 	// OK	
-	public boolean insertarEquipoCatalogo(EquipoDTO eDTO)throws Exception{
+	public boolean insertarEquipoCatalogo(EquipoRealDTO eDTO)throws Exception{
 		
 		// Inserta en base de datos un equipo real.
 		// El codigo debe ser autogenerado en bbdd.
@@ -127,39 +170,42 @@ public class ServiciosAdministracion implements IServiciosAdministracion{
 		ArrayList<JugadorDTO> lJugadores = new ArrayList<JugadorDTO>();
 		
 		JugadorDTO j1 = new JugadorDTO();
-		j1.setCodigo("00001");
+		j1.setCodigoJugador("00001");
+		j1.setActivo(true);
 		j1.setNombre("Luis");
 		j1.setApellido("Avila");
 		j1.setPuesto(Constantes.BASE);
 		j1.setAltura("192");
 		j1.setPeso("90");
 		j1.setNacionalidad(Constantes.ESP);
-		j1.setTemporadaInicio(temporadaInicio);
-		j1.setTemporadaFin(temporadaFin);
+		//j1.setTemporadaInicio(temporadaInicio);
+		//j1.setTemporadaFin(temporadaFin);
 		
 
 		JugadorDTO j2 = new JugadorDTO();
-		j2.setCodigo("00002");
+		j2.setCodigoJugador("00002");
+		j2.setActivo(true);
 		j2.setNombre("Charles");
 		j2.setApellido("Fish");
 		j2.setPuesto(Constantes.BASE);
 		j2.setAltura("184");
 		j2.setPeso("82");
 		j2.setNacionalidad(Constantes.USA);
-		j2.setTemporadaInicio(temporadaInicio);
-		j2.setTemporadaFin(temporadaFin);
+		//j2.setTemporadaInicio(temporadaInicio);
+		//j2.setTemporadaFin(temporadaFin);
 		
 		
 		JugadorDTO j3 = new JugadorDTO();
-		j3.setCodigo("00003");
+		j3.setCodigoJugador("00003");
+		j3.setActivo(true);
 		j3.setNombre("Javier");
 		j3.setApellido("Diaz de Miguel");
 		j3.setPuesto(Constantes.ALERO);
 		j3.setAltura("201");
 		j3.setPeso("99");
 		j3.setNacionalidad(Constantes.ESP);
-		j3.setTemporadaInicio(temporadaInicio);
-		j3.setTemporadaFin(temporadaFin);
+		//j3.setTemporadaInicio(temporadaInicio);
+		//j3.setTemporadaFin(temporadaFin);
 		
 		lJugadores.add(j1);
 		lJugadores.add(j2);

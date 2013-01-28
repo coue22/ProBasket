@@ -2,7 +2,7 @@ package com.personal.basket.model;
 
 import java.io.Serializable;
 
-public class Configuracion implements Serializable{
+public class ConfiguracionDTO implements Serializable{
 	
 	/**
 	 * 

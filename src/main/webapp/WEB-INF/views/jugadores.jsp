@@ -148,7 +148,7 @@ if (identificado == null || identificado.length()<1){
 	</div>
 	
 	
-	<jsp:include page="PlantillaPiePagina.jsp" />
+<%-- 	<jsp:include page="PlantillaPiePagina.jsp" /> --%>
 	
 <form name="formEliminarJugadores" action="jugadores" method="POST">
 	<input type="hidden" name="operacion" value="ELIMINAR" />

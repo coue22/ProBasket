@@ -126,11 +126,11 @@ $(document).ready(function(){
 });
 
 
-/*
+
 	function Registrarse(){
-		alert("HACERLA");
+		document.formRegistrarse.submit();	
 	}
-	
+/*	
 	function detalleJugador(codJug){
 		alert("CodJug: " + codJug);
 	}	
@@ -145,11 +145,11 @@ $(document).ready(function(){
 		//alert("opcion: " + opc);
 		
 		if (opc == '001'){
-			document.formMostrarJugadores.submit();
-		} else if (opc == '002'){
 			document.formMostrarEquipo.submit();
+		} else if (opc == '002'){
+			document.formMostrarLiga.submit();
 		} else if (opc == '003'){
-			alert("No implementado yet.");
+			alert("No implementado yet.");		
 		} else if (opc == '004'){
 			alert("No implementado yet.");			
 		} else if (opc == '101'){
@@ -170,31 +170,43 @@ $(document).ready(function(){
 		<div id="header">
 
  				<a target="_self" href="inicio.html" title="....." class="miLogo">
-  					<img src="img/logo_tcm423-208626.gif" alt="bbva" />
+  					<img src="img/banner-graphic.png" alt="..." />
  				</a>
+ 				
+<!--  				<a target="_self" href="inicio.html" title="....." class="miLogo"> -->
+<!--   					<img src="img/logo_tcm423-208626.gif" alt="bbva" /> -->
+<!--  				</a> -->
  			
-				<h2>XXXXXXXXXXXX</h2>
+<!-- 				<h2>XXXXXXXXXXXX</h2> -->
 		
-				<% if (identificado.equals(Ctes.SI)) { %>
-					<a class="miRegistro" onclick="CerrarSesion();" href="#">Cerrar Sesión</a>
-				<%}else{%>	
-					<a class="miRegistro" onclick="Registrarse();" href="#">Registrarse</a>
-				<%}%>
+
 				
 
  		</div>
  		
+ 		<div id="subheader">
+				<% if (identificado.equals(Ctes.SI)) { %>
+					<a class="miRegistro" onclick="CerrarSesion();" href="#">Cerrar Sesión</a>
+				<%}else{%>	
+					<a class="miRegistro" onclick="Registrarse();" href="#">Registrarse</a>
+				<%}%> 		
+ 		</div>
  		
+ 		
+
  		<% if (identificado.equals(Ctes.SI)) { 
  			ArrayList<MenuDTO> menuPrincipal = (ArrayList<MenuDTO>)objSesion.getAttribute(ConstantesSesion.OPCMENU);
  		%>
 			<div id="menu">
-				<h3>Menu</h3>
+				<h3>
+				<%=(String)objSesion.getAttribute(ConstantesSesion.OPCMENUTEXTO)%>
+				</h3>
 				<ul>
 					<c:forEach var="fila" items="<%=menuPrincipal%>" varStatus="status"> 
 						<li><a onclick="evaluarOpcion('${fila.identificador}');" href="#">${fila.nombre}</a></li>
 					</c:forEach>			
 				</ul>	
+<%-- <jsp:include page="PlantillaPiePagina.jsp" /> --%>
 	 		</div>
  		<%}else{%>
  			<form name="fLogin" id="fLogin" action="login" method="POST" >
@@ -214,10 +226,11 @@ $(document).ready(function(){
 						</p>
 						
 						<span id="error"></span>
+<%-- <jsp:include page="PlantillaPiePagina.jsp" />					 --%>
 				</div> 		
 			</form>
  		<%}%>
- 		
+		 		
 <!--
 
 <h2 class="demoHeaders">Autocomplete</h2>
@@ -233,13 +246,15 @@ $(document).ready(function(){
 *******************************
 -->
 
-<form name="formMostrarJugadores" action="jugadores" method="POST">
-	<input type="hidden" name="XXXX" />
-</form>
+<!-- <form name="formMostrarJugadores" action="jugadores" method="POST"> -->
+<!-- 	<input type="hidden" name="XXXX" /> -->
+<!-- </form> -->
 <form name="formMostrarEquipo" action="equipo" method="POST">
 	<input type="hidden" name="XXXX" />
 </form>
-
+<form name="formMostrarLiga" action="liga" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
 
 
 <form name="formMostrarCrearLiga" action="crearLiga" method="POST">
@@ -261,8 +276,9 @@ $(document).ready(function(){
 
 
 
-
-
+<form name="formRegistrarse" action="registrarse" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
 
  
 <form name="formCerrarSesion" action="cerrarSesion" method="POST">

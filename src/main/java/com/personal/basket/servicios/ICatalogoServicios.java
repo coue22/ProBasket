@@ -32,7 +32,7 @@ public interface ICatalogoServicios {
 	// 								OPERACIONES DE EQUIPO								   //
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
-	public EquipoDTO mostrarEquipo()throws Exception;
+	public EquipoRealDTO mostrarEquipo()throws Exception;
 
 	
 	// ----------------------------------------------------------------------------------- //
@@ -40,9 +40,22 @@ public interface ICatalogoServicios {
 	// 								SERVICIOS DE LOGIN 									   //
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //	
+	public boolean existeUsuario(String log)throws Exception;
 	
-	public boolean registrarse(String log, String pass)throws Exception;
-	public DatosPersonalesDTO loggearse(String log, String pass)throws Exception;
+	public UsuarioDTO registrarse(String log, String pass, 
+							   String email, String anoNac, 
+							   String sex, String codigoEcono)throws Exception;
+	public UsuarioDTO loggearse(String log, String pass)throws Exception;
 	//public DetalleServicioDTO recuperarDetalleServicio(String identificador) throws Exception;
+
+
+	
+	
+	// ----------------------------------------------------------------------------------- //
+	// ----------------------------------------------------------------------------------- //
+	// 								SERVICIOS DE ECONOMIA								   //
+	// ----------------------------------------------------------------------------------- //
+	// ----------------------------------------------------------------------------------- //
+	public EconomiaDTO setEconomia()throws Exception;
 	
 }

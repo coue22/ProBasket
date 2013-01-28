@@ -29,8 +29,9 @@ import com.personal.basket.bbdd.DBConneccionException;
 import com.personal.basket.bbdd.MySQLConnection;
 import com.personal.basket.ctes.ConstantesSesion;
 import com.personal.basket.ctes.Ctes;
-import com.personal.basket.dtos.DatosPersonalesDTO;
-import com.personal.basket.dtos.EquipoDTO;
+import com.personal.basket.dtos.EconomiaDTO;
+import com.personal.basket.dtos.UsuarioDTO;
+import com.personal.basket.dtos.EquipoRealDTO;
 import com.personal.basket.dtos.JugadorDTO;
 import com.personal.basket.dtos.LigaDTO;
 import com.personal.basket.dtos.MenuDTO;
@@ -90,6 +91,24 @@ public class HomeController {
 	public void setServicioGestionLigas(ServiciosGestionLigas servicioGestionLigas) {
 		this.servicioGestionLigas = servicioGestionLigas;
 	}
+	
+	/**
+	 * Se comprueba si la sesion esta activa.
+	 * @param sesion
+	 * @return true: esta activa
+	 * 		   false: NO activa
+	 */
+	private boolean comprobarSesionActiva(HttpSession sesion){
+		
+		// Compureba si una propiedad es null o no.
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO) == null)
+			return false;
+		else
+			return true;
+
+	}
+	
+	
 	/**
 	 * Inicializa la sesion con valores por defecto.
 	 * @param sesion
@@ -100,6 +119,11 @@ public class HomeController {
 		sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
 		sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
 		sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.NO);
+		
+		sesion.setAttribute(ConstantesSesion.MI_LIGA, Ctes.NO_ASIGNADO_LIGA);
+		sesion.setAttribute(ConstantesSesion.MI_EQUIPO, Ctes.NO_ASIGNADO_EQUIPO);
+		
+		
 	}
 	
 	/**
@@ -113,64 +137,15 @@ public class HomeController {
             HttpSession sesion) {
 		
 		logger.info("Welcome home! the client locale is "+ locale.toString());
-		
-/*		
-		// PLANIFICADOR...
-		try{
-			
-			if (APBDSchedulerFactoryBean.getInstance() == null){
-				
-				// Se arranca en la primera peticion el planificador.
-				Properties propConstantes = new Properties();
-				propConstantes.put("org.quartz.scheduler.instanceName","DefaultQuartzScheduler");
-				propConstantes.put("org.quartz.jobStore.tablePrefix","QRT2_");
-				propConstantes.put("org.quartz.scheduler.rmi.proxy","false");
-				propConstantes.put("org.quartz.jobStore.class","org.quartz.impl.jdbcjobstore.JobStoreTX");
-				propConstantes.put("org.quartz.threadPool.class","org.quartz.simpl.SimpleThreadPool");
-				propConstantes.put("org.quartz.threadPool.threadPriority","5");
-				propConstantes.put("org.quartz.scheduler.wrapJobExecutionInUserTransaction","false");
-				propConstantes.put("org.quartz.jobStore.misfireThreshold","60000");
-				propConstantes.put("org.quartz.scheduler.rmi.export","false");
-				propConstantes.put("org.quartz.threadPool.threadCount","10");
-				propConstantes.put("org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread","true");
-				propConstantes.put("org.quartz.jobStore.driverDelegateClass","org.quartz.impl.jdbcjobstore.oracle.weblogic.WebLogicOracleDelegate");
-				propConstantes.put("org.quartz.jobStore.dataSource","MyDataSource");
-				propConstantes.put("org.quartz.dataSource.MyDataSource.jndiURL","APBDDS");
-				
-// ESTO ES LO QUE SUSTITUYE AL jndiURL (Las 5 lineas de abajo.)
-//org.quartz.dataSource.APPDS.driver=com.sybase.jdbc2.jdbc.SybDriver
-//org.quartz.dataSource.APPDS.URL=jdbc:sybase:Tds:<internal-server-name>:1029/appdbname
-//org.quartz.dataSource.APPDS.user=[hidden]
-//org.quartz.dataSource.APPDS.password=[hidden]
-//org.quartz.dataSource.APPDS.maxConnections=30 
-				
-				
-				// Se arranca en la primera peticion el planificador.
-				APBDSchedulerFactoryBean.getInstance(propConstantes);
-				
-				// ASI SE LLAMA A LA PUBLICACION 
-				//return quartz.getInstance().planificaPublicacion(pase, entorno, usuario, dFecha);
-			}
-			
-		} catch (SchedulerException e) {
-			
-			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
-			return "error";
-		}
-*/		
-		
-		/*
-		MySQLConnection  ms = new MySQLConnection ("","","","");
-		try {
-			ms.open();
-		} catch (DBConneccionException e) {
-			logger.info("ERROR:" + e.getMensaje());
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-		*/
-		
 
+		
+		// Se crea la sesion.
+    	HttpSession session = request.getSession(true);
+    	session.setMaxInactiveInterval(-1);
+    	
+    	//System.out.println("Se crea la sesion con tiempo infinito:" + session.getId());
+		
+		// Se inicializan las variables de sesion.
 		InicializarSesion(sesion);
 		
 		// Se inicializa la configuracion del aplicativo.
@@ -208,11 +183,18 @@ public class HomeController {
 		// asociadas al usuario.
 		try {
 			
+			
+			InicializarSesion(sesion);
+			/*
+			sesion.setAttribute(ConstantesSesion.ADMINISTRADOR, Ctes.NO);
 			sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
 			sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
 			sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.NO);
+			sesion.setAttribute(ConstantesSesion.MI_LIGA, Ctes.NO_ASIGNADO_LIGA);
+			sesion.setAttribute(ConstantesSesion.MI_EQUIPO, Ctes.NO_ASIGNADO_EQUIPO);			
+			*/
 			
-			DatosPersonalesDTO dPers = catalogoServicio.loggearse(request.getParameter("nombreReg"), 
+			UsuarioDTO dPers = catalogoServicio.loggearse(request.getParameter("nombreReg"), 
 														 request.getParameter("contraReg"));
 			
 
@@ -224,10 +206,12 @@ public class HomeController {
 				sesion.setAttribute(ConstantesSesion.ADMINISTRADOR, Ctes.SI);
 			}else if (dPers.isLogado()){
 				sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.SI);
-				if (!dPers.getIdLiga().equals(Ctes.NO_ASIGNADO_LIGA)){
+				if (!dPers.getCodigoLiga().equals(Ctes.NO_ASIGNADO_LIGA)){
 					sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
-					if (!dPers.getIdLiga().equals(Ctes.NO_ASIGNADO_EQUIPO)){
-						sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.SI);	
+					sesion.setAttribute(ConstantesSesion.MI_LIGA, dPers.getCodigoLiga());
+					if (!dPers.getCodigoLiga().equals(Ctes.NO_ASIGNADO_EQUIPO)){
+						sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.SI);
+						sesion.setAttribute(ConstantesSesion.MI_EQUIPO, dPers.getCodigoEquipo());
 					}
 				}
 			}
@@ -236,8 +220,8 @@ public class HomeController {
 			sesion.setAttribute(Ctes.MAPA_CONFIGURACION, dPers.getMapConfiguracion());
 
 			System.out.println("Persona logada?:" + dPers.isLogado()+ " y esta Logado: " + sesion.getAttribute(ConstantesSesion.IDENTIFICADO));
-			System.out.println("Codigo Liga:" + dPers.getIdLiga()+ " y pertenece Liga: " + sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA));
-			System.out.println("Cod. Equipo:" + dPers.getIdEquipo()+ " y tiene Equipo: " + sesion.getAttribute(ConstantesSesion.TIENE_EQUIPO));
+			System.out.println("Codigo Liga:" + dPers.getCodigoLiga()+ " y pertenece Liga: " + sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA));
+			System.out.println("Cod. Equipo:" + dPers.getCodigoEquipo()+ " y tiene Equipo: " + sesion.getAttribute(ConstantesSesion.TIENE_EQUIPO));
 			
 		} catch (Exception e1) {
 			
@@ -275,11 +259,14 @@ public class HomeController {
 			
 			if (sesion.getAttribute(ConstantesSesion.ADMINISTRADOR).equals(Ctes.SI)){
 				lMenu = catalogoServicio.mostrarMenuAdministrador();
+				sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Administrador");
 			}
 			else {
 				if (sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA).equals(Ctes.NO)){
+					sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
 					lMenu = catalogoServicio.mostrarMenuNoLiga();
 				}else{
+					sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
 					lMenu = catalogoServicio.mostrarMenu();	
 				}
 			}
@@ -293,6 +280,9 @@ public class HomeController {
 		//model.put(Ctes.OPCMENU, lMenu);
 		sesion.setAttribute(ConstantesSesion.OPCMENU, lMenu);
 		
+		sesion.setMaxInactiveInterval(ConstantesSesion.TIEMPO_SESION);
+		//System.out.println("Se crea la sesion con tiempo " + ConstantesSesion.TIEMPO_SESION + " y sesion " + sesion.getId());
+		
 		return "home";
 	}
 
@@ -305,12 +295,8 @@ public class HomeController {
             HttpServletResponse response,
             HttpSession sesion) {
 		
-		/* 
-			En la clase de la interrupcion se pone la sesión a NO y aqui se
-			redirige a la pantalla de inicio por si se quiere logear otra vez.
-		*/
-		InicializarSesion(sesion);
-
+		// destruye la sesion
+		sesion.invalidate();
 		
 		return "home";
 	}
@@ -322,7 +308,157 @@ public class HomeController {
             HttpServletRequest request, 
             HttpServletResponse response,
             HttpSession sesion) {
-		return "home";
+		
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		
+		
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.SI)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Imposible registrarse");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Ya se encuentra identificado y por lo tanto no puede registrarse." );
+			return "error";
+		}
+		
+		String operacion = request.getParameter("operacion");
+		
+		if (operacion != null){
+			
+			if (operacion.equalsIgnoreCase(Ctes.CONFIRMAR_REGISTRO)){
+				
+				String loginRegistro = request.getParameter("loginRegistro");
+				String pwdRegistro = request.getParameter("pwdRegistro");
+				String pwd2Registro = request.getParameter("pwd2Registro");
+				String emailRegistro = request.getParameter("emailRegistro");
+				String email2Registro = request.getParameter("email2Registro");
+				String selAnoNacRegistro = request.getParameter("selAnoNacRegistro");
+				String selSexRegistro = request.getParameter("selSexRegistro");
+				String chPolitica = request.getParameter("chPolitica");
+				
+				boolean bCumpleRestricciones = true;
+
+				
+				/*
+				System.out.println("loginRegistro: " + loginRegistro);
+				System.out.println("pwdRegistro: " + pwdRegistro);
+				System.out.println("pwd2Registro: " + pwd2Registro);
+				System.out.println("emailRegistro: " + emailRegistro);
+				System.out.println("email2Registro: " + email2Registro);
+				System.out.println("selAnoNacRegistro: " + selAnoNacRegistro);
+				System.out.println("selSexRegistro: " + selSexRegistro);// H-Hombre ; M-Mujer
+				System.out.println("chPolitica: " + chPolitica); // N-No acepta; S-Si Acepta.
+				*/
+				
+				// Comprobaciones a nivel de servidor para el registro
+				if (loginRegistro == null || loginRegistro.length()<1){
+					model.put("errorRegistro", "El login no debe ir relleno.");
+					bCumpleRestricciones = false;
+				}
+				
+				if (pwdRegistro == null || pwdRegistro.length()<1){
+					model.put("errorRegistro", "La password debe ir rellena.");
+					bCumpleRestricciones = false;
+				}
+				if (pwd2Registro == null || pwd2Registro.length()<1){
+					model.put("errorRegistro", "La re-password debe ir rellena.");
+					bCumpleRestricciones = false;
+				}
+				if (!pwdRegistro.equals(pwd2Registro)){
+					model.put("errorRegistro", "Las password deben coincidir.");
+					bCumpleRestricciones = false;
+				}
+				
+				if (emailRegistro == null || emailRegistro.length()<1){
+					model.put("errorRegistro", "El email debe ir relleno.");
+					bCumpleRestricciones = false;
+				}
+				if (email2Registro == null || email2Registro.length()<1){
+					model.put("errorRegistro", "El re-email debe ir relleno.");
+					bCumpleRestricciones = false;
+				}
+				if (!emailRegistro.equals(email2Registro)){
+					model.put("errorRegistro", "Los e-mail deben coincidir.");
+					bCumpleRestricciones = false;
+				}				
+	
+				
+				if (selAnoNacRegistro.equals("---")){
+					model.put("errorRegistro", "Debe seleccionar un año de nacimiento");
+					bCumpleRestricciones = false;
+				}
+
+				if (selSexRegistro.equals("---")){
+					model.put("errorRegistro", "Debe seleccionar un sexo");
+					bCumpleRestricciones = false;
+				}
+
+				if (chPolitica.equalsIgnoreCase(Ctes.NO)){
+					model.put("errorRegistro", "Debe confirmar la politca de privacidad de datos.");
+					bCumpleRestricciones = false;
+				}
+				
+				// Si todo ha ido bien.
+				if (bCumpleRestricciones == true){
+					
+					try {
+						
+						
+						// Se comprueba si existe ya para otro usuario ese login.
+						boolean bExisteUsuario = catalogoServicio.existeUsuario(loginRegistro);
+						if (bExisteUsuario){
+							model.put("errorRegistro", "Ya existe un usuario con ese mismo login. Elija otro login");
+							return "registrarse";							
+						}
+						
+						// Se genera la economía.
+						EconomiaDTO economia = catalogoServicio.setEconomia();
+						if (economia.getCodigoEcono() == Ctes.NO_ASIGNADO_ECONOMIA){
+							sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al realizar el registro");
+							sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Implosible realizar el registro porque no se puede establecer una economía.");
+							return "error";
+						}
+						
+						
+						// Se inserta por fin el usuario con su economia.
+						UsuarioDTO dPers = catalogoServicio.registrarse(
+													loginRegistro, 
+													pwdRegistro,
+													emailRegistro,
+													selAnoNacRegistro,
+													selSexRegistro,
+													economia.getCodigoEcono());
+						
+
+						model.put("okRegistro", "Usuario " + loginRegistro + " se ha registrado de forma correcta.");
+	
+						// Se inicializa la sesion con todos los valores por defecto.
+						InicializarSesion(sesion);
+
+						
+						
+					} catch (Exception e) {
+						sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al realizar el registro");
+						sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+						return "error";
+					}
+					
+
+					
+				}
+				
+				
+			}// Ctes.CONFIRMAR_REGISTRO
+
+				
+				
+		}else{
+			System.out.println("NINGUNA OPERACION - Seguramente sea el click del inicio.");	
+		}		
+
+
+		
+		return "registrarse";
 	}
 	
 	
@@ -336,12 +472,16 @@ public class HomeController {
 	}
 	
 
-	@RequestMapping(value = "/jugadores", method = RequestMethod.POST)
-    public String jugadores(Locale locale,
+	@RequestMapping(value = "/equipo", method = RequestMethod.POST)
+    public String equipo(Locale locale,
 			Map<String, Object> model, 
             HttpServletRequest request, 
             HttpServletResponse response,
             HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
 		
 		// Si no esta identificado es un error.
 		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
@@ -360,7 +500,7 @@ public class HomeController {
 				String idJugEliminar = request.getParameter("idJugEliminar");
 				
 				JugadorDTO jDTO = new JugadorDTO();
-				jDTO.setCodigo(idJugEliminar);
+				jDTO.setCodigoJugador(idJugEliminar);
 				
 				try {
 					servicioJugadores.eliminarJugador(jDTO);
@@ -389,11 +529,12 @@ public class HomeController {
 
 		model.put(Ctes.OPCMENU_JUGADORES, lJugadores);
 		
-		return "jugadores";
+		return "equipo";
 	}
 
-	@RequestMapping(value = "/equipo", method = RequestMethod.POST)
-    public String equipo(Locale locale,
+	/*
+	@RequestMapping(value = "/equipoReal", method = RequestMethod.POST)
+    public String equipoReal(Locale locale,
 			Map<String, Object> model, 
             HttpServletRequest request, 
             HttpServletResponse response,
@@ -421,6 +562,34 @@ public class HomeController {
 		
 		return "equipo";
 	}
+	*/
+	
+	@RequestMapping(value = "/liga", method = RequestMethod.POST)
+    public String liga(Locale locale,
+			Map<String, Object> model, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+
+		
+		System.out.println("LIGA");
+		
+		/**
+		 * Aqui se pueden las variables de sesion  
+		 * sesion.getAttribute(ConstantesSesion.MI_LIGA)
+		 * sesion.getAttribute(ConstantesSesion.MI_EQUIPO)
+		 * tendrían los valores correctos y en la vista se puede pintar diferente dependiendo
+		 * de lo que contengan esas dos variables de sesion.
+		 */
+		
+
+		return "liga";
+		
+	}
+	
 	
 	
 	
@@ -436,6 +605,11 @@ public class HomeController {
             HttpServletRequest request, 
             HttpServletResponse response,
             HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		logger.info("Se ha pulsado el boton de Crear Liga");
 
 		// Si no esta identificado es un error.
 		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
@@ -448,6 +622,12 @@ public class HomeController {
 		String operacion = request.getParameter("operacion");
 		String nbLiga = request.getParameter("nbLiga");
 		String pwdLiga = request.getParameter("pwdLiga");
+		String pwd2Liga = request.getParameter("pwd2Liga");
+		String chPublica = request.getParameter("chPublica"); //(S|N)
+		
+		
+		
+
 		
 		// Se evaluan las distintas operaciones para los jugadores
 		if (operacion != null){
@@ -456,13 +636,25 @@ public class HomeController {
 			
 			if (operacion.equalsIgnoreCase(Ctes.CREAR_LIGA)){
 				
+				// Solo si la liga no es publica entonces se deben comprobar contraseñas.
+				if (chPublica.equals(Ctes.NO)){
+					/* Se comprueba que coincidan las contraseñas.*/
+					if (!pwdLiga.equals(pwd2Liga)){
+						sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al crear la liga");
+						sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "La contraseñas no coinciden." );
+						return "error";
+					}
+				}
+					
+
+				
 				LigaDTO lDTO = new LigaDTO();
 				lDTO.setNombre(nbLiga);
 				lDTO.setPassword(pwdLiga);
 				
-				boolean bCrearLiga = false;
+				String sCrearLiga = "";
 				try {
-					bCrearLiga = servicioGestionLigas.crearLiga(lDTO);
+					sCrearLiga = servicioGestionLigas.crearLiga(lDTO);
 				} catch (Exception e) {
 					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al crear una liga");
 					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
@@ -470,10 +662,15 @@ public class HomeController {
 				}
 				
 				// Si ha ido bien el alta.
-				if (bCrearLiga){
+				if (!sCrearLiga.equals(Ctes.NO_ASIGNADO_LIGA)){
+					
+					// TODO: SE DEBERIA REALIZAR UPDATE AL USUARIO CON EL CODIGO DE LA LIGA.
 					
 					// Ya pertenece a una liga.
 					sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
+					sesion.setAttribute(ConstantesSesion.MI_LIGA, sCrearLiga);
+							
+					
 					ArrayList<MenuDTO> lMenu = null;
 					try {
 						lMenu = catalogoServicio.mostrarMenu();
@@ -488,18 +685,23 @@ public class HomeController {
 					//System.out.print("HA IDO MAL" + lDTO.getError());
 					model.put("errorCrearLiga", lDTO.getError());
 				}
+
 		
 				
 			}else{
-				System.out.println("NINGUNA OPERACION - Seguramente sea el click del inicio.");	
+				System.out.println("NINGUNA OPERACION - POR AKI NUNCA");	
 			}
-		}		
+		}else{
+			System.out.println("NINGUNA OPERACION - Seguramente sea el click del inicio.");	
+		}
 		
 		
 		
 		//System.out.println("CREANDO LIGA...");	
 		return "crearLiga";
 	}
+	
+
 	
 	@RequestMapping(value = "/inscribirseLiga", method = RequestMethod.POST)
     public String inscribirseLiga(Locale locale,
@@ -509,6 +711,9 @@ public class HomeController {
             HttpSession sesion) {
 
 		//System.out.println("INSCRIBIRSE EN LIGA...");
+
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
 		
 		// Si no esta identificado es un error.
 		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
@@ -517,17 +722,112 @@ public class HomeController {
 			return "error";
 		}
 		
-		
-		ArrayList<LigaDTO> lLigas = null;
-		try {
-			lLigas = servicioGestionLigas.obtenerLigas();
-		} catch (Exception e) {
-			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar las ligas");
-			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+		// Si pertence a una liga es un error porque no se puede inscribir.
+		if (sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA).equals(Ctes.SI)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al intentar inscribirse en una la liga");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Ya pertenece a una liga y no puede estar inscrito en mas de una." );
 			return "error";
 		}
 		
-		model.put(Ctes.OPCMENU_INSCRIBIR_LIGA_RECUPERAR_LIGAS, lLigas);
+		
+		String operacion = request.getParameter("operacion");
+				
+		if (operacion != null){
+
+			if (operacion.equalsIgnoreCase(Ctes.BUSCAR_LIGA)){
+				
+				String nbLigaBuscar = request.getParameter("nbLigaBuscar");
+				
+				ArrayList<LigaDTO> lLigas = null;
+				try {
+					lLigas = servicioGestionLigas.obtenerLigas(nbLigaBuscar);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar las ligas");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}
+				
+				model.put(Ctes.OPCMENU_LIGAS_RECUPERADAS, lLigas);
+				
+				if (lLigas.size()<=0){
+					model.put(Ctes.OPCMENU_HAY_LIGAS_RECUPERADAS,Ctes.NO);
+				}
+				else{
+					model.put(Ctes.OPCMENU_HAY_LIGAS_RECUPERADAS,Ctes.SI);
+				}
+					
+				
+				
+			}else if (operacion.equalsIgnoreCase(Ctes.INSCRIBIR_LIGA)){
+				
+				// Formato de "selLiga" codLiga#publica
+				//	Ejemplos:
+				//		5#true  - codigo liga=5 y es publica
+				//	   12#false - codigo liga=12 y es privada				
+				String selLiga = request.getParameter("selLiga");
+				String passLiga = request.getParameter("passLiga");
+				
+				String[]temp = selLiga.split("#");
+				System.out.println("Codigo Liga    : " + temp[0]);
+				System.out.println("Es liga publica: " + temp[1]);
+				
+				LigaDTO lDTO = new LigaDTO();
+				lDTO.setCodigoLiga(temp[0]);
+				lDTO.setPassword(passLiga);
+				if (temp[1].equals("true"))
+					lDTO.setLigaPublica(true);
+				else
+					lDTO.setLigaPublica(false);
+				
+				String sInscrito = "";
+				try {
+					sInscrito = servicioGestionLigas.inscribirLiga(lDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al inscribirse en una liga");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}
+					
+				if (!sInscrito.equals(Ctes.NO_ASIGNADO_LIGA)){
+					
+					// TODO: SE DEBERIA REALIZAR UPDATE AL USUARIO CON EL CODIGO DE LA LIGA.
+					
+					sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
+					sesion.setAttribute(ConstantesSesion.MI_LIGA, sInscrito);
+					
+					ArrayList<MenuDTO> lMenu = null;
+					try {
+						lMenu = catalogoServicio.mostrarMenu();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+					
+					
+					sesion.setAttribute(ConstantesSesion.OPCMENU, lMenu);
+					return "liga";
+					
+				}else{
+					
+					// Si falla se debe gestionar de otra manera mejor.
+					//FALTAN HACER COSAS
+					//FALTAN HACER COSAS
+					//FALTAN HACER COSAS
+					//FALTAN HACER COSAS
+					//FALTAN HACER COSAS						
+				}
+
+				
+			}else{
+				System.out.println("NINGUNA OPERACION - POR AKI NUNCA");	
+			}
+			
+		}else{
+			System.out.println("NINGUNA OPERACION - Seguramente sea el click del inicio.");	
+		}
+		
+
+		
 		
 		return "inscribirseLiga";
 	}	
@@ -541,6 +841,9 @@ public class HomeController {
             HttpServletRequest request, 
             HttpServletResponse response,
             HttpSession sesion) {
+
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
 
 		
 		// Si no esta identificado es un error.
@@ -592,8 +895,8 @@ public class HomeController {
 				//System.out.println("equipoSiglas: " + equipoSiglas);
 				
 				// Se lleva a cabo la llamada al servicio para modificar un equipo.
-				EquipoDTO eDTO = new EquipoDTO();
-				eDTO.setCodigo(idEquipoModificar);
+				EquipoRealDTO eDTO = new EquipoRealDTO();
+				eDTO.setCodigoEquipoReal(idEquipoModificar);
 				eDTO.setNombre(equipoNombre);
 				eDTO.setSiglas(equipoSiglas);
 				
@@ -615,7 +918,7 @@ public class HomeController {
 				//System.out.println("equipoNombre Insertar: " + equipoNombre);
 				//System.out.println("equipoSiglas Insertar: " + equipoSiglas);
 				
-				EquipoDTO eDTO = new EquipoDTO();
+				EquipoRealDTO eDTO = new EquipoRealDTO();
 				eDTO.setNombre(equipoNombre);
 				eDTO.setSiglas(equipoSiglas);
 				
@@ -634,7 +937,7 @@ public class HomeController {
 		}
 		
 		
-		ArrayList<EquipoDTO> lEquipo = null;
+		ArrayList<EquipoRealDTO> lEquipo = null;
 
 		try {
 			lEquipo = servicioAdministracion.mostrarCatalogoEquipos();
@@ -668,6 +971,9 @@ public class HomeController {
             HttpServletResponse response,
             HttpSession sesion) {
 
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
 		//System.out.println("adminJugadores...");
 		
 		// Si no esta identificado es un error.
@@ -700,9 +1006,7 @@ public class HomeController {
 		return "adminJugadores";
 	}
 		
-	
-		
-	
+
 	
 	
 /*

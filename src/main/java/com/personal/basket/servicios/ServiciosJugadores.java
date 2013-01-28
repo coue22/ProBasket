@@ -42,6 +42,8 @@ public class ServiciosJugadores implements IServiciosJugadores{
 	// ----------------------------------------------------------------------------------- //
 	public ArrayList<JugadorDTO> mostrarJugadores()throws Exception{
 		
+		
+		/*
 		ArrayList<JugadorDTO> lJugadores = new ArrayList<JugadorDTO>();
 		
 		JugadorDTO j1 = new JugadorDTO();
@@ -70,7 +72,7 @@ public class ServiciosJugadores implements IServiciosJugadores{
 		j3.setAltura("201");
 		j3.setPeso("99");
 		j3.setNacionalidad(Constantes.ESP);
-		
+		*/
 		
 /*
 		//personaMapper.getAll();
@@ -82,11 +84,13 @@ public class ServiciosJugadores implements IServiciosJugadores{
 		}
 */
 		
-		
+/*		
 		lJugadores.add(j1);
 		lJugadores.add(j2);
 		lJugadores.add(j3);
 		return lJugadores;
+*/
+		return null;
 	}
 	
 

@@ -4,16 +4,31 @@
 	
 <%
 HttpSession objSesion = request.getSession(false);
+
 String identificado = (String)objSesion.getAttribute(ConstantesSesion.IDENTIFICADO);
 if (identificado == null || identificado.length()<1){
 	identificado = Ctes.NO;
 }
 
+String mi_liga = (String)objSesion.getAttribute(ConstantesSesion.MI_LIGA);
+if (mi_liga == null || mi_liga.length()<1){
+	mi_liga = Ctes.NO_ASIGNADO_LIGA;
+}
+
+
+String mi_equipo = (String)objSesion.getAttribute(ConstantesSesion.MI_EQUIPO);
+if (mi_equipo == null || mi_equipo.length()<1){
+	mi_equipo = Ctes.NO_ASIGNADO_EQUIPO;
+}
+
+
+
+/*
 String errorCrearLiga = (String)request.getAttribute("errorCrearLiga");
 if (errorCrearLiga == null || errorCrearLiga.length()<1){
 	errorCrearLiga = "";
 }
-
+*/
 
 
 %>
@@ -23,7 +38,7 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
    	
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Crear Liga</title>
+<title>Liga</title>
 
 	<link media="screen" href="css/estilos.css" type="text/css" rel="stylesheet"/>
 	<link href="css/redmond/jquery-ui-1.9.0.custom.css" type="text/css" rel="stylesheet">
@@ -33,6 +48,7 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 	
 <script language="JavaScript">
 
+/*
 	function inicializar(){
 		//alert("ini2");
 		
@@ -101,7 +117,7 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 			document.getElementById('InsertaPWD2Liga').value='';			
 		}
 	}
-
+*/
 
 </script>
 
@@ -127,7 +143,8 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 
 </head>
 
-<body onload="inicializar();">
+<!-- <body onload="inicializar();"> -->
+<body>
 	
 	<div id="cont">
 	
@@ -139,41 +156,45 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 		<div id="contenido">
 		
 			<% if (identificado.equalsIgnoreCase(Ctes.SI)){ %>
+			
+			liga: <%= mi_liga %>
+			equipo: <%= mi_equipo %>
 
-					<div id="menuPeticion">
-						<h3>Crear Liga</h3>
+
+<!-- 					<div id="menuPeticion"> -->
+<!-- 						<h3>Crear Liga</h3> -->
 					
 					
-							<table>
-								<tr>
-									<td>Nombre</td>
-									<td><input type="text" name="InsertaNBLiga" id="InsertaNBLiga" value="" maxlength="20" size="20" class="input" /></td>
-								</tr>
-								<tr>
-									<td>Password</td>
-									<td><input type="password" name="InsertaPWDLiga" id="InsertaPWDLiga" value="" maxlength="20" size="20" class="input" /></td>
-								</tr>
-								<tr>
-									<td>Re-Password</td>
-									<td><input type="password" name="InsertaPWD2Liga" id="InsertaPWD2Liga" value="" maxlength="20" size="20" class="input" /></td>
-								</tr>
-								<tr>
-									<td colspan="2" align="center">
-									<input type="checkbox" name="CHPublica" id="CHPublica" onchange="handleChange(this);">Hacer la liga p&uacute;blica</td>
-								</tr>	
-								<tr>
-									<td colspan="2" align="right">
-										<input type="button" name="botonInsertar" value="Insertar" maxlength="10" size="10" class="input" onclick="javascript:crearLiga();" />
-									</td>
-								</tr>
+<!-- 							<table> -->
+<!-- 								<tr> -->
+<!-- 									<td>Nombre</td> -->
+<!-- 									<td><input type="text" name="InsertaNBLiga" id="InsertaNBLiga" value="" maxlength="25" size="25" class="input" /></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>Password</td> -->
+<!-- 									<td><input type="password" name="InsertaPWDLiga" id="InsertaPWDLiga" value="" maxlength="25" size="25" class="input" /></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>Re-Password</td> -->
+<!-- 									<td><input type="password" name="InsertaPWD2Liga" id="InsertaPWD2Liga" value="" maxlength="25" size="25" class="input" /></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="2" align="center"> -->
+<!-- 									<input type="checkbox" name="CHPublica" id="CHPublica" onchange="handleChange(this);">Hacer la liga p&uacute;blica</td> -->
+<!-- 								</tr>	 -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="2" align="right"> -->
+<!-- 										<input type="button" name="botonInsertar" value="Insertar" maxlength="10" size="10" class="input" onclick="javascript:crearLiga();" /> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
 																
-							</table>
+<!-- 							</table> -->
 							
-							<span class="resaltarTorcido">
-								<%=errorCrearLiga%>
-							</span>
+<!-- 							<span class="resaltarTorcido"> -->
+<%-- 								<%=errorCrearLiga%> --%>
+<!-- 							</span> -->
 							
-						</div>
+<!-- 						</div> -->
 					
 				
 			<% }else{ %>
@@ -200,15 +221,15 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 	
 
 
-<form name="formConfirmarLiga" action="crearLiga" method="POST">
- 	<input type="hidden" name="operacion" value="CREAR_LIGA" />
+<!-- <form name="formConfirmarLiga" action="crearLiga" method="POST"> -->
+<!--  	<input type="hidden" name="operacion" value="CREAR_LIGA" /> -->
 
-	<input type="hidden" name="nbLiga" value="" />
-	<input type="hidden" name="pwdLiga" value="" />
-	<input type="hidden" name="pwd2Liga" value="" />
-	<input type="hidden" name="chPublica" value="" />
+<!-- 	<input type="hidden" name="nbLiga" value="" /> -->
+<!-- 	<input type="hidden" name="pwdLiga" value="" /> -->
+<!-- 	<input type="hidden" name="pwd2Liga" value="" /> -->
+<!-- 	<input type="hidden" name="chPublica" value="" /> -->
 	
-</form>
+<!-- </form> -->
   	
 
 </body>

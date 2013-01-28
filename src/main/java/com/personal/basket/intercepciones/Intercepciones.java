@@ -28,9 +28,32 @@ public class Intercepciones extends HandlerInterceptorAdapter {
         //my code here
     	System.out.println("preHandle");
     	
+    	/*
+    	// En cada peticion se va a evaluar la sesion.
+    	HttpSession session = request.getSession(false);
+    	if (request.getRequestURI().equals("/basket/")){
+    		
+    		System.out.println("Es la pagina inicial y no debe existir la sesion");
+    		
+    	}else{
+    		
+    		System.out.println("Peticion: " + request.getRequestURI());
+    		if (session == null){
+    			System.out.println("Sesion caducada por inactividad.");
+    			//response.sendRedirect("/basket/inactividad.jsp");
+    			response.sendRedirect("/basket/inactividad");
+    			
+    			//session.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
+    		}
+    		
+    	}
+    	*/
+    	
+    	
     	// Récupera la sesion y si no existe la crea.
-    	HttpSession session = request.getSession(true);
-
+    	//HttpSession session = request.getSession(true);
+    	//session.setMaxInactiveInterval(10);
+/*
     	// Session inexistante
     	if(session == null) {
     		System.out.println("AQUI DEBERIA DAR UN ERROR PORQUE NUNCA PUEDE IR POR ESTE SITIO.");
@@ -64,28 +87,20 @@ public class Intercepciones extends HandlerInterceptorAdapter {
     		}else if (request.getRequestURI().equals("/ProBasket/cerrarSesion")){
     			//session.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
     			//session.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
-    		}/*else if (request.getRequestURI().equals("/ProBasket/jugadores")){
-    			System.out.println("PINCHA EN JUGADORES");
-    			//session.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
-    			session.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
-    		}*//*else {
-    			response.sendRedirect("error");
-    			return false;
-    		}*/
+    		}
     		
-
-    		
+ 		
     		if (session.getAttribute(ConstantesSesion.IDENTIFICADO) == null){
     			System.out.println(" Con Null el identificado. Sospechoso... ");
     			session.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
     			session.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);	    			
     		}
     		System.out.println("IDENTIFICADO: " + session.getAttribute(ConstantesSesion.IDENTIFICADO));
-    			
+ 		
     			
 
     	}
-
+*/  
     	
         return super.preHandle(request, response, handler);
     }

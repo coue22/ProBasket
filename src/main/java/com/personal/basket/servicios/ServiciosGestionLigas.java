@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import org.springframework.stereotype.Service;
+
+import com.personal.basket.ctes.Ctes;
 import com.personal.basket.dtos.LigaDTO;
 
 
@@ -12,7 +14,7 @@ import com.personal.basket.dtos.LigaDTO;
 public class ServiciosGestionLigas implements IServiciosGestionLigas{
 
 
-	public boolean crearLiga (LigaDTO lDTO)throws Exception{
+	public String crearLiga (LigaDTO lDTO)throws Exception{
 
 		// Aqui debe crear una liga y vincular el usuario a la liga.
 		// 1 Usuario en 1 Liga.
@@ -24,21 +26,24 @@ public class ServiciosGestionLigas implements IServiciosGestionLigas{
 		
 		
 		// En el caso de devolver false. Debería tener una propiedad en "LigaDTO" para ver el error
-		lDTO.setError("No se ha podido crear la liga." + " Lo que devuelva de BBDD");
-		return false;
+		//lDTO.setError("No se ha podido crear la liga." + " Lo que devuelva de BBDD");
+		//return Ctes.NO_ASIGNADO_LIGA;
+		return "0000000001";
 	}
 
-	public  ArrayList<LigaDTO> obtenerLigas ()throws Exception{
+	public  ArrayList<LigaDTO> obtenerLigas (String nbLigaABuscar)throws Exception{
 		
 		ArrayList<LigaDTO> lLiga = new ArrayList<LigaDTO> ();
 		
-		
+		// AKI DEBE RECUPERAR LAS LIGAS QUE CUMPLAN CON EL FILTRO DE ENTRADA.
+		// RECUPERA LAS LIGAS QUE COMIENCEN POR "nbLigaABuscar"
+
 		for (int i = 0; i< 100 ; i++){
 			LigaDTO lDTO = new LigaDTO();
 			
-			lDTO.setCodigo(""+i);
+			lDTO.setCodigoLiga(""+i);
 			lDTO.setNombre("Liga " + i);
-			
+
 			// Sera pulbica si no tiene contraseña, es decir, esta vacia.
 			if (i % 4 == 0)
 				lDTO.setLigaPublica(true);
@@ -47,15 +52,25 @@ public class ServiciosGestionLigas implements IServiciosGestionLigas{
 			
 			lLiga.add(lDTO);
 			
-			// Aunque la contraseña
-			
 		}
-		
-		
-		
+
 		// Devolver de BBDD todas las ligas.
 		return lLiga;
 	}
 	
+	public String inscribirLiga (LigaDTO lDTO)throws Exception{
+		
+		// Se debe actualizar la tabla del usuario para indicar la liga a la que pertence.
+		
+		// 1.- Se comprueba que se puede añadir a la liga
+		//		Si es publica --> no hay mayor problema
+		//		Si es privada --> debe comprobar la contraseña.
+		
+		// 2.- Si se puede añadir debe actualizar el usuario con el codigo de la liga.
+		
+		// 3.- Si todo ha ido bien devuelve true y false e.o.c.
+		//return Ctes.NO_ASIGNADO_LIGA;
+		return "0000000001";
+	}
 	
 }

@@ -1,13 +1,3 @@
-
-	
-<%
-HttpSession objSesion = request.getSession(false);
-String detError = (String)objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR);
-String opError = (String)objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR);
-
-%>
-
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.personal.basket.ctes.*" %>
 
@@ -23,6 +13,12 @@ String opError = (String)objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
 	
+	<script>
+		function volverPrincipal(){
+			document.formInactividad.submit();
+		}	
+	</script>
+	
 </head>
 
 <body>
@@ -30,35 +26,34 @@ String opError = (String)objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR
 	<div id="cont">
 	
 
- 		<jsp:include page="PlantillaCabecera.jsp" />
+<%--  		<jsp:include page="PlantillaCabecera.jsp" /> --%>
 			
 			<div id="contenido">
 			
 			 	<div id="menuPeticion">
+			 	
 			 		<h3>Error</h3>
-					<table><tr><td><%=opError%></td></tr></table>
+					<table><tr><td>Ha caducado la sesion</td></tr></table>
+					
 					<h3>Detalle</h3>
-					<table><tr><td><%=detError%></td></tr></table>
+					<table><tr><td>Se ha superado el tiempo maximo de sesion. Debe logarse otra vez.</td></tr></table>
+					
+					<table><tr><td>
+						<input type="button" name="botonInactividad" value="Volver" maxlength="10" size="10" class="input" onclick="volverPrincipal();"/>
+					</td></tr></table>
+					
+					
 				</div>
 				
 			</div>
 	
-<!-- 		<div id="contenido"> -->
-<!-- 			<h3>Operacion</h3> -->
-<%-- 			<P> <%=opError%> </P> --%>
-<!-- 		</div> -->
-		
-<!-- 		<div id="contenido"> -->
-<!-- 			<h3>Error</h3> -->
-<%-- 			<P> <%=detError%> </P> --%>
-<!-- 		</div> -->
+
 	
 	</div>
-	
-<%-- 	<jsp:include page="PlantillaPiePagina.jsp" /> --%>
-  	 
 
-
+<!-- Se redirecciona a la primera pantalla. -->
+<form name="formInactividad" action="/basket" method="GET">
+</form>
 
 </body>
 </html>

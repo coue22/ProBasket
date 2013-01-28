@@ -241,7 +241,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 	</div>
 	
 	
-	<jsp:include page="PlantillaPiePagina.jsp" />
+<%-- 	<jsp:include page="PlantillaPiePagina.jsp" /> --%>
 	
 	
 <form name="formModificarEquipo" action="adminEquipos" method="POST">

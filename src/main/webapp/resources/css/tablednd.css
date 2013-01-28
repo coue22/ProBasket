@@ -1,3 +1,4 @@
+/*
 body {
     color:#333333;
     font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;
@@ -5,13 +6,18 @@ body {
     margin: 1em 9em;
     background-color: #F0F0F0;
     line-height: 1.4em;
+    
 }
+*/
 
 p {
 }
 
 h1 {
-    color: #114477;
+    color: #21A42A;
+	text-align: center;
+	font-size: 16px;  
+	
 }
 
 pre {
@@ -34,13 +40,14 @@ div#page {
 
 .tableDemo {
     background-color: white;
-    border: 1px solid #666699;
+    /*border: 1px solid #666699;*/
     margin-right: 10px;
     padding: 6px;
 }
 
 .tableDemo table {
-    border: 1px solid silver;
+    /*border: 1px solid silver;*/
+    padding-left: 10px;
 }
 
 .tableDemo td {
@@ -48,12 +55,12 @@ div#page {
 }
 
 .tableDemo th {
-    background-color:#29215A;
+    background-color:#21A42A;
     color:white;
 }
 
 #table-2 th {
-    background-color: #29215A;
+    background-color: #21A42A;
     color: white;
 }
 
@@ -70,7 +77,11 @@ div#page {
 }
 
 tr.alt td {
-    background-color: #ecf6fc;
+    /*background-color: #ecf6fc; azulito*/
+    background-color: #DFFFCC;
+}
+tr td {
+    background-color: #DFFFCC;
 }
 
 tr.myDragClass td {

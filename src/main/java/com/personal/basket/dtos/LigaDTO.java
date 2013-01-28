@@ -17,7 +17,7 @@ public class LigaDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String codigo;
+	private String codigoLiga;
 	private String nombre;
 	private String password;// Puede ser vacia.
 	
@@ -29,11 +29,11 @@ public class LigaDTO implements Serializable{
 	
 	
 	
-	public String getCodigo() {
-		return codigo;
+	public String getCodigoLiga() {
+		return codigoLiga;
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCodigoLiga(String codigoLiga) {
+		this.codigoLiga = codigoLiga;
 	}
 	public String getNombre() {
 		return nombre;

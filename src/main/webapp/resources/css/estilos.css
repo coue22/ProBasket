@@ -1,7 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
-body{ font:Arial,Helvetica,sans-serif; text-align: center; }
-#cont{ width: 980px; margin: 0 auto 0 auto; text-align: left;}
+body{ font:Arial,Helvetica,sans-serif; text-align: center;
+}
+
+#cont{ 
+	width: 810px; margin: 0 auto 0 auto; text-align: left;
+}
 #cont #menu ul li {
 	color: #0076ac;
 	font-size: 16px;
@@ -30,22 +34,27 @@ a{text-decoration: none;}
 }
 
 #cont #menu a {
-	color: #0076ac;
-	font-size: 16px;
+	/*color: #21A42A;*/
+	font-size: 13px;
 }
 
 #header {
 	height: 50px;
-	text-align: left;
-	padding-top: 17px;
-	padding-right: 10px;
-	padding-bottom: 0;
-	padding-left: 17px;
 	width: 100%;
+	text-align: center;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	
 }
 #header a.miLogo{float: left;}
-#header a.miRegistro{float: right;}
 #header img{border:0px;}
+
+/*
+#header a.miRegistro{float: right;}
+*/
+/*
 #header h2{
 	font:"Berlin Sans FB";
 	font-size:30px;
@@ -58,7 +67,8 @@ a{text-decoration: none;}
 	display: inline;
 	padding-right: 15px;
 }
-
+*/
+/*
 #header p{
 	font:"Berlin Sans FB";
 	font-size: 12px;
@@ -66,7 +76,8 @@ a{text-decoration: none;}
 	display: inline;
 	padding-right: 5px;
 }
-
+*/
+/*
 #header input{
 	font:"Berlin Sans FB";
 	font-size: 14px;
@@ -76,18 +87,39 @@ a{text-decoration: none;}
     display: inline;
     padding-right: 10px;
 }
-
+*/
 	
+/*	
 #header img.adelante{
 	float:right;
 }
+*/
+
+#subheader {
+	height: 20px;
+	/*width: 100%;*/
+	width: 810px;
+	text-align: left;
+	padding-top: 30px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	
+}
+#subheader a.miRegistro{
+	float: right;
+	background: url('imgestilos/boton.PNG');
+	color: #FFFFFF;
+}
+
 
 
 /*los textos del encabezado lo dejamos para mas adelante porque tenemos que hacer reemplazo de texto por imagen*/
 #contenido{
+
 	padding-left:10px;
-	border-top:3px solid #009ee5;
-	float: left;
+	border-top:3px solid #DC9110;
+	/*float: left;*/
 	margin-bottom: 70px;
 	clip: rect(auto,auto,auto,auto);
 	width:810px;
@@ -180,6 +212,12 @@ margin:2px 0 10px 10px;
 
 #menuPeticion{
 	float: left;
+	padding: 10px;
+	width: 645px;
+	/*
+background-image: url(../img/pistaBall.jpeg);
+background-repeat: no-repeat;
+*/	
 }
 
 #menuPeticion h3{
@@ -188,27 +226,45 @@ margin:2px 0 10px 10px;
 	font-weight: inherit;
 	margin: 0;
 	padding: 10px;
-	color: #FFF;
+	color: #21A42A;
+	/*
 	background-attachment: scroll;
-	background-color: #009ee5;
+	background-color: #21A42A;
 	background-image: none;
 	background-repeat: repeat;
 	background-position: 0 0;
+	*/
 	height: 13px;
 	position: relative;
-	text-align: center;
-	font-size: 13px;
+	text-align: left;
+	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 	line-height: 10px;
 	font:bold;
 	}
 
+#menuPeticion p{
+	border: 0 none;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	padding-left: 25px;
+	padding-top: 10px;
+	color: #000000;
+	height: 13px;
+	position: relative;
+	text-align: left;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 10px;
+	font:bold;
+	}
 
 #menuPeticion input{
 	font:"Berlin Sans FB";
 	font-size: 12px;
     border: 1px solid #006;
-    background: #ccfefe;
+    background: #AAE67A;
     margin-top:0px;
     display: inline;
     padding-right: 10px;
@@ -229,20 +285,67 @@ margin:2px 0 10px 10px;
 	padding-left:0px;
 	padding-top:15px:
 }
+
+#menuPeticion span.resaltar{
+	color: red; 
+}
 #menuPeticion span.resaltarTorcido{
 	font-style: oblique;
 	color: red; 
 }
 
-#menuPeticion span.resaltar{
-	color: red; 
+#menuPeticion span.resaltarExito{
+	color: blue; 
 }
+#menuPeticion span.resaltarTorcidoExito{
+	font-style: oblique;
+	color: blue; 
+}
+
+#menuPeticion select { 
+  color: #f6f6f6;
+  background-color:#21A42A;
+  border: 0 none;
+  /*border: 1px solid #006;*/
+  padding: 1px;
+}
+
+/*
+#menuPeticion option.impar { background-color: #fff }
+#menuPeticion option.par { background-color: #f6f6f6 }
+*/
+
+
+
+
+
+#menuPeticion table { 
+	/*
+	background:#D3E4E5;
+ 	border:1px solid gray;
+ 	border-collapse:collapse;
+ 	*/
+ 	color:#fff;
+ 	font:normal 12px verdana, arial, helvetica, sans-serif;
+ 	padding-left:25px;
+}
+
+#menuPeticion td { color:#363636;
+ padding:.4em;
+}
+
+#menuPeticion tr { 
+	border:1px dotted gray;
+}
+
+
+
 
 
 #menu{
 	width: 150px;
 	float: left;
-	border-right:#009ee5 3px solid;	
+	border-right:#DC9110 3px solid;	
 }
 
 #menu h3{
@@ -253,7 +356,7 @@ margin:2px 0 10px 10px;
 	padding: 10px;
 	color: #FFF;
 	background-attachment: scroll;
-	background-color: #009ee5;
+	background-color: #DC9110; /*ivan color menu - Naranja*/
 	background-image: none;
 	background-repeat: repeat;
 	background-position: 0 0;
@@ -276,7 +379,8 @@ margin:2px 0 10px 10px;
 	font:"Berlin Sans FB";
 	font-size: 12px;
     border: 1px solid #006;
-    background: #ccfefe;
+    /*background: #ccfefe;*/
+    background: #AAE67A;
     margin-top:0px;
     display: inline;
     padding-right: 10px;
@@ -285,20 +389,24 @@ margin:2px 0 10px 10px;
 
 
 #menu a{
-	color:#0076ac;
+	color:#21A42A;
 	text-decoration: none;
-	font-size: 13px;
+	/*font-size: 14px;*/
 	font-size-adjust:inherit;
-	padding-left:0px;
-	padding-top:15px:
+	padding: 4px;
+	display:block;
+	padding: 6px 30px;
+	height: 20px;
+	background: url('imgestilos/background.gif');
 }
 #menu a:hover{
-	color:#00b050;
+	/*color:#00b050;*/
+	color:#000000;
 	text-decoration: none;
-	font-size: 13px;
+	/*font-size: 14px;*/
 	font-size-adjust:inherit;
-	padding-left:0px;
-	padding-top:15px:
+	padding: 6px 40px;
+	background: url('imgestilos/highlight.gif');
 }
 
 #migas{
@@ -493,7 +601,7 @@ margin:2px 0 10px 10px;
 	padding-left:0px;
 	padding-top: 0px;
 }
-
+/*
 table { background:#D3E4E5;
  border:1px solid gray;
  border-collapse:collapse;
@@ -506,7 +614,6 @@ caption { border:1px solid #5C443A;
  letter-spacing:3px;
  padding:6px 4px 8px 0px;
  text-align:center;
- /*text-transform:uppercase;*/
 }
 td, th { color:#363636;
  padding:.4em;
@@ -556,7 +663,7 @@ tbody tr:hover { background:#99BCBF;
  border:1px solid #03476F;
  color:#000000;
 }
-
+*/
 .tablaDetalle{
 	width:777px;
 	border:0 none;
@@ -608,8 +715,9 @@ tbody tr:hover { background:#99BCBF;
 }
 hr{
 	height: 5px;
-	background-color:#009ee5;
+	background-color:#009ee5;/*ivan*/
 	margin-top: 20px}
+	
 	
 #entrada{
 	align: left;

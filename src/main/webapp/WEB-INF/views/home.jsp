@@ -21,8 +21,6 @@
 	
 
  		<jsp:include page="PlantillaCabecera.jsp" />
-	
-	
 
 		<div id="contenido">
 			Aqui pondría la informacion deseada. 
@@ -31,10 +29,11 @@
 		</div>
 		
 
-	
+		
+		
 	</div>
+<%-- 	<jsp:include page="PlantillaPiePagina.jsp" /> --%>
 	
-	<jsp:include page="PlantillaPiePagina.jsp" />
   	 
 
 
