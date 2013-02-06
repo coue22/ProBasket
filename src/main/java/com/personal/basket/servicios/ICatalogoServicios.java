@@ -3,6 +3,8 @@ package com.personal.basket.servicios;
 
 import java.util.ArrayList;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.personal.basket.dtos.*;
 
 public interface ICatalogoServicios {
@@ -20,10 +22,13 @@ public interface ICatalogoServicios {
 	// 								SERVICIOS DE MENU									   //
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //	
+	public ArrayList<MenuDTO> mostrarMenu(String idTipoMenu)throws Exception;
+	/*
 	public ArrayList<MenuDTO> mostrarMenu()throws Exception;
+	public ArrayList<MenuDTO> mostrarMenuDraft()throws Exception;
 	public ArrayList<MenuDTO> mostrarMenuNoLiga()throws Exception;
 	public ArrayList<MenuDTO> mostrarMenuAdministrador()throws Exception;
-	
+	*/
 	
 
 
@@ -32,7 +37,7 @@ public interface ICatalogoServicios {
 	// 								OPERACIONES DE EQUIPO								   //
 	// ----------------------------------------------------------------------------------- //
 	// ----------------------------------------------------------------------------------- //
-	public EquipoRealDTO mostrarEquipo()throws Exception;
+	//public EquipoRealDTO mostrarEquipo()throws Exception;
 
 	
 	// ----------------------------------------------------------------------------------- //

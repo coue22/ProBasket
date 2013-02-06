@@ -153,13 +153,23 @@ $(document).ready(function(){
 		} else if (opc == '004'){
 			alert("No implementado yet.");			
 		} else if (opc == '101'){
-			document.formMostrarCrearLiga.submit();
+			document.formMostrarCrearLiga.submit();//OK
 		}else if (opc == '102'){
-			document.formMostrarInscribirseLiga.submit();
+			document.formMostrarInscribirseLiga.submit();//OK
 		}else if (opc == '201'){
-			document.formAdminEquipos.submit();
+			document.formAdminConfiguracion.submit();//OK
 		}else if (opc == '202'){
+			document.formAdminNacionalidad.submit();//OK
+		}else if (opc == '203'){
+			document.formAdminOperacion.submit();//OK	
+		}else if (opc == '204'){
+			document.formAdminRol.submit();//OK		
+		}else if (opc == '205'){
+			document.formAdminEquipos.submit();
+		}else if (opc == '206'){
 			document.formAdminJugadores.submit();
+		}else if (opc == '301'){
+			document.formDraft.submit();
 		}
 		
 	}
@@ -267,13 +277,40 @@ $(document).ready(function(){
 
 
 
+<!-- 201 -->
+<form name="formAdminConfiguracion" action="adminConfiguracion" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<!-- 202 -->
+<form name="formAdminNacionalidad" action="adminNacionalidad" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<!-- 203 -->
+<form name="formAdminOperacion" action="adminOperacion" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<!-- 204 -->
+<form name="formAdminRol" action="adminRol" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<!-- 205 -->
 <form name="formAdminEquipos" action="adminEquipos" method="POST">
 	<input type="hidden" name="XXXX" />
 </form>
+
+<!-- 206 -->
 <form name="formAdminJugadores" action="adminJugadores" method="POST">
 	<input type="hidden" name="XXXX" />
 </form>
 
+<!-- 301 -->
+<form name="formDraft" action="draft" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
 
 
 <form name="formRegistrarse" action="registrarse" method="POST">

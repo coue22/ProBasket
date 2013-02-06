@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.personal.basket.ctes.Ctes;
 import com.personal.basket.dtos.LigaDTO;
+import com.personal.basket.dtos.SalidaInscripcionDTO;
 
 
 @Service("servicioGestionLigas")
@@ -58,7 +59,7 @@ public class ServiciosGestionLigas implements IServiciosGestionLigas{
 		return lLiga;
 	}
 	
-	public String inscribirLiga (LigaDTO lDTO)throws Exception{
+	public SalidaInscripcionDTO inscribirLiga (LigaDTO lDTO)throws Exception{
 		
 		// Se debe actualizar la tabla del usuario para indicar la liga a la que pertence.
 		
@@ -66,11 +67,24 @@ public class ServiciosGestionLigas implements IServiciosGestionLigas{
 		//		Si es publica --> no hay mayor problema
 		//		Si es privada --> debe comprobar la contraseña.
 		
-		// 2.- Si se puede añadir debe actualizar el usuario con el codigo de la liga.
+		// 2.- Se crea un equipo con todo lo que lleve.
+		
+		// 3.- Si se puede añadir debe actualizar el usuario con el codigo de la liga.
+		//		y con el codigo de equipo
 		
 		// 3.- Si todo ha ido bien devuelve true y false e.o.c.
 		//return Ctes.NO_ASIGNADO_LIGA;
-		return "0000000001";
+		//return "0000000001";
+		
+		
+		SalidaInscripcionDTO salDTO = new SalidaInscripcionDTO();
+		
+		salDTO.setCodigoLiga("0000000001");
+		salDTO.setCodigoEquipo("0000000006");
+		salDTO.setNombreLiga("la liguilla");
+		salDTO.setNombreEquipo("los ventolines");
+		
+		return salDTO;
 	}
 	
 }

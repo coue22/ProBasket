@@ -13,6 +13,8 @@ public class ConfiguracionDTO implements Serializable {
 
 	private String parametro;
 	private String valor;
+	
+	
 	public String getParametro() {
 		return parametro;
 	}

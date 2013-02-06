@@ -14,6 +14,26 @@ public class Ctes {
 	
 	public static final String OPCMENU_EQUIPO	 			= "OpcionEquipo";
 	
+	// Navegacion del la opcion de administracion de la configuracion.
+	public static final String OPCADMIN_CONFIGURACION		= "OpcionAdminConfiguracion";
+		public static final String CONFIG_ADMIN_CONFIRMAR_MODIFICAR		= "CONFIG_ADMIN_CONFIRMAR_MODIFICAR";
+		public static final String CONFIG_ADMIN_CONFIRMAR_INSERTAR		= "CONFIG_ADMIN_CONFIRMAR_INSERTAR";
+
+	// Navegacion del la opcion de administracion de la nacionalidad.
+	public static final String OPCADMIN_NACIONALIDAD		= "OpcionAdminNacionalidad";
+		public static final String CONFIG_NACIO_CONFIRMAR_ELIMINAR		= "CONFIG_NACIO_CONFIRMAR_ELIMINAR";
+		public static final String CONFIG_NACIO_CONFIRMAR_INSERTAR		= "CONFIG_NACIO_CONFIRMAR_INSERTAR";
+		
+	// Navegacion del la opcion de administracion de la Operacion.
+	public static final String OPCADMIN_OPERACION		= "OpcionAdminOperacion";
+		public static final String CONFIG_OPERA_CONFIRMAR_MODIFICAR		= "CONFIG_OPERA_CONFIRMAR_MODIFICAR";
+		public static final String CONFIG_OPERA_CONFIRMAR_INSERTAR		= "CONFIG_OPERA_CONFIRMAR_INSERTAR";
+
+	// Navegacion del la opcion de administracion de los roles.
+	public static final String OPCADMIN_ROLES		= "OpcionAdminRoles";
+		public static final String CONFIG_ROL_CONFIRMAR_MODIFICAR		= "CONFIG_ROL_CONFIRMAR_MODIFICAR";
+		public static final String CONFIG_ROL_CONFIRMAR_INSERTAR		= "CONFIG_ROL_CONFIRMAR_INSERTAR";
+		
 	// Navegacion del la opcion de administracion de un equipo.
 	public static final String OPCADMIN_EQUIPO	 			= "OpcionAdminEquipo";
 		public static final String EQUIPO_ADMIN_MODIFICAR 					= "EQUIPO_ADMIN_MODIFICAR";
@@ -39,6 +59,10 @@ public class Ctes {
 	public static final String OPCMENU_LIGAS_RECUPERADAS	 			= "ligas_recuperadas";
 	public static final String OPCMENU_HAY_LIGAS_RECUPERADAS	 		= "hay_ligas_recuperadas";
 	
+	// Constantes de la configuracion.
+	public static final String MAPA_CONFIGURACION_JORNADA	 		= "jornada";
+	public static final String MAPA_CONFIGURACION_TEMPORADA	 		= "temporada";
+	public static final String MAPA_CONFIGURACION_DRAFT	 			= "draft";
 	
 	
 	
@@ -51,25 +75,39 @@ public class Ctes {
 	public static final String NO_ASIGNADO_ECONOMIA			= "0000000000";	
 		public static final double ECONOMIA_INICIAL			= 4000000;
 		
-	
-	public static final String MAPA_CONFIGURACION	 		= "MAPA_CONFIGURACION";
-		public static final String MAPA_CONFIGURACION_TEMPORADA	 		= "temporada";
-		public static final String MAPA_CONFIGURACION_JORNADA	 		= "jornada";
-	
+
 	//public static final String OPCMENU_COMUN			= "OpcionesMenuComun";
 	
 	
 	//public static final String CERRAR_SESION	 		= "cerrarSesion";
 	
+	
+	public static final String DRAFT_NB_LIGA			= "DRAFT_NB_LIGA";
+	public static final String DRAFT_NB_EQUIPO			= "DRAFT_NB_EQUIPO";
+	public static final String DRAFT_ECONOMIA			= "DRAFT_ECONOMIA";
+	
+	
+	// Menu
+	public static final String MENU_NORMAL	 						= "00";
+	public static final String MENU_NOMENU	 						= "01";
+	public static final String MENU_ADMIN	 						= "02";
+	public static final String MENU_DRAFT	 						= "03";
+		
 	// OPCIONES DE MENUS
+	/*
 	public static final String MENU_EQUIPO	 						= "001";
 	public static final String MENU_LIGA	 						= "002";
 	
 	public static final String MENU_NOLIGA_CREAR_LIGA	 			= "101";
 	public static final String MENU_NOLIGA_INSCRIBIRSE_LIGA			= "102";
-		
-	public static final String MENU_ADMIN_EQUIPOS	 				= "201";
-	public static final String MENU_ADMIN_JUGADORES	 				= "202";
 	
+	public static final String MENU_ADMIN_CONFIG	 				= "201";
+	public static final String MENU_ADMIN_NACION	 				= "202";
+	public static final String MENU_ADMIN_OPERAC	 				= "203";
+	public static final String MENU_ADMIN_ROLES	 					= "204";
+	public static final String MENU_ADMIN_EQUIPOS	 				= "205";
+	public static final String MENU_ADMIN_JUGADORES	 				= "206";
 	
+	public static final String MENU_DRAFTEO			 				= "301";
+	*/
 }

@@ -1,6 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.personal.basket.ctes.*" %>
 
+<%
+HttpSession objSesion = request.getSession(false);
+String tipo_menu = (String)objSesion.getAttribute(ConstantesSesion.TIPOMENU);
+if (tipo_menu == null || tipo_menu.length()<1){
+	tipo_menu = "0";
+}
+%>
+
 <html>
    	
 <head>
@@ -23,9 +31,18 @@
  		<jsp:include page="PlantillaCabecera.jsp" />
 
 		<div id="contenido">
-			Aqui pondría la informacion deseada. 
-			Incluso algunas opciones como inscribirse en una liga o crea una nueva.
-			Opciones de cuando no se está identificado.
+			<% if (tipo_menu.equals("1")) { %>
+				Aqui puedo poner lo referente al menu de administracion.
+			<%}else if (tipo_menu.equals("2")) {%>
+				Aqui puedo poner lo referente a crear e inscribirse en liga
+			<%}else if (tipo_menu.equals("3")) {%>
+				Aqui puedo poner lo referente al draft
+			<%}else if (tipo_menu.equals("4")) {%>
+				Aqui puedo poner lo referente al menu normal
+			<%}else if (tipo_menu.equals("0")) {%>
+				El inicio....
+			<%}%>
+
 		</div>
 		
 

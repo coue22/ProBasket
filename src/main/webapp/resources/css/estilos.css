@@ -227,13 +227,6 @@ background-repeat: no-repeat;
 	margin: 0;
 	padding: 10px;
 	color: #21A42A;
-	/*
-	background-attachment: scroll;
-	background-color: #21A42A;
-	background-image: none;
-	background-repeat: repeat;
-	background-position: 0 0;
-	*/
 	height: 13px;
 	position: relative;
 	text-align: left;
@@ -248,9 +241,9 @@ background-repeat: no-repeat;
 	font-style: inherit;
 	font-weight: inherit;
 	margin: 0;
-	padding-left: 25px;
+	/*padding-left: 25px;*/
 	padding-top: 10px;
-	color: #000000;
+	color: #21A42A;
 	height: 13px;
 	position: relative;
 	text-align: left;
@@ -269,6 +262,7 @@ background-repeat: no-repeat;
     display: inline;
     padding-right: 10px;
 }
+
 #menuPeticion a{
 	color:#0076ac;
 	text-decoration: none;
@@ -315,10 +309,6 @@ background-repeat: no-repeat;
 #menuPeticion option.par { background-color: #f6f6f6 }
 */
 
-
-
-
-
 #menuPeticion table { 
 	/*
 	background:#D3E4E5;
@@ -330,6 +320,13 @@ background-repeat: no-repeat;
  	padding-left:25px;
 }
 
+#menuPeticion th { color:#363636;
+ padding:.4em;
+ font:bold;
+ color:#21A42A;
+}
+
+
 #menuPeticion td { color:#363636;
  padding:.4em;
 }
@@ -337,6 +334,11 @@ background-repeat: no-repeat;
 #menuPeticion tr { 
 	border:1px dotted gray;
 }
+
+
+
+
+
 
 
 

@@ -15,6 +15,7 @@ public class Constantes {
 	// NACIONALIDADES (Deberiann estar en una tabla.)
 	public static final String ESP = "Español";
 	public static final String USA = "Americano";
+	public static final String AND = "Andorrano";
 	
 	
 

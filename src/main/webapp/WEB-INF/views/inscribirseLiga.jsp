@@ -68,14 +68,21 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 	
 	function inscribirLiga(){
 		
+		var nbEquipo=document.getElementById('NBEquipo');
 		var passLiga=document.getElementById('passLiga');
 		var selLiga=document.getElementById('selLiga');
+		
+		if (nbEquipo.value == ''){
+			alert("Debe escribir como desea que se llame su equipo.");
+			return;
+		}
 		
 		var temp=selLiga.value.split("#");
 		if (temp[0] == "-1"){
 			alert("Debe seleccionar una liga.");
 		}
 		else{
+			document.formInscribirLiga.nbEquipo.value=nbEquipo.value;
 			document.formInscribirLiga.passLiga.value=passLiga.value;
 			document.formInscribirLiga.selLiga.value=selLiga.value;
 			
@@ -152,13 +159,18 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 							
 								<h3>Ligas</h3>	
 								
+								<tr>
+									<td>Nombre del Equipo</td>
+									<td><input type="text" name="NBEquipo" id="NBEquipo" value="" maxlength="25" size="25" class="input" /></td>
+								</tr>
+															
 								<table>
 									<tr>
 										<td>
 											<select name="selLiga" id="selLiga" onchange="if (this.selectedIndex){ establecerPase(this.value); }">
 												<option value="-1#-1">Selecciona liga</option>
 												<c:forEach var="fila" items="${ligas_recuperadas}" varStatus="status">
-													<option value=${fila.codigo}#${fila.ligaPublica}>${fila.nombre}</option>
+													<option value=${fila.codigoLiga}#${fila.ligaPublica}>${fila.nombre}</option>
 												</c:forEach>
 											</select> 
 										</td>
@@ -217,6 +229,7 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 
 <form name="formInscribirLiga" action="inscribirseLiga" method="POST">
  	<input type="hidden" name="operacion" value="INSCRIBIR_LIGA" />
+ 	<input type="hidden" name="nbEquipo" value="" />
 	<input type="hidden" name="passLiga" value="" />
 	<input type="hidden" name="selLiga" value="" />
 </form>

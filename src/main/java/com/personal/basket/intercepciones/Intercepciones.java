@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.quartz.SchedulerException;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -27,6 +27,7 @@ public class Intercepciones extends HandlerInterceptorAdapter {
     	
         //my code here
     	System.out.println("preHandle");
+    	
     	
     	/*
     	// En cada peticion se va a evaluar la sesion.

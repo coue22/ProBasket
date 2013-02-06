@@ -4,6 +4,7 @@ package com.personal.basket.servicios;
 import java.util.ArrayList;
 
 import com.personal.basket.dtos.LigaDTO;
+import com.personal.basket.dtos.SalidaInscripcionDTO;
 
 
 public interface IServiciosGestionLigas {
@@ -29,11 +30,10 @@ public interface IServiciosGestionLigas {
 	/**
 	 * Actualiza el usuario con el codigo de liga al que se ha asociado.
 	 * @param lDTO
-	 * @return devuelve "0000000000" - si no puede inscribirse.
-	 * 			y el codigo de la liga si tiene exito
+	 * @return 
 	 * @throws Exception
 	 */
-	public String inscribirLiga (LigaDTO lDTO)throws Exception;
+	public SalidaInscripcionDTO inscribirLiga (LigaDTO lDTO)throws Exception;
 
 
 	

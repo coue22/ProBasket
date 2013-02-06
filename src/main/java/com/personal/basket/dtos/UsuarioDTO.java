@@ -24,19 +24,20 @@ public class UsuarioDTO implements Serializable {
 	// Salida comun
 	private boolean			administrador;
 	private boolean			logado;
+	
 	// FK - 
 	private String			codigoLiga;
 	// FK - 
 	private String			codigoEquipo;
 	// FK - A la economia propia.
-	private String codigoEcono;
+	private String 			codigoEcono;
 	
 	// Salida de registro
 	//private boolean			registrado;
 	//private String			sErrorRegistrado;
 	
 	// Salida de login
-	private Map<String, String> mapConfiguracion;
+	//private Map<String, String> mapConfiguracion;
 	
 	
 
@@ -122,14 +123,14 @@ public class UsuarioDTO implements Serializable {
 		this.sErrorRegistrado = sErrorRegistrado;
 	}
 	*/
-	
+	/*
 	public Map<String, String> getMapConfiguracion() {
 		return mapConfiguracion;
 	}
 	public void setMapConfiguracion(Map<String, String> mapConfiguracion) {
 		this.mapConfiguracion = mapConfiguracion;
 	}
-	
+	*/
 	public String getCodigoEcono() {
 		return codigoEcono;
 	}

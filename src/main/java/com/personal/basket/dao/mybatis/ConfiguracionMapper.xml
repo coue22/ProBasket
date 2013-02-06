@@ -12,6 +12,13 @@
         SELECT parametro, valor FROM configuracion;
     </select>
 
+	<insert id="insert" parameterType="com.personal.basket.model.ConfiguracionDTO">		
+		insert into configuracion (parametro, valor) values (#{parametro},#{valor});
+	</insert>
+	
+
+	
+	
 <!-- http://www.javacodegeeks.com/2012/02/mybatis-3-spring-integration-tutorial.html -->
 </mapper>
 

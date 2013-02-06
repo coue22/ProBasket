@@ -152,7 +152,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 				  				</ul>
 				  			</td>
 				  
-				  			<td>${fila.codigo}</td>
+				  			<td>${fila.codigoJugador}</td>
 				  			<td>${fila.apellido}, ${fila.nombre} </td>
 				  			<td>${fila.puesto}</td>
 				  			<td>${fila.altura}</td>
@@ -162,7 +162,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 
 <!-- 				  			<td> -->
 <!-- 				  				<ul id="icons" class="ui-widget ui-helper-clearfix"> -->
-<%-- 			  					<li class="ui-state-default ui-corner-all" title="modificar" onclick="modificarEquipo('${fila.codigo}','${fila.nombre}','${fila.siglas}');"><span class="ui-icon ui-icon-circle-close"></span></li> --%>
+<%-- 			  					<li class="ui-state-default ui-corner-all" title="modificar" onclick="modificarEquipo('${fila.codigoJugador}','${fila.nombre}','${fila.siglas}');"><span class="ui-icon ui-icon-circle-close"></span></li> --%>
 <!-- 				  				</ul> -->
 <!-- 				  			</td> -->
 				  			

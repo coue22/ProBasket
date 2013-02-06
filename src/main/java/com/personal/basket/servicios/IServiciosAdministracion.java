@@ -3,31 +3,64 @@ package com.personal.basket.servicios;
 
 import java.util.ArrayList;
 
+import com.personal.basket.dtos.ConfiguracionDTO;
 import com.personal.basket.dtos.EquipoRealDTO;
-import com.personal.basket.dtos.JugadorDTO;
+import com.personal.basket.dtos.JugadorRealDTO;
+import com.personal.basket.dtos.NacionalidadDTO;
+import com.personal.basket.dtos.OperacionDTO;
+import com.personal.basket.dtos.RoleDTO;
 
 
 public interface IServiciosAdministracion {
 	
-	// Inicializacion
-	public void InicializarConfiguracion()throws Exception;
+
+	// **************************************************************************
+	// **************************************************************************
+	// Configuracion
+	// **************************************************************************
+	// **************************************************************************
+	public boolean modificarConfiguracion(ConfiguracionDTO cDTO)throws Exception;
+	public boolean insertarConfiguracion(ConfiguracionDTO cDTO)throws Exception;
+	
+	// **************************************************************************
+	// **************************************************************************
+	// Nacionalidad
+	// **************************************************************************
+	// **************************************************************************	
+	public boolean eliminarNacionalidad(NacionalidadDTO nDTO)throws Exception;
+	public boolean insertarNacionalidad(NacionalidadDTO nDTO)throws Exception;
+	
+	// **************************************************************************
+	// **************************************************************************
+	// Operacion
+	// **************************************************************************
+	// **************************************************************************
+	public boolean modificarOperacion(OperacionDTO oDTO)throws Exception;
+	public boolean insertarOperacion(OperacionDTO oDTO)throws Exception;
 	
 	
-	// Equipo catalogo
-	public ArrayList<EquipoRealDTO> mostrarCatalogoEquipos()throws Exception;
+	// **************************************************************************
+	// **************************************************************************
+	// Role
+	// **************************************************************************
+	// **************************************************************************
+	public boolean modificarRole(RoleDTO rDTO)throws Exception;
+	public boolean insertarRole(RoleDTO rDTO)throws Exception;
+	
+		
 	
 	// Eliminacion de un equipo no se contempla. Eso no debe ocurrir nunca porque puede joder 
 	// el aplicativo
-	
 	public boolean modificarEquipoCatalogo(EquipoRealDTO eDTO)throws Exception;
 	public boolean insertarEquipoCatalogo(EquipoRealDTO eDTO)throws Exception;
 	
 	
 	// Jugadores Catalogo
-	public ArrayList<JugadorDTO> mostrarCatalogoJugadores()throws Exception;
-	// Consiste en poner la propiedad "activo" con un 0. --> significa que no tiene equipo.
-	public boolean eliminarJugadorCatalogo(JugadorDTO jDTO)throws Exception;
-	public boolean insertarJugadorCatalogo(JugadorDTO jDTO)throws Exception;
+	
+	/*
+	public boolean eliminarJugadorCatalogo(JugadorRealDTO jDTO)throws Exception;
+	public boolean insertarJugadorCatalogo(JugadorRealDTO jDTO)throws Exception;
+	*/
 
 	
 }

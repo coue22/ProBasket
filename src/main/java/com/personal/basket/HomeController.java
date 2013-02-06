@@ -4,41 +4,44 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Vector;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.personal.basket.bbdd.DBConneccionException;
-import com.personal.basket.bbdd.MySQLConnection;
+
+
 import com.personal.basket.ctes.ConstantesSesion;
 import com.personal.basket.ctes.Ctes;
+
+import com.personal.basket.dtos.ConfiguracionDTO;
 import com.personal.basket.dtos.EconomiaDTO;
+import com.personal.basket.dtos.NacionalidadDTO;
+import com.personal.basket.dtos.OperacionDTO;
+import com.personal.basket.dtos.RoleDTO;
+import com.personal.basket.dtos.SalidaInscripcionDTO;
 import com.personal.basket.dtos.UsuarioDTO;
 import com.personal.basket.dtos.EquipoRealDTO;
-import com.personal.basket.dtos.JugadorDTO;
+import com.personal.basket.dtos.JugadorRealDTO;
 import com.personal.basket.dtos.LigaDTO;
 import com.personal.basket.dtos.MenuDTO;
+
 import com.personal.basket.servicios.CatalogoServicios;
 import com.personal.basket.servicios.ServiciosAdministracion;
-import com.personal.basket.servicios.ServiciosJugadores;
 import com.personal.basket.servicios.ServiciosGestionLigas;
+import com.personal.basket.servicios.ServiciosSingleton;
+
 import com.personal.basket.util.util;
 
 /**
@@ -49,17 +52,27 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	
+	private HashMap<String, ConfiguracionDTO> hmConfiguracion  = null;
+	private HashMap<String, NacionalidadDTO> hmNacionalidad  = null;
+	private HashMap<String, OperacionDTO> hmOperaciones = null;
+	private HashMap<String, RoleDTO> hmRoles  = null;
+	private HashMap<String, EquipoRealDTO> hmEquiposReales  = null;
+	private HashMap<String, JugadorRealDTO> hmJugadoresReales  = null;
+	
+	
+	
 	@Autowired
 	CatalogoServicios catalogoServicio;
-
-	@Autowired
-	ServiciosJugadores servicioJugadores;
 	
 	@Autowired
 	ServiciosAdministracion servicioAdministracion;
 	
 	@Autowired
 	ServiciosGestionLigas servicioGestionLigas;
+	
+	@Autowired
+	ServiciosSingleton servicioSingleton;
 	
 
 	public CatalogoServicios getCatalogoServicio() {
@@ -69,12 +82,7 @@ public class HomeController {
 		this.catalogoServicio = catalogoServicio;
 	}
 
-	public ServiciosJugadores getServicioJugadores() {
-		return servicioJugadores;
-	}
-	public void setServicioJugadores(ServiciosJugadores servicioJugadores) {
-		this.servicioJugadores = servicioJugadores;
-	}
+
 	
 	public ServiciosAdministracion getServicioAdministracion() {
 		return servicioAdministracion;
@@ -92,6 +100,14 @@ public class HomeController {
 		this.servicioGestionLigas = servicioGestionLigas;
 	}
 	
+	
+	
+	public ServiciosSingleton getServicioSingleton() {
+		return servicioSingleton;
+	}
+	public void setServicioSingleton(ServiciosSingleton servicioSingleton) {
+		this.servicioSingleton = servicioSingleton;
+	}
 	/**
 	 * Se comprueba si la sesion esta activa.
 	 * @param sesion
@@ -117,11 +133,14 @@ public class HomeController {
 		
 		sesion.setAttribute(ConstantesSesion.ADMINISTRADOR, Ctes.NO);
 		sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
+		
 		sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
 		sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.NO);
 		
 		sesion.setAttribute(ConstantesSesion.MI_LIGA, Ctes.NO_ASIGNADO_LIGA);
 		sesion.setAttribute(ConstantesSesion.MI_EQUIPO, Ctes.NO_ASIGNADO_EQUIPO);
+		
+
 		
 		
 	}
@@ -136,6 +155,11 @@ public class HomeController {
             HttpServletResponse response,
             HttpSession sesion) {
 		
+		// INYECCION DE DEPENDENCIA PARA TRANSACCIONES
+		// NO PROBADO...
+		//DataSourceTransactionManager transactionManager;
+		
+		
 		logger.info("Welcome home! the client locale is "+ locale.toString());
 
 		
@@ -148,9 +172,27 @@ public class HomeController {
 		// Se inicializan las variables de sesion.
 		InicializarSesion(sesion);
 		
-		// Se inicializa la configuracion del aplicativo.
+		// Se recuperan los valores que son iguales para todos los usuarios.
 		try {
-			servicioAdministracion.InicializarConfiguracion();
+
+			hmConfiguracion = servicioSingleton.getConfiguracion(Ctes.NO);
+			hmNacionalidad = servicioSingleton.getNacionalidades(Ctes.NO);
+			hmOperaciones = servicioSingleton.getOperaciones(Ctes.NO);
+			hmRoles = servicioSingleton.getRoles(Ctes.NO);
+			hmEquiposReales = servicioSingleton.getEquiposReales(Ctes.NO);
+			hmJugadoresReales = servicioSingleton.getJugadoresReales(Ctes.NO);
+			
+/*			
+			System.out.println("VARIABLES DE CONFIGURACION");
+			System.out.println("--------------------------");
+			Iterator it = hmConfiguracion.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry e = (Map.Entry)it.next();
+				System.out.println(e.getKey() + ": " + ((ConfiguracionDTO)e.getValue()).getValor());
+			}
+*/			
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,14 +227,7 @@ public class HomeController {
 			
 			
 			InicializarSesion(sesion);
-			/*
-			sesion.setAttribute(ConstantesSesion.ADMINISTRADOR, Ctes.NO);
-			sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.NO);
-			sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.NO);
-			sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.NO);
-			sesion.setAttribute(ConstantesSesion.MI_LIGA, Ctes.NO_ASIGNADO_LIGA);
-			sesion.setAttribute(ConstantesSesion.MI_EQUIPO, Ctes.NO_ASIGNADO_EQUIPO);			
-			*/
+
 			
 			UsuarioDTO dPers = catalogoServicio.loggearse(request.getParameter("nombreReg"), 
 														 request.getParameter("contraReg"));
@@ -207,17 +242,24 @@ public class HomeController {
 			}else if (dPers.isLogado()){
 				sesion.setAttribute(ConstantesSesion.IDENTIFICADO, Ctes.SI);
 				if (!dPers.getCodigoLiga().equals(Ctes.NO_ASIGNADO_LIGA)){
+					
 					sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
 					sesion.setAttribute(ConstantesSesion.MI_LIGA, dPers.getCodigoLiga());
+					sesion.setAttribute(ConstantesSesion.COD_ECONO, dPers.getCodigoEcono());
+					
+
 					if (!dPers.getCodigoLiga().equals(Ctes.NO_ASIGNADO_EQUIPO)){
 						sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.SI);
 						sesion.setAttribute(ConstantesSesion.MI_EQUIPO, dPers.getCodigoEquipo());
+
 					}
 				}
 			}
 			
+			
+			
 			// Se guarda el mapa con lo que hay en la tabla de configuracion.
-			sesion.setAttribute(Ctes.MAPA_CONFIGURACION, dPers.getMapConfiguracion());
+			//sesion.setAttribute(Ctes.MAPA_CONFIGURACION, dPers.getMapConfiguracion());
 
 			System.out.println("Persona logada?:" + dPers.isLogado()+ " y esta Logado: " + sesion.getAttribute(ConstantesSesion.IDENTIFICADO));
 			System.out.println("Codigo Liga:" + dPers.getCodigoLiga()+ " y pertenece Liga: " + sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA));
@@ -238,36 +280,65 @@ public class HomeController {
 			return "error";
 		}
 		
-			
-		// Muestra en la consola todo lo que contiene el mapa de configuración.
-		Map<String, String> mConfig = (Map<String, String>) sesion.getAttribute(Ctes.MAPA_CONFIGURACION);
+		// Se comprueba que existen las variables de configuracion.
+/*
 		try {
-			System.out.println("jorn:" + util.getValorMapa(mConfig, Ctes.MAPA_CONFIGURACION_JORNADA));
-			System.out.println("temp:" + util.getValorMapa(mConfig, Ctes.MAPA_CONFIGURACION_TEMPORADA));
+			
+			ConfiguracionDTO conf1 = util.getValorMapaConfiguracion(hmConfiguracion,Ctes.MAPA_CONFIGURACION_TEMPORADA);
+			ConfiguracionDTO conf2 = util.getValorMapaConfiguracion(hmConfiguracion,Ctes.MAPA_CONFIGURACION_JORNADA);
+			
+			//System.out.println("jornada  : " + conf1.getValor().toString() );
+			//System.out.println("temporada: " + conf2.getValor().toString() );
+			
 		} catch (Exception e1) {
-			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al logarse. No se han podido cargar correctamente las variables de configuracion.");
-			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e1.getMessage() + "-->" + e1.getStackTrace());
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al logarse.");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Actualmento no es posible cargar correctamente la configuración de la aplicacion.");
 			return "error";
 		}
-		
+*/	
 
-		
 		// Se decide lo que se va a pintar en la vista.
 		ArrayList<MenuDTO> lMenu = null;
 
 		try {
 			
 			if (sesion.getAttribute(ConstantesSesion.ADMINISTRADOR).equals(Ctes.SI)){
-				lMenu = catalogoServicio.mostrarMenuAdministrador();
-				sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Administrador");
+				//lMenu = catalogoServicio.mostrarMenuAdministrador();
+				lMenu = catalogoServicio.mostrarMenu(Ctes.MENU_ADMIN);
+				sesion.setAttribute(ConstantesSesion.TIPOMENU, "1");
+				sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Administrador");/*Administrador*/
 			}
 			else {
 				if (sesion.getAttribute(ConstantesSesion.PERTENECE_LIGA).equals(Ctes.NO)){
+					sesion.setAttribute(ConstantesSesion.TIPOMENU, "2");
 					sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
-					lMenu = catalogoServicio.mostrarMenuNoLiga();
+					//lMenu = catalogoServicio.mostrarMenuNoLiga();/*Crear e inscribirte en liga*/
+					lMenu = catalogoServicio.mostrarMenu(Ctes.MENU_NOMENU);
 				}else{
-					sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
-					lMenu = catalogoServicio.mostrarMenu();	
+					
+					ConfiguracionDTO cDTO = null;
+					try {
+						cDTO = util.getValorMapaConfiguracion(hmConfiguracion, Ctes.MAPA_CONFIGURACION_DRAFT);
+					} catch (Exception e1) {
+						sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al inscribirse en una liga.");
+						sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Sin la variable de entorno del Draft no se puede continuar.");
+						return "error";
+					}					
+					
+					System.out.println("El valor de " + cDTO.getParametro().toString() + " es: " + cDTO.getValor().toString());
+					
+					if (cDTO.getValor().toString().equalsIgnoreCase(Ctes.SI)){
+						sesion.setAttribute(ConstantesSesion.TIPOMENU, "3");
+						sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
+						//lMenu = catalogoServicio.mostrarMenuDraft();/* Es tiempo de draft*/
+						lMenu = catalogoServicio.mostrarMenu(Ctes.MENU_DRAFT);
+					}else{
+						sesion.setAttribute(ConstantesSesion.TIPOMENU, "4");
+						sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
+						//lMenu = catalogoServicio.mostrarMenu();	/* Es tiempo de jugar */
+						lMenu = catalogoServicio.mostrarMenu(Ctes.MENU_NORMAL);
+					}
+
 				}
 			}
 			
@@ -471,7 +542,7 @@ public class HomeController {
 		return "error";
 	}
 	
-
+// SE DEBE HACER BIEN.
 	@RequestMapping(value = "/equipo", method = RequestMethod.POST)
     public String equipo(Locale locale,
 			Map<String, Object> model, 
@@ -479,6 +550,7 @@ public class HomeController {
             HttpServletResponse response,
             HttpSession sesion) {
 		
+/*		
 		if (comprobarSesionActiva(sesion) == false)
 			return "inactividad";
 		
@@ -499,7 +571,7 @@ public class HomeController {
 				
 				String idJugEliminar = request.getParameter("idJugEliminar");
 				
-				JugadorDTO jDTO = new JugadorDTO();
+				JugadorRealDTO jDTO = new JugadorRealDTO();
 				jDTO.setCodigoJugador(idJugEliminar);
 				
 				try {
@@ -518,7 +590,7 @@ public class HomeController {
 		
 			
 		
-		ArrayList<JugadorDTO> lJugadores = null;
+		ArrayList<JugadorRealDTO> lJugadores = null;
 
 		try {
 			lJugadores = servicioJugadores.mostrarJugadores();
@@ -530,6 +602,8 @@ public class HomeController {
 		model.put(Ctes.OPCMENU_JUGADORES, lJugadores);
 		
 		return "equipo";
+*/
+		return "home";
 	}
 
 	/*
@@ -624,11 +698,7 @@ public class HomeController {
 		String pwdLiga = request.getParameter("pwdLiga");
 		String pwd2Liga = request.getParameter("pwd2Liga");
 		String chPublica = request.getParameter("chPublica"); //(S|N)
-		
-		
-		
 
-		
 		// Se evaluan las distintas operaciones para los jugadores
 		if (operacion != null){
 			
@@ -661,30 +731,27 @@ public class HomeController {
 					return "error";
 				}
 				
-				// Si ha ido bien el alta.
-				if (!sCrearLiga.equals(Ctes.NO_ASIGNADO_LIGA)){
+				return "home";
+				
+/*
 					
-					// TODO: SE DEBERIA REALIZAR UPDATE AL USUARIO CON EL CODIGO DE LA LIGA.
-					
-					// Ya pertenece a una liga.
-					sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
-					sesion.setAttribute(ConstantesSesion.MI_LIGA, sCrearLiga);
-							
-					
-					ArrayList<MenuDTO> lMenu = null;
-					try {
-						lMenu = catalogoServicio.mostrarMenu();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
-					sesion.setAttribute(ConstantesSesion.OPCMENU, lMenu);
-					return "home";
-				}else{
-					
-					//System.out.print("HA IDO MAL" + lDTO.getError());
-					model.put("errorCrearLiga", lDTO.getError());
-				}
+				// TODO: SE DEBERIA REALIZAR UPDATE AL USUARIO CON EL CODIGO DE LA LIGA.
+				
+				// Ya pertenece a una liga.
+				sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
+				sesion.setAttribute(ConstantesSesion.MI_LIGA, sCrearLiga);
+						
+				
+				ArrayList<MenuDTO> lMenu = null;
+				try {
+					lMenu = catalogoServicio.mostrarMenu();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				sesion.setAttribute(ConstantesSesion.OPCMENU, lMenu);
+				return "home";
+*/
 
 		
 				
@@ -766,10 +833,13 @@ public class HomeController {
 				//	   12#false - codigo liga=12 y es privada				
 				String selLiga = request.getParameter("selLiga");
 				String passLiga = request.getParameter("passLiga");
+				String nbEquipo = request.getParameter("nbEquipo");
+				
 				
 				String[]temp = selLiga.split("#");
 				System.out.println("Codigo Liga    : " + temp[0]);
 				System.out.println("Es liga publica: " + temp[1]);
+				System.out.println("nombre Equipo  : " + nbEquipo);
 				
 				LigaDTO lDTO = new LigaDTO();
 				lDTO.setCodigoLiga(temp[0]);
@@ -779,42 +849,67 @@ public class HomeController {
 				else
 					lDTO.setLigaPublica(false);
 				
-				String sInscrito = "";
+				
+				
+				SalidaInscripcionDTO salDTO = null;
 				try {
-					sInscrito = servicioGestionLigas.inscribirLiga(lDTO);
+					salDTO = servicioGestionLigas.inscribirLiga(lDTO);
 				} catch (Exception e) {
 					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al inscribirse en una liga");
 					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
 					return "error";
 				}
+				
+				sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
+				sesion.setAttribute(ConstantesSesion.MI_LIGA, salDTO.getCodigoLiga());
+
+				sesion.setAttribute(ConstantesSesion.TIENE_EQUIPO, Ctes.SI);
+				sesion.setAttribute(ConstantesSesion.MI_EQUIPO, salDTO.getCodigoEquipo());
+				
+				sesion.setAttribute(ConstantesSesion.COD_ECONO, salDTO.getCodigoEcono());
+
+
+				ConfiguracionDTO cDTO = null;
+				try {
+					cDTO = util.getValorMapaConfiguracion(hmConfiguracion, Ctes.MAPA_CONFIGURACION_DRAFT);
+				} catch (Exception e1) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al inscribirse en una liga.");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Sin la variable de entorno del Draft no se puede continuar.");
+					return "error";
+				}
+				
+				System.out.println("El valor de " + cDTO.getParametro().toString() + " es: " + cDTO.getValor().toString());
+				
+				ArrayList<MenuDTO> lMenu = null;
+				
+				// Si el valor de draft es SI
+				if (cDTO.getValor().toString().equalsIgnoreCase(Ctes.SI)){
 					
-				if (!sInscrito.equals(Ctes.NO_ASIGNADO_LIGA)){
-					
-					// TODO: SE DEBERIA REALIZAR UPDATE AL USUARIO CON EL CODIGO DE LA LIGA.
-					
-					sesion.setAttribute(ConstantesSesion.PERTENECE_LIGA, Ctes.SI);
-					sesion.setAttribute(ConstantesSesion.MI_LIGA, sInscrito);
-					
-					ArrayList<MenuDTO> lMenu = null;
 					try {
-						lMenu = catalogoServicio.mostrarMenu();
+						//lMenu = catalogoServicio.mostrarMenuDraft();
+						lMenu = catalogoServicio.mostrarMenu(Ctes.MENU_DRAFT);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					sesion.setAttribute(ConstantesSesion.TIPOMENU, "3");
+					sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
+					sesion.setAttribute(ConstantesSesion.OPCMENU, lMenu);
+					return "home"; //TODO : Poner bien esta redireccion en caso de estar mal
+					
+				}else{
+
+					try {
+						//lMenu = catalogoServicio.mostrarMenu();
+						lMenu = catalogoServicio.mostrarMenu(Ctes.MENU_NORMAL);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}	
-					
-					
+					sesion.setAttribute(ConstantesSesion.TIPOMENU, "4");
+					sesion.setAttribute(ConstantesSesion.OPCMENUTEXTO, "Menu");
 					sesion.setAttribute(ConstantesSesion.OPCMENU, lMenu);
-					return "liga";
-					
-				}else{
-					
-					// Si falla se debe gestionar de otra manera mejor.
-					//FALTAN HACER COSAS
-					//FALTAN HACER COSAS
-					//FALTAN HACER COSAS
-					//FALTAN HACER COSAS
-					//FALTAN HACER COSAS						
+					return "home"; //TODO : Poner bien esta redireccion en caso de estar mal
 				}
 
 				
@@ -829,10 +924,433 @@ public class HomeController {
 
 		
 		
+		
 		return "inscribirseLiga";
 	}	
 	
 
+	@RequestMapping(value = "/adminConfiguracion", method = RequestMethod.POST)
+    public String adminConfiguracion(Locale locale,
+			Map<String, Object> model, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		// Si no esta identificado es un error.
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar configuracion");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse para poder continuar" );
+			return "error";
+		}
+		
+		// Si no esta identificado como administrador es un error
+		if (sesion.getAttribute(ConstantesSesion.ADMINISTRADOR).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar configuracion");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse como administrador para poder continuar" );
+			return "error";
+		}	
+		
+		String operacion = request.getParameter("operacion");
+		
+		// Se evaluan las distintas operaciones para los jugadores
+		if (operacion != null){
+			
+			// Si se ha pulsado modificar una configuracion.
+			if (operacion.equalsIgnoreCase(Ctes.CONFIG_ADMIN_CONFIRMAR_MODIFICAR)){
+				
+				String parametro = request.getParameter("parametro");
+				String valor = request.getParameter("valor");
+				
+				System.out.println("param a modificar: " + parametro);
+				System.out.println("valor a modificar: " + valor);
+				
+				ConfiguracionDTO cDTO = new ConfiguracionDTO();
+				cDTO.setParametro(parametro);
+				cDTO.setValor(valor);
+				
+				boolean bModificado = false;
+				try {
+					bModificado = servicioAdministracion.modificarConfiguracion(cDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al modificar un parametro de la configuracion");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}
+				
+	
+			}else if (operacion.equalsIgnoreCase(Ctes.CONFIG_ADMIN_CONFIRMAR_INSERTAR)){
+				String parametro = request.getParameter("parametro");
+				String valor = request.getParameter("valor");
+				
+				//System.out.println("param a insertar: " + parametro);
+				//System.out.println("valor a insertar: " + valor);
+				
+				ConfiguracionDTO cDTO = new ConfiguracionDTO();
+				cDTO.setParametro(parametro);
+				cDTO.setValor(valor);
+				
+				boolean bModificado = false;
+				try {
+					bModificado = servicioAdministracion.insertarConfiguracion(cDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al insertar un parametro de la configuracion");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}				
+				
+			}else{
+				sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error en la configuracion");
+				sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Operacion no admitida");
+				return "error";
+			}
+			
+			
+		}
+		
+		try {
+			
+			String refrescar = Ctes.NO;
+			
+			if (operacion != null){
+				
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_ADMIN_CONFIRMAR_MODIFICAR)){
+					refrescar = Ctes.SI;
+				}	
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_ADMIN_CONFIRMAR_INSERTAR)){
+					refrescar = Ctes.SI;
+				}	
+			}
+			
+			
+			hmConfiguracion = servicioSingleton.getConfiguracion(refrescar);
+			
+		} catch (Exception e) {
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar la configuracion");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+			return "error";
+		}
+		model.put(Ctes.OPCADMIN_CONFIGURACION, hmConfiguracion);
+		
+		
+		
+		return "adminConfiguracion";
+	}
+
+	
+	@RequestMapping(value = "/adminNacionalidad", method = RequestMethod.POST)
+    public String adminNacionalidad(Locale locale,
+			Map<String, Object> model, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		// Si no esta identificado es un error.
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar nacionalidades");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse para poder continuar" );
+			return "error";
+		}
+		
+		// Si no esta identificado como administrador es un error
+		if (sesion.getAttribute(ConstantesSesion.ADMINISTRADOR).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar nacionalidades");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse como administrador para poder continuar" );
+			return "error";
+		}	
+		
+		String operacion = request.getParameter("operacion");
+		
+		// Se evaluan las distintas operaciones para las nacionalidades
+		if (operacion != null){
+
+			// Si se ha pulsado eliminar una nacionalidad.
+			if (operacion.equalsIgnoreCase(Ctes.CONFIG_NACIO_CONFIRMAR_ELIMINAR)){
+				
+				String codigoNacion = request.getParameter("codigoNacion");
+				
+				NacionalidadDTO nDTO = new NacionalidadDTO();
+				nDTO.setCodigoNacionalidad(codigoNacion);
+				
+				try {
+					servicioAdministracion.eliminarNacionalidad(nDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al eliminar la nacionalidad");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}
+				
+			}else if (operacion.equalsIgnoreCase(Ctes.CONFIG_NACIO_CONFIRMAR_INSERTAR)){
+				
+				
+				String descripcion = request.getParameter("descripcion");
+				
+				NacionalidadDTO nDTO = new NacionalidadDTO();
+				nDTO.setDescripcion(descripcion);
+
+				try {
+					servicioAdministracion.insertarNacionalidad(nDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al insertar la nacionalidad");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}
+
+			}else{
+				sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error en la nacionalidad");
+				sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Operacion no admitida");
+				return "error";
+			}
+			
+		}
+
+		
+		try {
+			String refrescar = Ctes.NO;
+			
+			if (operacion != null){
+				
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_NACIO_CONFIRMAR_ELIMINAR)){
+					refrescar = Ctes.SI;
+				}	
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_NACIO_CONFIRMAR_INSERTAR)){
+					refrescar = Ctes.SI;
+				}	
+			}
+
+			hmNacionalidad = servicioSingleton.getNacionalidades(refrescar);
+			
+		} catch (Exception e) {
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar las nacionalidades. ");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+			return "error";
+		}
+		
+
+		
+		model.put(Ctes.OPCADMIN_NACIONALIDAD, hmNacionalidad);
+		
+		return "adminNacionalidad";
+	}
+
+
+	
+	@RequestMapping(value = "/adminOperacion", method = RequestMethod.POST)
+    public String adminOperacion(Locale locale,
+			Map<String, Object> model, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		// Si no esta identificado es un error.
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar operaciones");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse para poder continuar" );
+			return "error";
+		}
+		
+		// Si no esta identificado como administrador es un error
+		if (sesion.getAttribute(ConstantesSesion.ADMINISTRADOR).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar operaciones");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse como administrador para poder continuar" );
+			return "error";
+		}	
+		
+		String operacion = request.getParameter("operacion");
+		
+		// Se evaluan las distintas operaciones para las nacionalidades
+		if (operacion != null){
+			if (operacion.equalsIgnoreCase(Ctes.CONFIG_OPERA_CONFIRMAR_MODIFICAR)){
+				
+
+				
+				String codOpera = request.getParameter("codOpera");
+				String descOpera = request.getParameter("descOpera");
+				
+				System.out.println("codigo operacion para modificar su descripcion: " + codOpera);
+				System.out.println("valor a modificar: " + descOpera);
+				
+				OperacionDTO oDTO = new OperacionDTO();
+				oDTO.setCodigoOpera(codOpera);
+				oDTO.setDescripcion(descOpera);
+				
+				try {
+					servicioAdministracion.modificarOperacion(oDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al modificar la operacion");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+				}
+				
+				
+			}else if (operacion.equalsIgnoreCase(Ctes.CONFIG_OPERA_CONFIRMAR_INSERTAR)){
+				
+				String descOpera = request.getParameter("descOpera");
+				
+				System.out.println("descripcion a insertar: " + descOpera);
+				
+				OperacionDTO oDTO = new OperacionDTO();
+				oDTO.setDescripcion(descOpera);			
+				
+				try {
+					servicioAdministracion.insertarOperacion(oDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al insertar la operacion");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+
+				}
+
+				
+			}else{
+				sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error en la operacion");
+				sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Operacion no admitida");
+				return "error";
+			}
+		}
+		
+		
+		try {
+			String refrescar = Ctes.NO;
+			
+			if (operacion != null){
+				
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_OPERA_CONFIRMAR_MODIFICAR)){
+					refrescar = Ctes.SI;
+				}	
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_OPERA_CONFIRMAR_INSERTAR)){
+					refrescar = Ctes.SI;
+				}	
+			}
+
+			hmOperaciones = servicioSingleton.getOperaciones(refrescar);
+			
+		} catch (Exception e) {
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar las operaciones. ");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+			return "error";
+		}
+		
+		model.put(Ctes.OPCADMIN_OPERACION, hmOperaciones);
+		
+	
+		return "adminOperacion";
+	}
+	
+	
+	@RequestMapping(value = "/adminRol", method = RequestMethod.POST)
+    public String adminRol(Locale locale,
+			Map<String, Object> model, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		// Si no esta identificado es un error.
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar los roles");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse para poder continuar" );
+			return "error";
+		}
+		
+		// Si no esta identificado como administrador es un error
+		if (sesion.getAttribute(ConstantesSesion.ADMINISTRADOR).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar los roles");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse como administrador para poder continuar" );
+			return "error";
+		}	
+		
+		String operacion = request.getParameter("operacion");
+		
+		// Se evaluan las distintas operaciones para las nacionalidades
+		if (operacion != null){
+			
+			if (operacion.equalsIgnoreCase(Ctes.CONFIG_ROL_CONFIRMAR_MODIFICAR)){
+				
+				String codRol = request.getParameter("codRol");
+				String descRol = request.getParameter("descRol");
+				
+				System.out.println("codigo rol a modificar: " + codRol);
+				System.out.println("descripcion a modificar: " + descRol);
+				
+				RoleDTO rDTO = new RoleDTO();
+				rDTO.setCodigoRole(codRol);
+				rDTO.setDescripcion(descRol);			
+				
+				try {
+					servicioAdministracion.modificarRole(rDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al modificar el role");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+
+				}
+				
+
+				
+			}else if (operacion.equalsIgnoreCase(Ctes.CONFIG_ROL_CONFIRMAR_INSERTAR)){
+
+				String descRol = request.getParameter("descRol");
+				
+				System.out.println("descripcion a insertar: " + descRol);
+				
+				RoleDTO rDTO = new RoleDTO();
+				rDTO.setDescripcion(descRol);			
+				
+				try {
+					servicioAdministracion.insertarRole(rDTO);
+				} catch (Exception e) {
+					sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al insertar el role");
+					sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+					return "error";
+
+				}				
+				
+			}else{
+				sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error en la operacion de roles");
+				sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Operacion no admitida");
+				return "error";
+			}
+		}
+		
+		try {
+			String refrescar = Ctes.NO;
+			
+			if (operacion != null){
+				
+				
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_ROL_CONFIRMAR_MODIFICAR)){
+					refrescar = Ctes.SI;
+				}	
+				if (operacion.equalsIgnoreCase(Ctes.CONFIG_ROL_CONFIRMAR_INSERTAR)){
+					refrescar = Ctes.SI;
+				}
+				
+			}
+
+			hmRoles = servicioSingleton.getRoles(refrescar);
+			
+		} catch (Exception e) {
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar los roles. ");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+			return "error";
+		}
+		
+		model.put(Ctes.OPCADMIN_ROLES, hmRoles);		
+		
+	
+		return "adminRol";
+	}
 	
 	
 	@RequestMapping(value = "/adminEquipos", method = RequestMethod.POST)
@@ -866,9 +1384,12 @@ public class HomeController {
 		String equipoNombre="";
 		String equipoSiglas="";		
 		
+		
+		String operacion = request.getParameter("operacion");
+		
 		// Se evaluan las distintas operaciones para los jugadores
-		if (request.getParameter("operacion") != null){
-			String operacion = request.getParameter("operacion");
+		if (operacion != null){
+			
 			System.out.println("operacion:" + operacion);
 			
 			if (operacion.equalsIgnoreCase(Ctes.EQUIPO_ADMIN_MODIFICAR)){
@@ -932,11 +1453,11 @@ public class HomeController {
 				
 			}
 			else{
-				System.out.println("NINGUNA OPERACION");	
+				System.out.println("NINGUNA OPERACION CONOCIDA");	
 			}
 		}
 		
-		
+		/*
 		ArrayList<EquipoRealDTO> lEquipo = null;
 
 		try {
@@ -948,6 +1469,30 @@ public class HomeController {
 		}
 
 		model.put(Ctes.OPCADMIN_EQUIPO, lEquipo);
+		*/
+
+
+		try {
+			String refrescar = Ctes.NO;
+			if (operacion != null){
+				
+				if (operacion.equalsIgnoreCase(Ctes.EQUIPO_ADMIN_CONFIRMAR_MODIFICAR) ||
+						operacion.equalsIgnoreCase(Ctes.EQUIPO_ADMIN_CONFIRMAR_INSERTAR)
+						){
+					refrescar = Ctes.SI;
+				}
+				
+			}
+			
+			hmEquiposReales = servicioSingleton.getEquiposReales(refrescar);
+			
+		} catch (Exception e) {
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar equipos reales");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
+			return "error";
+		}
+		model.put(Ctes.OPCADMIN_EQUIPO, hmEquiposReales);
+		
 		
 		// Para indicar que muestre en la pantalla "adminEquipos" para modificar.
 		model.put(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR, confirmarModificacion);
@@ -960,10 +1505,10 @@ public class HomeController {
 		// Para indicar que muestre en la pantalla "adminEquipos" para insertar.
 		model.put(Ctes.EQUIPO_ADMIN_MOSTRAR_INSERTAR, confirmarInserccion);		
 
-		return "adminEquipos";
+		return "adminEquipos"; 
 	}
 	
-	
+	// TODO: MIRAR COMO SE HA GESTIONADO /adminEquipos PARA HACER LO MISMO CON JUGADORES.
 	@RequestMapping(value = "/adminJugadores", method = RequestMethod.POST)
     public String adminJugadores(Locale locale,
 			Map<String, Object> model, 
@@ -991,9 +1536,11 @@ public class HomeController {
 		}
 		
 		
-		ArrayList<JugadorDTO> lJugador = null;
+		ArrayList<JugadorRealDTO> lJugador = null;
 		try {
-			lJugador = servicioAdministracion.mostrarCatalogoJugadores();
+			//ivan
+			//lJugador = servicioAdministracion.mostrarCatalogoJugadores();
+			lJugador=null;
 		} catch (Exception e) {
 			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al recuperar jugadores reales");
 			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, e.getMessage() + "-->" + e.getStackTrace());
@@ -1006,7 +1553,40 @@ public class HomeController {
 		return "adminJugadores";
 	}
 		
+	@RequestMapping(value = "/draft", method = RequestMethod.POST)
+    public String draft(Locale locale,
+			Map<String, Object> model, 
+            HttpServletRequest request, 
+            HttpServletResponse response,
+            HttpSession sesion) {
+		
+		if (comprobarSesionActiva(sesion) == false)
+			return "inactividad";
+		
+		// Si no esta identificado es un error.
+		if (sesion.getAttribute(ConstantesSesion.IDENTIFICADO).equals(Ctes.NO)){
+			sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al administrar jugador real");
+			sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Debe identificarse para poder continuar" );
+			return "error";
+		}
+		
 
+		// Que se debe informar para draft????
+		// El nombre de la liga - Esto se puede obtener a partir de ConstantesSesion.MI_LIGA si se va a la tabla de Liga
+		// El nombre del equipo - Esto se puede obtener a partir - ConstantesSesion.MI_EQUIPO si se va a la tabla de Equipo
+		// Dinero disponible - Esto se puede obtener a partir - ConstantesSesion.COD_ECONO si se va a la tabla de Economia.
+		
+		
+		model.put(Ctes.DRAFT_NB_LIGA, "la revuelta");
+		model.put(Ctes.DRAFT_NB_EQUIPO, "los ventolines");
+System.out.println(Double.toString(Ctes.ECONOMIA_INICIAL));
+System.out.println(Ctes.ECONOMIA_INICIAL);
+		model.put(Ctes.DRAFT_ECONOMIA, Double.toString(Ctes.ECONOMIA_INICIAL));//La cifra se obtendrá de bbdd
+		
+		
+		return "draft";
+		
+	}
 	
 	
 /*

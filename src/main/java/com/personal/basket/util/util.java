@@ -2,9 +2,12 @@ package com.personal.basket.util;
 
 import java.util.Map;
 
-public class util {
+import com.personal.basket.dtos.ConfiguracionDTO;
 
-	public static String getValorMapa (Map <String, String>mapa, String param) throws Exception
+public class util {
+	
+	
+	public static ConfiguracionDTO getValorMapaConfiguracion (Map <String, ConfiguracionDTO>mapa, String param) throws Exception
 	{
 		
 		if (mapa.containsKey(param) == false)
@@ -13,5 +16,6 @@ public class util {
 		return mapa.get(param);
 	}
 	
+
 	
 }

@@ -5,7 +5,7 @@ package com.personal.basket.dtos;
 
 import java.io.Serializable;
 
-public class JugadorDTO implements Serializable{
+public class JugadorRealDTO implements Serializable{
 
 	
 	/**
@@ -25,12 +25,6 @@ public class JugadorDTO implements Serializable{
 	// PK
 	private String codigoEquipoReal;
 	
-/*
-	private int temporadaInicio;
-	private int temporadaFin;	
-*/
-	
-
 	
 	public String getCodigoJugador() {
 		return codigoJugador;
@@ -89,21 +83,7 @@ public class JugadorDTO implements Serializable{
 		this.codigoEquipoReal = codigoEquipoReal;
 	}
 	
-/*
-	public int getTemporadaInicio() {
-		return temporadaInicio;
-	}
-	public void setTemporadaInicio(int temporadaInicio) {
-		this.temporadaInicio = temporadaInicio;
-	}
-	public int getTemporadaFin() {
-		return temporadaFin;
-	}
-	public void setTemporadaFin(int temporadaFin) {
-		this.temporadaFin = temporadaFin;
-	}
-*/
-	
+
 	
 	
 	
