@@ -24,6 +24,7 @@ public class LigaDTO implements Serializable{
 	private String error;
 	private boolean ligaPublica;
 	
+	
 	//private ArrayList <EquipoDTO>		lEquiposTotales;
 	//private	ArrayList <JugadorDTO> 		lJugadoresTotales;
 	

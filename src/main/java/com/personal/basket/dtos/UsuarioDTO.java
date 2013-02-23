@@ -32,13 +32,11 @@ public class UsuarioDTO implements Serializable {
 	// FK - A la economia propia.
 	private String 			codigoEcono;
 	
-	// Salida de registro
-	//private boolean			registrado;
-	//private String			sErrorRegistrado;
-	
-	// Salida de login
-	//private Map<String, String> mapConfiguracion;
-	
+	// Utilizado para la inscripcion en una liga.
+	// 0 - OK
+	// 1 - No se ha podido inscribir en la liga.
+	// 2 - Existe un equipo con ese nombre.
+	private int error;
 	
 
 	
@@ -106,36 +104,17 @@ public class UsuarioDTO implements Serializable {
 		this.codigoEquipo = codigoEquipo;
 	}
 	
-	/*
-	public boolean isRegistrado() {
-		return registrado;
-	}
-	public void setRegistrado(boolean registrado) {
-		this.registrado = registrado;
-	}
-	
-	
-	
-	public String getsErrorRegistrado() {
-		return sErrorRegistrado;
-	}
-	public void setsErrorRegistrado(String sErrorRegistrado) {
-		this.sErrorRegistrado = sErrorRegistrado;
-	}
-	*/
-	/*
-	public Map<String, String> getMapConfiguracion() {
-		return mapConfiguracion;
-	}
-	public void setMapConfiguracion(Map<String, String> mapConfiguracion) {
-		this.mapConfiguracion = mapConfiguracion;
-	}
-	*/
 	public String getCodigoEcono() {
 		return codigoEcono;
 	}
 	public void setCodigoEcono(String codigoEcono) {
 		this.codigoEcono = codigoEcono;
+	}
+	public int getError() {
+		return error;
+	}
+	public void setError(int error) {
+		this.error = error;
 	}
 	
 	

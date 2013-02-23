@@ -9,6 +9,11 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	identificadoAdministrador = Ctes.NO;
 }
 
+String adminSalida = (String)request.getAttribute(Ctes.ADMIN_SALIDA);
+if (adminSalida == null || adminSalida.length()<1){
+	adminSalida = "";
+}
+
 
 %>
 
@@ -25,10 +30,13 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
+	
 	
 <script language="JavaScript">
 
-		
+
+	
 	function modificarConfiguracion(parametro){
 		
 		//alert("Configuracion a modificar: " + parametro + "-" + ModificaConfigValor.value);
@@ -72,46 +80,9 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 		
 	}
 	
+
+
 	
-	
-/*
-	function modificarEquipo(idEquipoModificar, equipoNombre, equipoSiglas){
-		
-		//alert("Equipo a Modificar:" + idEquipoModificar);
-		
-		document.formModificarEquipo.idEquipoModificar.value=idEquipoModificar;
-		document.formModificarEquipo.equipoNombre.value=equipoNombre;
-		document.formModificarEquipo.equipoSiglas.value=equipoSiglas;
-		
-		document.formModificarEquipo.submit();	
-	}
-	
-	function confirmarModificarEquipo(idEquipoModificar)
-	{
-		// alert("Datos mofidicados - ID: " + idEquipoModificar);
-		// alert("Datos mofidicados - NB: " + ModificaEquipoNBConfirmar.value);
-		// alert("Datos mofidicados - SG: " + ModificaEquipoSGConfirmar.value);
-		
-		document.formConfirmarModificarEquipo.idEquipoModificar.value=idEquipoModificar;
-		document.formConfirmarModificarEquipo.equipoNombre.value=ModificaEquipoNBConfirmar.value;
-		document.formConfirmarModificarEquipo.equipoSiglas.value=ModificaEquipoSGConfirmar.value;
-		document.formConfirmarModificarEquipo.submit();
-	}	
-
-	function insertarEquipo(idEquipoModificar)
-	{
-		document.formInsertarEquipo.submit();	
-	}
-
-
-	function confirmarInsertarEquipo()
-	{
-		document.formConfirmarInsertarEquipo.equipoNombre.value=InsertaEquipoNBConfirmar.value;
-		document.formConfirmarInsertarEquipo.equipoSiglas.value=InsertaEquipoSGConfirmar.value;
-		document.formConfirmarInsertarEquipo.submit();
-	}
-*/
-
 </script>
 
 <style>
@@ -137,6 +108,8 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 </head>
 
 <body>
+	
+
 	
 	<div id="cont">
 	
@@ -201,24 +174,50 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 				  			</td>
 								
 							</tr>
-					</table>			
-													
+					</table>	
+					
+					<table>
+						<tr>						
+							<td>					
+								<span class="resaltarExito">
+									<%=adminSalida%>
+								</span>		
+							</td>		
+						</tr>
+					</table>						
 				</div>
+				
+
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
+				<div id="menuPeticion">
 				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Administracion de la Configuracion.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
+					%>		
+							
+					<h3>Error producido en la administracion de la configuración</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>
+				</div>
+
 			<% } %>
 		
 
-		</div>
+		
 
 	
 	</div>

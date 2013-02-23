@@ -2,6 +2,9 @@ package com.personal.basket.servicios;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.personal.basket.dtos.ConfiguracionDTO;
 import com.personal.basket.dtos.EquipoRealDTO;
@@ -37,6 +40,7 @@ public interface IServiciosSingleton {
 	 * @return - Array con todas las operaciones.
 	 * @throws Exception
 	 */
+	@Transactional(readOnly=true)
 	public HashMap<String, ConfiguracionDTO> getConfiguracion(String refrescar)throws Exception;
 	
 	/**
@@ -52,6 +56,7 @@ public interface IServiciosSingleton {
 	 * @return - Array con todas las operaciones.
 	 * @throws Exception
 	 */	
+	@Transactional(readOnly=true)
 	public HashMap<String, NacionalidadDTO> getNacionalidades(String refrescar)throws Exception;
 	
 	
@@ -69,6 +74,7 @@ public interface IServiciosSingleton {
 	 * @return - Array con todas las operaciones.
 	 * @throws Exception
 	 */
+	@Transactional(readOnly=true)
 	public HashMap<String, OperacionDTO> getOperaciones(String refrescar)throws Exception;
 	
 	/**
@@ -84,7 +90,9 @@ public interface IServiciosSingleton {
 	 * @return - Array con todas las operaciones.
 	 * @throws Exception
 	 */
+	@Transactional(readOnly=true)
 	public HashMap<String, RoleDTO> getRoles(String refrescar)throws Exception;
+	
 	
 	
 	/**
@@ -100,6 +108,7 @@ public interface IServiciosSingleton {
 	 * @return - Array con todas las operaciones.
 	 * @throws Exception
 	 */
+	@Transactional(readOnly=true)
 	public HashMap<String, EquipoRealDTO> getEquiposReales(String refrescar)throws Exception;
 
 	
@@ -116,6 +125,7 @@ public interface IServiciosSingleton {
 	 * @return - Array con todas las operaciones.
 	 * @throws Exception
 	 */
+	@Transactional(readOnly=true)
 	public HashMap<String, JugadorRealDTO> getJugadoresReales(String refrescar)throws Exception;
 
 	

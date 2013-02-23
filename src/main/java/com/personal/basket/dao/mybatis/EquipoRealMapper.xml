@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.EquipoRealMapper" >
+    
+    <resultMap id="resultEquiposActivos" type="com.personal.basket.model.EquipoRealModelDTO">
+        <result property="codEquipoReal" column="codequiporeal"/>
+        <result property="nombre" column="nombre"/>
+        <result property="siglas" column="siglas"/>
+        <result property="patrocinio" column="patrocinio"/>
+    </resultMap>
+    
+    <resultMap id="resultAllEquipos" type="com.personal.basket.model.EquipoRealModelDTO">
+        <result property="codEquipoReal" column="codequiporeal"/>
+        <result property="nombre" column="nombre"/>
+        <result property="siglas" column="siglas"/>
+        <result property="patrocinio" column="patrocinio"/>
+        <result property="activo" column="activo"/>
+    </resultMap>    
+
+
+    <select id="getActivosEquipoReal" resultMap="resultEquiposActivos">
+        SELECT codequiporeal, nombre, siglas, patrocinio FROM equiporeal where activo='S';
+    </select>
+    
+    <!-- NO UTILIZADA POR EL MOMENTO -->
+    <select id="getAllEquipoReal" resultMap="resultAllEquipos">
+        SELECT codequiporeal, nombre, siglas, patrocinio, activo FROM equiporeal;
+    </select>    
+
+    <select id="existeEquipoReal" parameterType="String" resultType="int">
+        SELECT count(*) FROM equiporeal where codequiporeal=#{codEqReal};
+    </select>    
+    
+
+<!-- 	<insert id="insert" parameterType="com.personal.basket.model.ConfiguracionModelDTO">		 -->
+<!-- 		insert into configuracion (parametro, valor) values (#{parametro},#{valor}); -->
+<!-- 	</insert> -->
+	
+
+	
+	
+<!-- http://www.javacodegeeks.com/2012/02/mybatis-3-spring-integration-tutorial.html -->
+</mapper>
+

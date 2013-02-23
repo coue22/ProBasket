@@ -9,22 +9,18 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	identificadoAdministrador = Ctes.NO;
 }
 
-String debeModificaEquipo = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR);
-if (debeModificaEquipo == null || debeModificaEquipo.length()<1){
-	debeModificaEquipo = Ctes.NO;
+
+
+
+String nbFicheroAInsertar = (String)request.getAttribute(Ctes.JUGADOR_ADMIN_JUGADORES_FICHERO);
+if (nbFicheroAInsertar == null || nbFicheroAInsertar.length()<1){
+	nbFicheroAInsertar = "";
 }
 
-/*
-String ModificaEquipoID = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_ID);
-String ModificaEquipoNB = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_NB);
-String ModificaEquipoSG = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_SG);
-
-
-String debeInsertarEquipo = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_INSERTAR);
-if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
-	debeInsertarEquipo = Ctes.NO;
+String bJugadoresInsertados = (String)request.getAttribute(Ctes.JUGADOR_ADMIN_JUGADORES_INSERTADOS);
+if (bJugadoresInsertados == null || bJugadoresInsertados.length()<1){
+	bJugadoresInsertados = Ctes.NO;
 }
-*/
 
 
 %>
@@ -35,53 +31,31 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
    	
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Administrador de Equipos</title>
+<title>Insertar de Jugadores</title>
 
 	<link media="screen" href="css/estilos.css" type="text/css" rel="stylesheet"/>
 	<link href="css/redmond/jquery-ui-1.9.0.custom.css" type="text/css" rel="stylesheet">
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 
-/*
-	function modificarEquipo(idEquipoModificar, equipoNombre, equipoSiglas){
+	function insertarJugadores(bInsertar, fich){
 		
-		//alert("Equipo a Modificar:" + idEquipoModificar);
-		
-		document.formModificarEquipo.idEquipoModificar.value=idEquipoModificar;
-		document.formModificarEquipo.equipoNombre.value=equipoNombre;
-		document.formModificarEquipo.equipoSiglas.value=equipoSiglas;
-		
-		document.formModificarEquipo.submit();	
-	}
-	
-	function confirmarModificarEquipo(idEquipoModificar)
-	{
-		// alert("Datos mofidicados - ID: " + idEquipoModificar);
-		// alert("Datos mofidicados - NB: " + ModificaEquipoNBConfirmar.value);
-		// alert("Datos mofidicados - SG: " + ModificaEquipoSGConfirmar.value);
-		
-		document.formConfirmarModificarEquipo.idEquipoModificar.value=idEquipoModificar;
-		document.formConfirmarModificarEquipo.equipoNombre.value=ModificaEquipoNBConfirmar.value;
-		document.formConfirmarModificarEquipo.equipoSiglas.value=ModificaEquipoSGConfirmar.value;
-		document.formConfirmarModificarEquipo.submit();
-	}	
 
-	function insertarEquipo(idEquipoModificar)
-	{
-		document.formInsertarEquipo.submit();	
-	}
+		if (fich == ''){
+			alert("El nombre del fichero debe ir relleno.");
+			NbFicheroJugadores.focus();
+			return;
+		}
 
-
-	function confirmarInsertarEquipo()
-	{
-		document.formConfirmarInsertarEquipo.equipoNombre.value=InsertaEquipoNBConfirmar.value;
-		document.formConfirmarInsertarEquipo.equipoSiglas.value=InsertaEquipoSGConfirmar.value;
-		document.formConfirmarInsertarEquipo.submit();
+		document.formInsertarJugadores.nbFicheroJugadores.value=fich;
+		document.formInsertarJugadores.bInsertar.value=bInsertar;
+		document.formInsertarJugadores.submit();			
+		
 	}
-*/
 
 </script>
 
@@ -121,76 +95,148 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 			<% if (identificadoAdministrador.equalsIgnoreCase(Ctes.SI)){ %>
 			
 
-				<div class="tableDemo">
-				<!-- <div id="debugArea" style="float: right">&nbsp;</div>"; -->
-				<table id="table-2">
-				
-					<caption> JUGADORES </caption>
+				<div id="menuPeticion">
 					
-					<thead>
+					<h3>Insertar fichero jugadores</h3>
+					
+					<table>
 						<tr>
-						<th></th>
-						<th>Codigo</th>
-						<th>Nombre</th>
-						<th>Puesto</th>
-						<th>Altura</th>
-						<th>Peso</th>
-						<th>Nacionalidad</th>
+							<th colspan="2" align="left">Nombre del fichero</th>
+						</tr>					
+						<tr>
+							
+							<td>
+								<input type="text" name="NbFicheroJugadores" id="NbFicheroJugadores" value="" maxlength="100" size="35" class="input" />
+							</td>
+				  			<td>
+				  				<ul id="icons" class="ui-widget ui-helper-clearfix">
+			  					<li class="ui-state-default ui-corner-all" title="insertar jugadores" onclick="insertarJugadores('N', NbFicheroJugadores.value);"><span class="ui-icon ui-icon-circle-check"></span></li>
+				  				</ul>
+				  			</td>								
 						</tr>
-					</thead>
-					<tbody>
+						
+<!-- http://viralpatel.net/blogs/spring-mvc-multiple-file-upload-example/ -->
+
+<!-- <tr> -->
+<!-- 	<td> -->
+
+<!-- 		<form action="adminJugadores" method="POST" enctype="multipart/form-data"> -->
+<!-- 		    <input type="file" name="NbFicheroJugadores" id="NbFicheroJugadores" class="input"/> -->
+<!-- 		    <input type="hidden" name="bInsertar" value="N" /> -->
+<!-- 		    <input type="hidden" name="operacion" value="JUGADOR_ADMIN_INSERTAR" /> -->
+<!-- 		    <input type="submit" /> -->
+<!-- 		</form>	 -->
+<!-- 	</td>				 -->
+<!-- </tr>							 -->
+					</table>	
 					
 					
-					<c:forEach var="fila" items="${OpcionAdminJugador}" varStatus="status">
-						
-						
-						
+					
+					<table>
 						<tr>
 							<td>
-								<ul id="icons" class="ui-widget ui-helper-clearfix">
-				  					<li class="ui-state-default ui-corner-all" title="jug"><span class="ui-icon ui-icon-person"></span></li>
-				  				</ul>
-				  			</td>
-				  
-				  			<td>${fila.codigoJugador}</td>
-				  			<td>${fila.apellido}, ${fila.nombre} </td>
-				  			<td>${fila.puesto}</td>
-				  			<td>${fila.altura}</td>
-				  			<td>${fila.peso}</td>
-				  			<td>${fila.nacionalidad}</td>
-
-
-<!-- 				  			<td> -->
-<!-- 				  				<ul id="icons" class="ui-widget ui-helper-clearfix"> -->
-<%-- 			  					<li class="ui-state-default ui-corner-all" title="modificar" onclick="modificarEquipo('${fila.codigoJugador}','${fila.nombre}','${fila.siglas}');"><span class="ui-icon ui-icon-circle-close"></span></li> --%>
-<!-- 				  				</ul> -->
-<!-- 				  			</td> -->
-				  			
-				  
-				  		</tr>
-	
-
-													
-					</c:forEach>
+								<span class="resaltarTorcido">
+									Un ejemplo de nombre de fichero: 012jugadores.txt o 006_2fich.txt
+								</span>	
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="resaltarTorcido">
+									El fichero debe existir en el directorio resources/jugadores y comenzar por un codigo de equipo real
+								</span>	
+							</td>							
+						</tr>						
+					</table>		
 					
-
+					<!-- Solo si los jugadores no se han insertado -->
+					<% if (bJugadoresInsertados.equalsIgnoreCase(Ctes.NO)){ %>
+					
+						<!-- Solo si esta variable viene rellena se presentan los jugadores a insertar. -->
+						<% if (!(nbFicheroAInsertar.equalsIgnoreCase(""))){ %>
+							<h3>Jugadores a Insertar</h3>
+							<table>
+							
+								<tr>
+									<th>Codigo</th>
+									<th>Nombre</th>
+									<th>Apellidos</th>
+									<th>Posicion</th>
+									<th>Altura</th>
+									<th>Nacionalidad</th>
+									<th>Precio</th>
+		
+								
+								</tr>
+								
+								<c:forEach var="fila" items="${OpcionAdminJugador_para_insertar}" varStatus="status">
+		
+									<tr>
+										<td>${fila.codigoJugador}</td>
+										<td>${fila.nombre}</td>
+										<td>${fila.apellidos}</td>
+										<td>${fila.puesto}</td>
+										<td>${fila.altura}</td>
+										<td>${fila.codigoNacionalidad}</td>
+										<td>${fila.precio}</td>
+		
+									</tr>
+								
+								</c:forEach>
+								
+								<tr>
+						  			<td>
+						  				<ul id="icons" class="ui-widget ui-helper-clearfix">
+					  					<li class="ui-state-default ui-corner-all" title="insertar jugadores" onclick="insertarJugadores('S','<%=nbFicheroAInsertar%>');"><span class="ui-icon ui-icon-circle-check"></span></li>
+						  				</ul>
+						  			</td>
+						  		</tr>						
+															
+							</table>
 						
-					</tbody>
+						<%}%>	
+										
+					<% } else {%>
 					
-				</table>
-				</div>		
+						<table>
+							<tr>
+								<td>
+									<span class="resaltarTorcidoExito">
+										Se han insertado de forma correcta los datos del fichero <%=nbFicheroAInsertar%>
+									</span>	
+								</td>							
+							</tr>						
+						</table>
+
+					<%}%>	
+			
+													
+				</div>	
 				
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Administracion de Jugadores.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
+					%>		
+							
+					<h3>Error producido en administracion de jugadores</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 
@@ -202,35 +248,13 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 	
 <%-- 	<jsp:include page="PlantillaPiePagina.jsp" /> --%>
 	
-	
-<!-- <form name="formModificarEquipo" action="adminEquipos" method="POST"> -->
-<!-- 	<input type="hidden" name="operacion" value="EQUIPO_ADMIN_MODIFICAR" /> -->
-	
-<!-- 	<input type="hidden" name="idEquipoModificar" value="" /> -->
-<!-- 	<input type="hidden" name="equipoNombre" value="" /> -->
-<!-- 	<input type="hidden" name="equipoSiglas" value="" /> -->
-	
-<!-- </form> -->
+<form name="formInsertarJugadores" action="adminJugadores" method="POST">
+ 	<input type="hidden" name="operacion" value="JUGADOR_ADMIN_INSERTAR" />
+ 	<input type="hidden" name="bInsertar" value="" />
+	<input type="hidden" name="nbFicheroJugadores" value="" />
+</form>	
 
-<!-- <form name="formConfirmarModificarEquipo" action="adminEquipos" method="POST"> -->
-<!-- 	<input type="hidden" name="operacion" value="EQUIPO_ADMIN_CONFIRMAR_MODIFICAR" /> -->
-	
-<!-- 	<input type="hidden" name="idEquipoModificar" value="" /> -->
-<!-- 	<input type="hidden" name="equipoNombre" value="" /> -->
-<!-- 	<input type="hidden" name="equipoSiglas" value="" /> -->
-	
-<!-- </form> -->
 
-<!-- <form name="formInsertarEquipo" action="adminEquipos" method="POST"> -->
-<!-- 	<input type="hidden" name="operacion" value="EQUIPO_ADMIN_INSERTAR" /> -->
-<!-- </form> -->
-
-<!-- <form name="formConfirmarInsertarEquipo" action="adminEquipos" method="POST"> -->
-<!-- 	<input type="hidden" name="operacion" value="EQUIPO_ADMIN_CONFIRMAR_INSERTAR" /> -->
-	
-<!-- 	<input type="hidden" name="equipoNombre" value="" /> -->
-<!-- 	<input type="hidden" name="equipoSiglas" value="" /> -->
-<!-- </form> -->
   	
 
 </body>

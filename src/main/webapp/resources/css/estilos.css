@@ -111,6 +111,14 @@ a{text-decoration: none;}
 	background: url('imgestilos/boton.PNG');
 	color: #FFFFFF;
 }
+#subheader a.miRegistro2{
+	float: right;
+	padding-left: 10px;
+	padding-right: 10px;
+	/*background: url('imgestilos/boton.PNG');*/
+	background: #FFFFFF;
+	color: #000000;
+}
 
 
 

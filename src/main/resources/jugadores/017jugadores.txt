@@ -1,0 +1,150 @@
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBE1LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBE1LACB57.jpg'">
+<td class="naranja">5</td>
+<td class="beige"><a href="jugador.php?id=BE1">Asselin, Josh</a></td>
+<td class="blanco">P</td>
+<td class="gris">DOM</td>
+<td class="blanco">COT</td>
+<td class="gris">2.10</td>
+<td class="blanco">34</td>
+<td class="gris">4</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JA96LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JA96LACB57.jpg'">
+<td class="naranja">6</td>
+<td class="beige"><a href="jugador.php?id=A96">Rodr&iacute;guez, Javi</a></td>
+<td class="blanco">B</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.88</td>
+<td class="blanco">33</td>
+<td class="gris">4</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J17GLACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J17GLACB57.jpg'">
+<td class="naranja">8</td>
+<td class="beige"><a href="jugador.php?id=17G">DeVries, Troy</a></td>
+<td class="blanco">E</td>
+<td class="gris">USA</td>
+<td class="blanco">EXT</td>
+<td class="gris">1.92</td>
+<td class="blanco">30</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JY7GLACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JY7GLACB57.jpg'">
+<td class="naranja">11</td>
+<td class="beige"><a href="jugador.php?id=Y7G">Hern&aacute;ndez, Alex</a></td>
+<td class="blanco">B</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.89</td>
+<td class="blanco">23</td>
+<td class="gris">3</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB00LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB00LACB57.jpg'">
+<td class="naranja">12</td>
+<td class="beige"><a href="jugador.php?id=B00">Arteaga, Oliver</a></td>
+<td class="blanco">P</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">2.07</td>
+<td class="blanco">30</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J151LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J151LACB57.jpg'">
+<td class="naranja">13</td>
+<td class="beige"><a href="jugador.php?id=151">Palsson, Haukur</a></td>
+<td class="blanco">A</td>
+<td class="gris">ISL</td>
+<td class="blanco">EUR</td>
+<td class="gris">1.97</td>
+<td class="blanco">20</td>
+<td class="gris">2</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB52LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB52LACB57.jpg'">
+<td class="naranja">14</td>
+<td class="beige"><a href="jugador.php?id=B52">Arco, Salva</a></td>
+<td class="blanco">E</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.96</td>
+<td class="blanco">28</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J125LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J125LACB57.jpg'">
+<td class="naranja">17</td>
+<td class="beige"><a href="jugador.php?id=125">Hanga, Adam</a></td>
+<td class="blanco">A</td>
+<td class="gris">HUN</td>
+<td class="blanco">EUR</td>
+<td class="gris">1.99</td>
+<td class="blanco">23</td>
+<td class="gris">2</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J214LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J214LACB57.jpg'">
+<td class="naranja">18</td>
+<td class="beige"><a href="jugador.php?id=214">Yanev, Aleksander</a></td>
+<td class="blanco">A</td>
+<td class="gris">BGR</td>
+<td class="blanco">EUR</td>
+<td class="gris">2.03</td>
+<td class="blanco">23</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JA0RLACB56.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JA0RLACB56.jpg'">
+<td class="naranja">21</td>
+<td class="beige"><a href="jugador.php?id=A0R">Lavi&ntilde;a, Ferran</a></td>
+<td class="blanco">E</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.92</td>
+<td class="blanco">35</td>
+<td class="gris">7</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J215LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J215LACB57.jpg'">
+<td class="naranja">22</td>
+<td class="beige"><a href="jugador.php?id=215">Ramsdell, Charles</a></td>
+<td class="blanco">F</td>
+<td class="gris">MDG</td>
+<td class="blanco">COT</td>
+<td class="gris">2.07</td>
+<td class="blanco">28</td>
+<td class="gris">1</td>
+</tr>
+<tr>
+<td class="naranja">16</td>
+<td class="beige"><a href="jugador.php?id=17K">Angelats, Nil</a></td>
+<td class="blanco">B</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.85</td>
+<td class="blanco">19</td>
+<td class="gris">1</td>
+</tr>
+<tr>
+<td class="naranja">19</td>
+<td class="beige"><a href="jugador.php?id=782">Pardina, Joan</a></td>
+<td class="blanco">-</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">-.-</td>
+<td class="blanco">19</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J236LACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J236LACB57.jpg'">
+<td class="naranja">24</td>
+<td class="beige"><a href="jugador.php?id=236">Larsen, Rasmus</a></td>
+<td class="blanco">P</td>
+<td class="gris">DNK</td>
+<td class="blanco">EUR</td>
+<td class="gris">2.12</td>
+<td class="blanco">18</td>
+<td class="gris">1</td>
+</tr>
+<tr>
+<td class="naranja">25</td>
+<td class="beige"><a href="jugador.php?id=T4K">Kody, Johan</a></td>
+<td class="blanco">P</td>
+<td class="gris">CMR</td>
+<td class="blanco">JFL</td>
+<td class="gris">2.07</td>
+<td class="blanco">19</td>
+<td class="gris">2</td>
+</tr>

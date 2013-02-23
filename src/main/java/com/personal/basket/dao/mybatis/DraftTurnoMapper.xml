@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.DraftTurnoMapper" >
+
+    <resultMap id="resultDraftTurno" type="com.personal.basket.model.DraftTurnoModelDTO">
+        <result property="codLiga" column="CODLIGA"/>
+        <result property="codEquipo" column="CODEQUIPO"/>
+        <result property="turno" column="TURNO"/>
+    </resultMap>
+    
+    
+    <insert id="guardarTurnoDraft" parameterType="com.personal.basket.model.DraftTurnoModelDTO">
+    
+        insert into DRAFTTURNO (CODLIGA, CODEQUIPO, TURNO) 
+        			values (#{codLiga},#{codEquipo},#{turno});
+    </insert>
+    
+    <delete id="eliminarTurnosDraft">		
+		delete from DRAFTTURNO
+	</delete>
+    
+</mapper>
+

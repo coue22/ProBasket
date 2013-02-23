@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.EquipoMapper" >
+
+
+    <select id="existeEquipo" parameterType="String" resultType="int">
+        SELECT count(*) FROM EQUIPO where nombre=#{nombre};
+    </select>
+
+	<select id="getSecuenciaEquipoHSQL"  resultType="String">
+        call NEXT VALUE FOR SEQ_EQUIPO;
+    </select>
+
+    <insert id="crearEquipo" parameterType="com.personal.basket.model.EquipoModelDTO">
+    
+        insert into EQUIPO (CODEQUIPO, NOMBRE, POSICION, PUNTOTAL, CODLIGA) 
+        			values (#{codEquipo},#{nombre},#{posicion},#{puntuacionTotal},#{codLiga});
+    </insert>
+    
+    <select id="getEquipo" parameterType="String" resultType="com.personal.basket.model.EquipoModelDTO">
+        SELECT NOMBRE, POSICION, PUNTOTAL, CODLIGA FROM EQUIPO where codequipo=#{codEquipo};
+    </select>
+
+    <select id="getEquiposLiga" parameterType="String" resultType="com.personal.basket.model.EquipoModelDTO">
+        SELECT CODEQUIPO FROM EQUIPO where CODLIGA=#{codLiga};
+    </select>
+        
+    
+<!-- 	<select id="buscarLigas" parameterType="com.personal.basket.model.EquipoModelDTO" resultType="com.personal.basket.model.EquipoModelDTO"> -->
+<!--         select codliga, nombre, password FROM LIGA where nombre like '%${nombre}%' -->
+<!--     </select>     -->
+    
+<!--     <select id="acreditacionEnLiga" parameterType="com.personal.basket.model.EquipoModelDTO" resultType="int"> -->
+<!--         SELECT count(*) FROM LIGA where nombre=#{nombre} AND password=#{password}; -->
+<!--     </select>     -->
+    
+
+</mapper>
+

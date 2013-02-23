@@ -22,7 +22,7 @@ public class DetEconomiaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	// PK
-	private String codigoDetEconomia;
+	private String codDetEconomia;
 	private Date fecha;
 	private String detalle;
 	
@@ -32,11 +32,12 @@ public class DetEconomiaDTO implements Serializable{
 	private String codigoEcono;
 	
 	
-	public String getCodigoDetEconomia() {
-		return codigoDetEconomia;
+
+	public String getCodDetEconomia() {
+		return codDetEconomia;
 	}
-	public void setCodigoDetEconomia(String codigoDetEconomia) {
-		this.codigoDetEconomia = codigoDetEconomia;
+	public void setCodDetEconomia(String codDetEconomia) {
+		this.codDetEconomia = codDetEconomia;
 	}
 	public Date getFecha() {
 		return fecha;

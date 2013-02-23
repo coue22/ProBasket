@@ -23,6 +23,7 @@
 			<param-value>
 			/WEB-INF/spring/appServlet/servlet-context.xml
  			/WEB-INF/spring/appServlet/myBatis.xml
+ 			/WEB-INF/spring/appServlet/Spring-Quartz.xml
 <!-- 			/WEB-INF/spring/appServlet/spring-security.xml -->
 			</param-value>
 		</init-param>

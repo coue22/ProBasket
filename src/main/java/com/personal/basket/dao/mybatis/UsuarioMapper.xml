@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.UsuarioMapper" >
+    
+    <resultMap id="result" type="com.personal.basket.model.UsuarioModelDTO">
+        <result property="activo" column="activo"/>
+        <result property="administrador" column="administrador"/>
+        <result property="codEcono" column="codecono"/>
+        <result property="codLiga" column="codliga"/>
+        <result property="codEquipo" column="codequipo"/>
+    </resultMap>
+    
+    
+    <select id="existeUsuario" parameterType="String" resultType="int">
+        SELECT count(*) FROM USUARIO where login=#{login};
+    </select>
+
+    <insert id="registrar" parameterType="com.personal.basket.model.UsuarioModelDTO">
+        insert into USUARIO (login, password, email, nacimiento, sexo, activo, administrador, codecono, codliga, codequipo) 
+        			values (#{login},#{password},#{email},#{anoNac},#{sexo},#{activo},#{administrador},#{codEcono},#{codLiga},#{codEquipo});
+    </insert>
+
+	<select id="logarse" parameterType="com.personal.basket.model.UsuarioModelDTO" resultMap="result">
+        SELECT activo, administrador, codecono, codliga, codequipo  FROM USUARIO where login=#{login} and password=#{password};
+    </select>
+    
+    <update id="actualizarUsuarioLiga" parameterType="com.personal.basket.model.UsuarioModelDTO">
+        update USUARIO set
+        	codliga = #{codLiga},
+        	codequipo = #{codEquipo}
+        where login = #{login}        
+    </update>
+        
+    <select id="getDatosUsuario" parameterType="String" resultType="com.personal.basket.model.UsuarioModelDTO">
+        SELECT password, email, nacimiento, sexo, activo, administrador, codecono, codliga, codequipo 
+        	FROM USUARIO
+        where login=#{login};
+    </select>
+            
+	
+</mapper>
+

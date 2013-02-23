@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.EconomiaMapper" >
+
+	<select id="getSecuenciaEconomiaHSQL"  resultType="String">
+        call NEXT VALUE FOR SEQ_ECONOMIA;
+    </select>
+
+
+
+    <insert id="InicializarEconomia" parameterType="com.personal.basket.model.EconomiaModelDTO">
+    
+<!-- 		<selectkey order="BEFORE" keyproperty="codigoEcono" resulttype="String"> -->
+<!-- 			SELECT nextVal('SEQ_ECONOMIA') -->
+<!-- 		</selectkey>     -->
+
+
+<!-- 		<selectKey resultType="String" keyProperty="codigoEcono"> -->
+<!-- 	        SELECT SEQ_ECONOMIA.NEXTVAL FROM DUAL -->
+<!-- 	    </selectKey> -->
+    
+        insert into ECONOMIA (CODECONO, DINERO) 
+        			values (#{codEcono},#{dinero});
+    </insert>
+    
+    <select id="getEconomia" resultType="com.personal.basket.model.EconomiaModelDTO" parameterType="String">
+        select DINERO FROM ECONOMIA where CODECONO=#{codEcono};
+    </select> 
+
+</mapper>
+

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+<!-- 	Ejemplo obtenido de -->
+<!-- 	http://www.mkyong.com/spring/spring-quartz-scheduler-example/ -->
+	
+	<beans:bean id="runMeTask" class="com.personal.basket.quartz.RunMeTask" />
+	
+	<!-- Spring Quartz -->
+	<beans:bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<beans:property name="jobClass" value="com.personal.basket.quartz.RunMeJob" />
+		<beans:property name="jobDataAsMap">
+			<beans:map>
+				<beans:entry key="runMeTask" value-ref="runMeTask" />
+			</beans:map>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- Simple Trigger, run every 5 seconds -->
+	<beans:bean id="simpleTrigger" 
+                class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<beans:property name="jobDetail" ref="runMeJob" />
+		<beans:property name="repeatInterval" value="5000" />
+		<beans:property name="startDelay" value="1000" />
+	</beans:bean>
+	
+	<!-- http://quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-06 -->
+<!-- 
+	0 11 11 11 11 ? 	
+	Fire every November 11th at 11:11am.	 
+-->
+
+<!-- 
+	0 10,44 14 ? 3 WED 	
+	Fire at 2:10pm and at 2:44pm every Wednesday in the month of March. 
+-->
+	<!-- Cron Trigger, run every 5 seconds -->
+<!-- 	<beans:bean id="cronTrigger" -->
+<!-- 		class="org.springframework.scheduling.quartz.CronTriggerBean"> -->
+<!-- 		<beans:property name="jobDetail" ref="runMeJob" /> -->
+<!-- 		<beans:property name="cronExpression" value="0/5 * * * * ?" /> -->
+<!-- 	</beans:bean>	 -->
+	
+	<beans:bean id="cronTrigger2"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<beans:property name="jobDetail" ref="runMeJob" />
+		<beans:property name="cronExpression" value="0 44 12 * * ?" />
+	</beans:bean>		
+	
+	<beans:bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<beans:property name="jobDetails">
+	   		<beans:list>
+	      		<beans:ref bean="runMeJob" />
+	   		</beans:list>
+		</beans:property>
+	
+		<beans:property name="triggers">
+	    	<beans:list>
+<!-- 				<beans:ref bean="cronTrigger" /> -->
+				<beans:ref bean="cronTrigger2" />
+	    	</beans:list>	    	
+		</beans:property>
+	
+	</beans:bean>	
+
+ 
+</beans:beans>

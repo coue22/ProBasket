@@ -13,9 +13,9 @@ public class Constantes {
 	public static final String PIVOT = "Pivot";	
 	
 	// NACIONALIDADES (Deberiann estar en una tabla.)
-	public static final String ESP = "Español";
-	public static final String USA = "Americano";
-	public static final String AND = "Andorrano";
+	public static final String ESP = "ESP";
+	public static final String USA = "USA";
+
 	
 	
 

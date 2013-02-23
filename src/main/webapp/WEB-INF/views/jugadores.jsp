@@ -23,6 +23,7 @@ if (identificado == null || identificado.length()<1){
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 	function eliminarJugador(idJugEliminar){
@@ -131,14 +132,27 @@ if (identificado == null || identificado.length()<1){
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Jugadores.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado.");
+					%>		
+							
+					<h3>Error producido en jugadores</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 

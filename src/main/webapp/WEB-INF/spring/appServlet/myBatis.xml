@@ -66,23 +66,23 @@
     
 	
 <!-- ESTE ES DEL TIPO 3 -->
-    <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
-		<beans:property name="driverClassName" 	value="com.mysql.jdbc.Driver" />
-		<beans:property name="url" 				value="jdbc:mysql://localhost:3306/probasket" />
-		<beans:property name="username" 		value="root" />
-		<beans:property name="password" 		value="maguy22" />
-        <beans:property name="initialSize"  	value="6"/>  
-        <beans:property name="maxActive"    	value="10"/>  
-    </beans:bean>  
-    
 <!--     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">   -->
-<!-- 		<beans:property name="driverClassName" 	value="org.hsqldb.jdbcDriver" /> -->
-<!-- 		<beans:property name="url" 				value="jdbc:hsqldb:hsql://localhost/testdb" /> -->
-<!-- 		<beans:property name="username" 		value="sa" /> -->
-<!-- 		<beans:property name="password" 		value="" /> -->
+<!-- 		<beans:property name="driverClassName" 	value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<beans:property name="url" 				value="jdbc:mysql://localhost:3306/probasket" /> -->
+<!-- 		<beans:property name="username" 		value="root" /> -->
+<!-- 		<beans:property name="password" 		value="maguy22" /> -->
 <!--         <beans:property name="initialSize"  	value="6"/>   -->
 <!--         <beans:property name="maxActive"    	value="10"/>   -->
 <!--     </beans:bean>   -->
+    
+    <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
+		<beans:property name="driverClassName" 	value="org.hsqldb.jdbcDriver" />
+		<beans:property name="url" 				value="jdbc:hsqldb:hsql://localhost/testdb" />
+		<beans:property name="username" 		value="sa" />
+		<beans:property name="password" 		value="" />
+        <beans:property name="initialSize"  	value="6"/>  
+        <beans:property name="maxActive"    	value="10"/>  
+    </beans:bean>  
 
 
 <!-- OPCIONES DE DATASOURCE  -->
@@ -165,6 +165,77 @@
 		<beans:property name="mapperInterface" value="com.personal.basket.dao.MenuMapper" />
 		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</beans:bean>
+
+	<beans:bean id="usuarioMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.UsuarioMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="economiaMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.EconomiaMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="detEconomiaMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.DetEconomiaMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+	
+	<beans:bean id="ligaMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.LigaMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+	<beans:bean id="equipoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.EquipoMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+	<beans:bean id="nacionalidadMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.NacionalidadMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+	<beans:bean id="operacionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.OperacionMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+	
+	<beans:bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.RoleMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+	
+	<beans:bean id="equipoRealMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.EquipoRealMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+		
+	<beans:bean id="jugadorRealMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.JugadorRealMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+	
+	<beans:bean id="ligaJugadorMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.LigaJugadorMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+	<beans:bean id="ligaJugadorJoinJugadorMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.LigaJugadorJoinJugadorMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+	<beans:bean id="draftMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.DraftMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+	<beans:bean id="draftTurnoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.DraftTurnoMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
 	
 	
 </beans:beans>

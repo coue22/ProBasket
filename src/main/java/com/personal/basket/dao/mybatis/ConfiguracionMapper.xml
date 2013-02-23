@@ -3,19 +3,24 @@
 
 <mapper namespace="com.personal.basket.dao.ConfiguracionMapper" >
     
-    <resultMap id="result" type="com.personal.basket.model.ConfiguracionDTO">
+    <resultMap id="result" type="com.personal.basket.model.ConfiguracionModelDTO">
         <result property="parametro" column="parametro"/>
         <result property="valor" column="valor"/>
     </resultMap>
 
-    <select id="getAll" parameterType="int" resultMap="result">
+    <select id="getConfiguracion" parameterType="int" resultMap="result">
         SELECT parametro, valor FROM configuracion;
     </select>
 
-	<insert id="insert" parameterType="com.personal.basket.model.ConfiguracionDTO">		
+	<insert id="insertarConfiguracion" parameterType="com.personal.basket.model.ConfiguracionModelDTO">		
 		insert into configuracion (parametro, valor) values (#{parametro},#{valor});
 	</insert>
 	
+    <update id="modificarConfiguracion" parameterType="com.personal.basket.model.ConfiguracionModelDTO">
+        update configuracion set
+        	valor = #{valor}
+        where parametro = #{parametro}        
+    </update>	
 
 	
 	

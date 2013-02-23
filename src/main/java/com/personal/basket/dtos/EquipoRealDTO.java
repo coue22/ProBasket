@@ -17,11 +17,9 @@ public class EquipoRealDTO implements Serializable {
 	private String codigoEquipoReal;
 	private String nombre;
 	private String siglas;
-/*	
-	private int temporadaInicio;
-	private int temporadaFin;
-*/	
-	
+	private String activo;
+	private String patrocinio;
+
 
 	public String getCodigoEquipoReal() {
 		return codigoEquipoReal;
@@ -41,19 +39,18 @@ public class EquipoRealDTO implements Serializable {
 	public void setSiglas(String siglas) {
 		this.siglas = siglas;
 	}
-/*	
-	public int getTemporadaInicio() {
-		return temporadaInicio;
+	public String getActivo() {
+		return activo;
 	}
-	public void setTemporadaInicio(int temporadaInicio) {
-		this.temporadaInicio = temporadaInicio;
+	public void setActivo(String activo) {
+		this.activo = activo;
 	}
-	public int getTemporadaFin() {
-		return temporadaFin;
+	public String getPatrocinio() {
+		return patrocinio;
 	}
-	public void setTemporadaFin(int temporadaFin) {
-		this.temporadaFin = temporadaFin;
+	public void setPatrocinio(String patrocinio) {
+		this.patrocinio = patrocinio;
 	}
-*/	
+
 	
 }

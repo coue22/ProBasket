@@ -1,0 +1,130 @@
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J243SCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J243SCOPA13.jpg'">
+<td class="naranja">4</td>
+<td class="beige"><a href="jugador.php?id=243">Draper, Dontaye</a></td>
+<td class="blanco">B</td>
+<td class="gris">HRV</td>
+<td class="blanco">EUR</td>
+<td class="gris">1.81</td>
+<td class="blanco">28</td>
+<td class="gris">125000</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB0XSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB0XSCOPA13.jpg'">
+<td class="naranja">5</td>
+<td class="beige"><a href="jugador.php?id=B0X">Fern&aacute;ndez, Rudy</a></td>
+<td class="blanco">A</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.96</td>
+<td class="blanco">27</td>
+<td class="gris">265000.15</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J138SCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/J138SCOPA13.jpg'">
+<td class="naranja">7</td>
+<td class="beige"><a href="jugador.php?id=138">Pocius, Martynas</a></td>
+<td class="blanco">E</td>
+<td class="gris">LTU</td>
+<td class="blanco">EUR</td>
+<td class="gris">1.96</td>
+<td class="blanco">26</td>
+<td class="gris">2</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB79SCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB79SCOPA13.jpg'">
+<td class="naranja">8</td>
+<td class="beige"><a href="jugador.php?id=B79">Su&aacute;rez, Carlos</a></td>
+<td class="blanco">A</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">2.03</td>
+<td class="blanco">26</td>
+<td class="gris">3</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JA1MSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JA1MSCOPA13.jpg'">
+<td class="naranja">9</td>
+<td class="beige"><a href="jugador.php?id=A1M">Reyes, Felipe</a></td>
+<td class="blanco">F</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">2.04</td>
+<td class="blanco">32</td>
+<td class="gris">9</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBGKSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBGKSCOPA13.jpg'">
+<td class="naranja">12</td>
+<td class="beige"><a href="jugador.php?id=BGK">Mirotic, Nikola</a></td>
+<td class="blanco">F</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">2.08</td>
+<td class="blanco">22</td>
+<td class="gris">4</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB68SCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB68SCOPA13.jpg'">
+<td class="naranja">13</td>
+<td class="beige"><a href="jugador.php?id=B68">Rodr&iacute;guez, Sergio</a></td>
+<td class="blanco">B</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.91</td>
+<td class="blanco">26</td>
+<td class="gris">3</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JY3BLACB57.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JY3BLACB57.jpg'">
+<td class="naranja">15</td>
+<td class="beige"><a href="jugador.php?id=Y3B">Hettsheimeir, R.</a></td>
+<td class="blanco">P</td>
+<td class="gris">ESP</td>
+<td class="blanco">EUR</td>
+<td class="gris">2.08</td>
+<td class="blanco">26</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBKGSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBKGSCOPA13.jpg'">
+<td class="naranja">16</td>
+<td class="beige"><a href="jugador.php?id=BKG">Begic, Mirza</a></td>
+<td class="blanco">P</td>
+<td class="gris">SVN</td>
+<td class="blanco">EUR</td>
+<td class="gris">2.16</td>
+<td class="blanco">27</td>
+<td class="gris">3</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBGZSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBGZSCOPA13.jpg'">
+<td class="naranja">20</td>
+<td class="beige"><a href="jugador.php?id=BGZ">Carroll, Jaycee</a></td>
+<td class="blanco">E</td>
+<td class="gris">AZE</td>
+<td class="blanco">EUR</td>
+<td class="gris">1.88</td>
+<td class="blanco">29</td>
+<td class="gris">2</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB7GSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JB7GSCOPA13.jpg'">
+<td class="naranja">23</td>
+<td class="beige"><a href="jugador.php?id=B7G">Llull, Sergio</a></td>
+<td class="blanco">B</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">1.90</td>
+<td class="blanco">25</td>
+<td class="gris">7</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBJUSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JBJUSCOPA13.jpg'">
+<td class="naranja">44</td>
+<td class="beige"><a href="jugador.php?id=BJU">Slaughter, Marcus</a></td>
+<td class="blanco">P</td>
+<td class="gris">USA</td>
+<td class="blanco">EXT</td>
+<td class="gris">2.04</td>
+<td class="blanco">27</td>
+<td class="gris">1</td>
+</tr>
+<tr onmouseover="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JSFPSCOPA13.jpg'" onmouseout="document['foto'].src='http://www.acb.com/fotos_cara/jugadores/JSFPSCOPA13.jpg'">
+<td class="naranja">14</td>
+<td class="beige"><a href="jugador.php?id=SFP">Hernang&oacute;mez, G.</a></td>
+<td class="blanco">P</td>
+<td class="gris">ESP</td>
+<td class="blanco">JFL</td>
+<td class="gris">2.08</td>
+<td class="blanco">18</td>
+<td class="gris">1</td>
+</tr>

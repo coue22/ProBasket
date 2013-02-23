@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.LigaMapper" >
+
+
+    <select id="existeLiga" parameterType="String" resultType="int">
+        SELECT count(*) FROM LIGA where nombre=#{nombre};
+    </select>
+
+	<select id="getSecuenciaLigaHSQL"  resultType="String">
+        call NEXT VALUE FOR SEQ_LIGA;
+    </select>
+
+    <insert id="crearLiga" parameterType="com.personal.basket.model.LigaModelDTO">
+    
+        insert into LIGA (CODLIGA, NOMBRE, PASSWORD) 
+        			values (#{codLiga},#{nombre},#{password});
+    </insert>
+    
+	<select id="buscarLigas" parameterType="com.personal.basket.model.LigaModelDTO" resultType="com.personal.basket.model.LigaModelDTO">
+        select CODLIGA, NOMBRE, PASSWORD FROM LIGA where nombre like '%${nombre}%'
+    </select>    
+    
+    <select id="acreditacionEnLiga" parameterType="com.personal.basket.model.LigaModelDTO" resultType="int">
+        SELECT count(*) FROM LIGA where nombre=#{nombre} AND password=#{password};
+    </select>    
+    
+    <select id="getAllLigas" resultType="com.personal.basket.model.LigaModelDTO">
+        select CODLIGA, NOMBRE, PASSWORD FROM LIGA
+    </select>   
+
+    <select id="getLiga" resultType="com.personal.basket.model.LigaModelDTO" parameterType="String">
+        select NOMBRE FROM LIGA where CODLIGA=#{codLiga};
+    </select>   
+
+</mapper>
+

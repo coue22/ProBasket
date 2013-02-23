@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.personal.basket.model.ConfiguracionDTO;
+import com.personal.basket.model.ConfiguracionModelDTO;
 
 
 public interface ConfiguracionMapper {
 
-	List<ConfiguracionDTO> getAll();
-	void insert(ConfiguracionDTO configuracionDTO);
+	List<ConfiguracionModelDTO> getConfiguracion();
+	void insertarConfiguracion(ConfiguracionModelDTO configuracionDTO);
+	void modificarConfiguracion(ConfiguracionModelDTO configuracionDTO);
 	
 } 

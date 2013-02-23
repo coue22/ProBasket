@@ -52,7 +52,8 @@
 	</div>
 
 <!-- Se redirecciona a la primera pantalla. -->
-<form name="formInactividad" action="/basket" method="GET">
+<form name="formInactividad" action="/ProBasket" method="GET">
+<!-- <form name="formInactividad" action="/basket" method="GET"> -->
 </form>
 
 </body>

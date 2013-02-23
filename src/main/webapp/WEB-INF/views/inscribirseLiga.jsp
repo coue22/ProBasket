@@ -14,6 +14,10 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 	hay_ligas_recuperadas = "";
 }
 
+String errorInscribirLiga = (String)request.getAttribute("errorInscribirLiga");
+if (errorInscribirLiga == null || errorInscribirLiga.length()<1){
+	errorInscribirLiga = "";
+}
 
 %>
 
@@ -29,6 +33,7 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 
@@ -49,15 +54,16 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 		//alert(selValor);
 		
 		var temp=selValor.split("#");
-
-		//alert(temp[0]);	
-		//alert(temp[1]);
-		
+/*
+		alert(temp[0]);//Codigo liga	
+		alert(temp[1]);//si es publica o no
+		alert(temp[2]);//nombre de la liga.
+*/		
 		var passLiga=document.getElementById('passLiga');
 		
 		// Si es liga publica
 		if (temp[1] == "true"){
-			passLiga.value="publica";
+			passLiga.value="liga publica";
 			document.getElementById('passLiga').setAttribute('readOnly','readonly');
 		}else{
 			passLiga.value="";
@@ -159,18 +165,20 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 							
 								<h3>Ligas</h3>	
 								
-								<tr>
-									<td>Nombre del Equipo</td>
-									<td><input type="text" name="NBEquipo" id="NBEquipo" value="" maxlength="25" size="25" class="input" /></td>
-								</tr>
+
 															
 								<table>
+									<tr>
+										<td>Nombre del Equipo</td>
+										<td><input type="text" name="NBEquipo" id="NBEquipo" value="" maxlength="25" size="25" class="input" /></td>
+									</tr>	
+																
 									<tr>
 										<td>
 											<select name="selLiga" id="selLiga" onchange="if (this.selectedIndex){ establecerPase(this.value); }">
 												<option value="-1#-1">Selecciona liga</option>
 												<c:forEach var="fila" items="${ligas_recuperadas}" varStatus="status">
-													<option value=${fila.codigoLiga}#${fila.ligaPublica}>${fila.nombre}</option>
+													<option value=${fila.codigoLiga}#${fila.ligaPublica}#${fila.nombre}>${fila.nombre}</option>
 												</c:forEach>
 											</select> 
 										</td>
@@ -194,7 +202,14 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 							<% } %>
 							
 						<% } %>		
-											
+
+						<!-- Ira relleno en dos casos y siempre cuando se inscriba un equipo. -->
+							<!-- 1.- Los credenciales para insertarse en una liga no son correctos. -->
+							<!-- 2.- El nombre del equipo ya existe. -->
+						<span class="resaltarTorcido">
+							<%=errorInscribirLiga%>
+						</span>							
+				
 				</div>
 
 
@@ -203,14 +218,27 @@ if (hay_ligas_recuperadas == null || hay_ligas_recuperadas.length()<1){
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Inscribir a una Liga.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado.");
+					%>		
+							
+					<h3>Error producido en la inscripcion a una liga</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 

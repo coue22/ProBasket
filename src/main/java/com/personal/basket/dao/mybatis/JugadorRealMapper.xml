@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.JugadorRealMapper" >
+    
+    <resultMap id="result" type="com.personal.basket.model.JugadorRealModelDTO">
+        <result property="codJugador" column="codjugador"/>
+        <result property="activo" column="activo"/>
+        <result property="nombre" column="nombre"/>
+        <result property="apellidos" column="apellidos"/>
+        <result property="puesto" column="puesto"/>
+        <result property="altura" column="altura"/>
+        <result property="peso" column="peso"/>
+        <result property="fecalta" column="fecalta" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="precio" column="precio"/>
+        <result property="codEquipoReal" column="codequiporeal"/>
+        <result property="codNacionalidad" column="codnacionalidad"/>
+    </resultMap>
+
+
+    <select id="getJugadores" parameterType="int" resultMap="result">
+        SELECT codjugador, activo, nombre, apellidos, puesto, altura, peso, fecalta, precio, codequiporeal, codnacionalidad FROM jugador;
+    </select>
+
+	<insert id="insertJugador" parameterType="com.personal.basket.model.JugadorRealModelDTO">		
+		insert into jugador (codjugador, activo, nombre, apellidos, puesto, altura, peso, fecalta, precio, codequiporeal, codnacionalidad) 
+					values (#{codJugador},#{activo},#{nombre},#{apellidos},#{puesto},#{altura},#{peso},now(),#{precio}, #{codEquipoReal},#{codNacionalidad});
+	</insert>
+	  
+    <update id="cambiarEstadoJugador" parameterType="com.personal.basket.model.JugadorRealModelDTO">
+        update jugador set
+        	activo = #{activo}
+        where codjugador = #{codJugador}        
+    </update>
+    	
+	
+<!-- http://www.javacodegeeks.com/2012/02/mybatis-3-spring-integration-tutorial.html -->
+</mapper>
+

@@ -10,7 +10,18 @@ String identificado = (String)objSesion.getAttribute(ConstantesSesion.IDENTIFICA
 if (identificado == null || identificado.length()<1){
 	identificado = Ctes.NO;
 }
+
+String loginUsuario = (String)objSesion.getAttribute(ConstantesSesion.LOGIN_USUARIO);
+if (loginUsuario == null || loginUsuario.length()<1){
+	loginUsuario = "";
+}
+
+
+
 %>
+
+
+	
 
 <script>
 
@@ -168,6 +179,10 @@ $(document).ready(function(){
 			document.formAdminEquipos.submit();
 		}else if (opc == '206'){
 			document.formAdminJugadores.submit();
+		}else if (opc == '207'){
+			document.formAdminCustomJugador.submit();			
+		}else if (opc == '208'){
+			document.formAdminInsertarJugador.submit();				
 		}else if (opc == '301'){
 			document.formDraft.submit();
 		}
@@ -175,6 +190,7 @@ $(document).ready(function(){
 	}
 	
 </script>
+
 
 
 		<div id="header">
@@ -196,9 +212,14 @@ $(document).ready(function(){
  		
  		<div id="subheader">
 				<% if (identificado.equals(Ctes.SI)) { %>
+
 					<a class="miRegistro" onclick="CerrarSesion();" href="#">Cerrar Sesión</a>
-				<%}else{%>	
+					<a class="miRegistro2" href="#"><b>Bienvenido <%=loginUsuario%></b></a>
+
+				<%}else{%>
+						
 					<a class="miRegistro" onclick="Registrarse();" href="#">Registrarse</a>
+	 		
 				<%}%> 		
  		</div>
  		
@@ -307,6 +328,17 @@ $(document).ready(function(){
 	<input type="hidden" name="XXXX" />
 </form>
 
+<!-- 207 -->
+<form name="formAdminCustomJugador" action="adminCustomJugador" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+<!-- 208 -->
+<form name="formAdminInsertarJugador" action="adminInsertarJugador" method="POST">
+	<input type="hidden" name="XXXX" />
+</form>
+
+
 <!-- 301 -->
 <form name="formDraft" action="draft" method="POST">
 	<input type="hidden" name="XXXX" />
@@ -314,13 +346,19 @@ $(document).ready(function(){
 
 
 <form name="formRegistrarse" action="registrarse" method="POST">
-	<input type="hidden" name="XXXX" />
+	<input type="hidden" name="operacion" value='REGISTRO' />
 </form>
 
  
 <form name="formCerrarSesion" action="cerrarSesion" method="POST">
 	<!-- <input type="hidden" name="cerrarSesion" id="cerrarSesion" value="S" /> -->
 </form>
+
+<form name="formError" action="error" method="POST">
+	<input type="hidden" name="operacion" value="" />
+	<input type="hidden" name="detalle" value="" />
+</form>
+
 
 
  		

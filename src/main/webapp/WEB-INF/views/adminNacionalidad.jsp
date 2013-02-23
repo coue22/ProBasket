@@ -25,11 +25,12 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 
 
-	function eliminarConfiguracion(codigoNacion){
+	function eliminarConfiguracion(){
 		
 		var selNacion=document.getElementById('selNacion');
 		
@@ -41,14 +42,20 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 
 	function insertarNacionalidad(){
 		
-
+		if (InsertaNacionalidadCod.value == ''){
+			alert("El campo codigo debe ir relleno");
+			InsertaNacionalidadCod.focus();
+			return;
+		}	
 		if (InsertaNacionalidadDesc.value == ''){
 			alert("El campo descripcion debe ir relleno");
 			InsertaNacionalidadDesc.focus();
 			return;
 		}		
 			
+		document.formInsertarNacionalidad.codigoNacion.value=InsertaNacionalidadCod.value;
 		document.formInsertarNacionalidad.descripcion.value=InsertaNacionalidadDesc.value;
+		
 		
 		document.formInsertarNacionalidad.submit();			
 		
@@ -129,7 +136,9 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 							<th>Nacionalidad</th>
 						</tr>					
 						<tr>
-							
+							<td>
+								<input type="text" name="InsertaNacionalidadCod" id="InsertaNacionalidadCod" value="" maxlength="4" size="7" class="input" />
+							</td>							
 							<td>
 								<input type="text" name="InsertaNacionalidadDesc" id="InsertaNacionalidadDesc" value="" maxlength="100" size="15" class="input" />
 							</td>
@@ -146,14 +155,27 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Administracion de Nacionalidades.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
+					%>		
+							
+					<h3>Error producido en administracion de nacionalidades</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 
@@ -170,6 +192,7 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	
 <form name="formInsertarNacionalidad" action="adminNacionalidad" method="POST">
 	<input type="hidden" name="operacion" value="CONFIG_NACIO_CONFIRMAR_INSERTAR" />
+	<input type="hidden" name="codigoNacion" value="" />
 	<input type="hidden" name="descripcion" value="" />
 </form>	
 

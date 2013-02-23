@@ -25,6 +25,7 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 
@@ -51,15 +52,20 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 	function insertarRol(){
 		
 
+		if (InsertaCodRol.value == ''){
+			alert("El campo del codigo es obligatorio.");
+			InsertaCodRol.focus();
+			return;
+		}		
 		if (InsertaDescRol.value == ''){
 			alert("El campo de la descripcion es obligatorio.");
 			InsertaDescRol.focus();
 			return;
-		}		
+		}				
 			
+		document.formInsertarRol.codRol.value=InsertaCodRol.value;
 		document.formInsertarRol.descRol.value=InsertaDescRol.value;
-		
-		
+
 		document.formInsertarRol.submit();			
 		
 	}
@@ -134,14 +140,17 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 													
 					</table>
 					
-					<h3>Insertar una operacion</h3>
+					<h3>Insertar un Role</h3>
 					<table>
 						<tr>
-							<th>Desc. Operacion</th>
+							<th>Codigo</th>
+							<th>Descripcion</th>
 						</tr>					
 						<tr>
 
-							
+							<td>
+								<input type="text" name="InsertaCodRol" id="InsertaCodRol" value="" maxlength="3" size="6" class="input" />
+							</td>							
 							<td>
 								<input type="text" name="InsertaDescRol" id="InsertaDescRol" value="" maxlength="100" size="30" class="input" />
 							</td>
@@ -158,14 +167,27 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Administracion de Roles.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
+					%>		
+							
+					<h3>Error producido en administracion de Roles</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 
@@ -189,6 +211,7 @@ if (identificadoAdministrador == null || identificadoAdministrador.length()<1){
 <form name="formInsertarRol" action="adminRol" method="POST">
 	<input type="hidden" name="operacion" value="CONFIG_ROL_CONFIRMAR_INSERTAR" />
 	
+	<input type="hidden" name="codRol" value="" />
 	<input type="hidden" name="descRol" value="" />
 	
 </form>

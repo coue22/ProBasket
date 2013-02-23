@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.personal.basket.ctes.*" %>
+<%@ page import="java.util.ArrayList" language="java" %>
 
 	
 <%
@@ -9,19 +10,37 @@ if (identificado == null || identificado.length()<1){
 	identificado = Ctes.NO;
 }
 
+String loginUsuario = (String)objSesion.getAttribute(ConstantesSesion.LOGIN_USUARIO);
+if (loginUsuario == null || loginUsuario.length()<1){
+	loginUsuario = Ctes.NO_ASIGNADO_LOGIN;
+}
 
-String nbLiga = (String)request.getAttribute("DRAFT_NB_LIGA");
+String codLiga = (String)objSesion.getAttribute(ConstantesSesion.MI_LIGA);
+if (codLiga == null || codLiga.length()<1){
+	codLiga = Ctes.NO;
+}
+
+String codEquipo = (String)objSesion.getAttribute(ConstantesSesion.MI_EQUIPO);
+if (codEquipo == null || codEquipo.length()<1){
+	codEquipo = Ctes.NO;
+}
+
+String nbLiga = (String)request.getAttribute(Ctes.DRAFT_NB_LIGA);
 if (nbLiga == null || nbLiga.length()<1){
 	nbLiga = "";
 }
-String nbEquipo = (String)request.getAttribute("DRAFT_NB_EQUIPO");
+
+String nbEquipo = (String)request.getAttribute(Ctes.DRAFT_NB_EQUIPO);
 if (nbEquipo == null || nbEquipo.length()<1){
 	nbEquipo = "";
 }
-String economia = (String)request.getAttribute("DRAFT_ECONOMIA");
-if (economia == null || economia.length()<1){
-	economia = "";
+
+String dineroDisponible =String.valueOf(request.getAttribute(Ctes.DRAFT_ECONOMIA));
+if (dineroDisponible == null || dineroDisponible.length()<1){
+	dineroDisponible = "";
 }
+
+
 
 
 /*
@@ -47,78 +66,103 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 
 
+	$.ajaxSetup({
+	    cache: false
+	});
+	
+	function doConfirmarDraft(codliga, codequipo, sel1,sel2,sel3,sel4,sel5,sel6,sel7,sel8,sel9,sel10){
+	
+        $.ajax({
+	          url: 'confirmarDraft',
+	          data: ({codliga : codliga, 
+		        	  codequipo : codequipo, 
+		        	  draft1 : sel1, 
+		        	  draft2 : sel2, 
+		        	  draft3 : sel3, 
+		        	  draft4 : sel4, 
+		        	  draft5 : sel5, 
+		        	  draft6 : sel6, 
+		        	  draft7 : sel7, 
+		        	  draft8 : sel8, 
+		        	  draft9 : sel9, 
+		        	  draft10 : sel10}),
+	          success: function(data) {
+	        	  alert(data);
+	            	//$("textarea#mensaje_entrada").val(data);//send response to textarea
+				 	//$("div#entrada").val(data);//send response to textarea
+	          }
+		});
 
+	}
 /*
-	function inicializar(){
-	
-		document.getElementById('CHPublica').checked = false;
-		document.getElementById('CHPublica').value = "N";
-
-	}
-
-	function crearLiga()
-	{
-		var nbliga=document.getElementById('InsertaNBLiga');
-		var pwdLiga=document.getElementById('InsertaPWDLiga');
-		var pwd2Liga=document.getElementById('InsertaPWD2Liga');
-		var chPublica=document.getElementById('CHPublica');
-		
-		chPublica.value = "N";
-		if (chPublica.checked == true)
-			chPublica.value = "S";
-		
-		
-		//Se valida que el nombre de la liga
-		if (nbliga.value=='' )
-		{
-			alert("El nombre de la liga debe ir relleno.");
-			
-		}else{
-			
-			if (chPublica.checked == true){
-				document.formConfirmarLiga.nbLiga.value=InsertaNBLiga.value;
-				document.formConfirmarLiga.pwdLiga.value="";
-				document.formConfirmarLiga.pwd2Liga.value="";
-				document.formConfirmarLiga.chPublica.value=chPublica.value;
-				
-				document.formConfirmarLiga.submit();
-				
-			}else{
-				
-				if (pwdLiga.value == '')
-					alert("La contraseña debe ir rellena.");
-				else if (pwd2Liga.value == '')
-					alert("La re-contraseña debe ir rellena.");
-				else if (pwdLiga.value != pwd2Liga.value){
-					alert("Las contraseñas deben ser iguales.");	
-					InsertaPWDLiga.value='';
-					InsertaPWD2Liga.value='';
-				}else{
-					document.formConfirmarLiga.nbLiga.value=InsertaNBLiga.value;
-					document.formConfirmarLiga.pwdLiga.value=InsertaPWDLiga.value;
-					document.formConfirmarLiga.pwd2Liga.value=InsertaPWD2Liga.value;
-					document.formConfirmarLiga.chPublica.value=chPublica.value;
+	function doRefrescarDraft(){
+        $.ajax({
+	          url: 'refrescarDraft',
+	          data: ('sinvalor'),
+	          success: function(data) {
+	        	  alert(data);
+	            	//$("textarea#mensaje_entrada").val(data);//send response to textarea
+				 	//$("div#entrada").val(data);//send response to textarea
 					
-					document.formConfirmarLiga.submit();
-					
-				}				
-			}
-
-		}
-	}
-	
-	// Cuando se indica que es publica la liga se borran las contraseñas.
-	function handleChange(cb){
-		if (cb.checked == true){
-			document.getElementById('InsertaPWDLiga').value='';
-			document.getElementById('InsertaPWD2Liga').value='';			
-		}
+					cargarJugadoresDraft();
+				
+	          }
+		});
 	}
 */
+	function cargarJugadoresDraft(){
+
+		var contador = 1;
+		<c:forEach var="fila" items="${draft_jugadores_draft}" varStatus="status">
+			
+			switch(contador){
+				case 1: selJugador1.value = '${fila.codigoJugador}'; 
+				break;
+				case 2: selJugador2.value = '${fila.codigoJugador}'; 
+				break;
+				case 3: selJugador3.value = '${fila.codigoJugador}'; 
+				break;
+				case 4: selJugador4.value = '${fila.codigoJugador}'; 
+				break;
+				case 5: selJugador5.value = '${fila.codigoJugador}'; 
+				break;
+				case 6: selJugador6.value = '${fila.codigoJugador}'; 
+				break;
+				case 7: selJugador7.value = '${fila.codigoJugador}'; 
+				break;
+				case 8: selJugador8.value = '${fila.codigoJugador}'; 
+				break;
+				case 9: selJugador9.value = '${fila.codigoJugador}'; 
+				break;
+				case 10: selJugador10.value = '${fila.codigoJugador}'; 
+				break;
+
+			}
+
+			contador++;
+			
+		</c:forEach>
+		/*
+		<c:forEach var="fila" items="${draft_jugadores_draft}" varStatus="status">
+
+		<select name="selJugador1" id="selJugador1">
+				
+					<option value=${fila.codigoJugador}>${fila.codigoJugador}</option>
+				
+		</select> 	
+		<c:out value="${fila.codigoJugador}" />
+		
+		</c:forEach>
+	*/
+//alert("ivan1");
+//selJugador1.value="A0R";
+	}
+
 
 </script>
 
@@ -146,6 +190,11 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 
 <body>
 	
+	<input type="hidden" name="loginUsuario" value="<%=loginUsuario%>" />
+	<input type="hidden" name="codLiga" value="<%=codLiga%>" />
+	<input type="hidden" name="codEquipo" value="<%=codEquipo%>" />
+	<input type="hidden" name="dineroDisponible" value="<%=dineroDisponible%>" />
+	
 	<div id="cont">
 	
 
@@ -157,71 +206,236 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 		
 			<% if (identificado.equalsIgnoreCase(Ctes.SI)){ %>
 
+				<% if (!loginUsuario.equalsIgnoreCase(ConstantesSesion.LOGIN_USUARIO)){ %>
+
 					<div id="menuPeticion">
 					
-						<h3><b>Draft</b></h3>
+<%-- 						<h3><b><%=nbLiga%></b></h3> --%>
+<%-- 						<h3><b><%=nbEquipo%>, dinero disponible <%=dineroDisponible%></b></h3> --%>
+
+
+
+						<!-- SE CARGAN LOS COMBOS PARA LA SELECCION -->
+						<!-- SE CARGAN LOS COMBOS PARA LA SELECCION -->
+						<!-- SE CARGAN LOS COMBOS PARA LA SELECCION -->
+						<!-- SE CARGAN LOS COMBOS PARA LA SELECCION -->
+						<!-- SE CARGAN LOS COMBOS PARA LA SELECCION -->
+						<!-- SE CARGAN LOS COMBOS PARA LA SELECCION -->
 						
-							<!-- Tabla de resumen -->
+						<h3>Preseleccion de jugadores</h3>
+						
+						<table>
 							
 
-
-<!-- 					<br /> -->
-<!-- 					<br />		 -->
 					
-<table border="2">
-<caption>Nombre Liga: <%=nbLiga%><br />Nombre Equipo: <%=nbEquipo%><br />Dinero disponible: <%=economia%> &#8364;</caption>
-<thead>
-	<tr>
-		<th width="65%" scope="col">Nombre</th>
-		<th width="10%" scope="col">Posicion</th>
-		<th width="20%" scope="col">Precio</th>
-		<th width="5%" scope="col"></th>
-	</tr>
-</thead>
+							<tr>
+								<th>Jugador 1</th>
+								<th>
+									<select name="selJugador1" id="selJugador1">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+									</select> 		
+								</th>		
+								<th>Jugador 2</th>
+								<th>
+									<select name="selJugador2" id="selJugador2">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
 
-<tfoot>
-	<tr>
-		<th scope="row" colspan="4" align="right">Total: 2 jugadores</th>
-	</tr>
-</tfoot>
-
-<tbody>
-<tr>
-	<td scope="row">Kurz, Robert</td>
-	<td>Pivot</td>
-	<td>1.265.698 &#8364;</td>
-	<td><a href="http://www.adobati.it/labs/CSSTable/0m4r.table.css" title="Download the rows table template CSS file">Download</a></td>
-</tr>
-
-<tr class="odd">
-	<td scope="row">Mainoldi, Leo</td>
-	<td>Alero</td>
-	<td>663.258 &#8364;</td>
-	<td><a href="http://www.admixweb.com/downloads/csstablegallery/bluedream.css" title="Download the Blue Dream CSS file">Download</a></td>
-</tr>
-
-</tbody>
-</table>
+									</select> 		
+								</th>
+							</tr>
 	
+							<tr>
+								<th>Jugador 3</th>
+								<th>
+									<select name="selJugador3" id="selJugador3">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>	
+								<th>Jugador 4</th>
+								<th>
+									<select name="selJugador4" id="selJugador4">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>
+							</tr>	
+		
 
 							
-<!-- 							<span class="resaltarTorcido"> -->
-<%-- 								<%=errorCrearLiga%> --%>
-<!-- 							</span> -->
+							<tr>
+								<th>Jugador 5</th>
+								<th>
+									<select name="selJugador5" id="selJugador5">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>	
+								<th>Jugador 6</th>
+								<th>
+									<select name="selJugador6" id="selJugador6">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>	
+							</tr>	
 							
-						</div>
+
+							<tr>
+								<th>Jugador 7</th>
+								<th>
+									<select name="selJugador7" id="selJugador7">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>
+								<th>Jugador 8</th>
+								<th>
+									<select name="selJugador8" id="selJugador8">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>	
+							</tr>	
+							<tr>
+								<th>Jugador 9</th>
+								<th>
+									<select name="selJugador9" id="selJugador9">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>
+								<th>Jugador 10</th>
+								<th>
+									<select name="selJugador10" id="selJugador10">
+										<option value="-1">Selecciona jugador</option>
+										<c:forEach var="fila" items="${draft_jugadores_recuperados_sin_equipo}" varStatus="status">
+											<option value=${fila.codigoJugador}>${fila.apellidos}, ${fila.nombre}  (${fila.puesto}) - ${fila.dinero} &#8364;</option>
+										</c:forEach>
+
+									</select> 		
+								</th>	
+							</tr>	
+							
+							<tr>
+								<th colspan="4">									
+									<input align="right" type="button" name="botonAceptarJug" value="Confirmar Selecci&oacute;n de Draft" 
+										maxlength="10" size="10" class="input" 
+										onclick="doConfirmarDraft('<%=codLiga%>','<%=codEquipo%>',selJugador1.value,selJugador2.value,selJugador3.value,selJugador4.value,selJugador5.value,selJugador6.value,selJugador7.value,selJugador8.value,selJugador9.value,selJugador10.value);" />
+								</th>
+<!-- 								<th> -->
+<!-- 				  					<ul id="icons" class="ui-widget ui-helper-clearfix"> -->
+<!-- 			  							<li class="ui-state-default ui-corner-all" title="refrescar" onclick="doRefrescarDraft();"><span class="ui-icon ui-icon-refresh"></span></li> -->
+<!-- 				  					</ul> -->
+<!-- 				  				</th>								 -->
+							</tr>
+							
+						</table>
+	
+						
+						<!-- VISUALIZACION DE LAS ELECCIONES DEL DRAFT -->
+						<!-- VISUALIZACION DE LAS ELECCIONES DEL DRAFT -->
+						<!-- VISUALIZACION DE LAS ELECCIONES DEL DRAFT -->
+						<!-- VISUALIZACION DE LAS ELECCIONES DEL DRAFT -->
+						<!-- HACERLOS CON HORARIOS -->
+						
+						
+						
+						<!-- TODAS LAS ELECCIONES DEL DRAFT -->
+						<!-- TODAS LAS ELECCIONES DEL DRAFT -->
+						<!-- TODAS LAS ELECCIONES DEL DRAFT -->
+						<!-- TODAS LAS ELECCIONES DEL DRAFT -->
+						<!-- TODAS LAS ELECCIONES DEL DRAFT -->
+						<!-- TODAS LAS ELECCIONES DEL DRAFT -->
+						<!-- HACERLO -->
+						
+						
+						
+						<!-- Se cargan los jugadores guardados para seleccion de draft -->
+						<!-- OJO, esto va al final -->
+						<script>
+							cargarJugadoresDraft();
+						</script>
+
+
 					
+					</div>
+				<% }else{ %>
+
+					<div id="menuPeticion">
+						<!-- Se redigira a error... -->
+						<%
+							objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Draft.");
+							objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder al Draft sin estar logeado.");
+						%>		
+								
+						<h3>Error producido en el Draft</h3>
+						
+						<table>
+							<tr>
+								<td>
+									<input type="button" name="botonError" value="Ver Detalle" 
+											maxlength="10" size="10" class="input" 
+											onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																					'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+								
+								</td>
+							</tr>						
+						</table>
+					</div>	
+				
+				<% } %>
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Draft.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado.");
+					%>		
+							
+					<h3>Error producido en el Draft</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 

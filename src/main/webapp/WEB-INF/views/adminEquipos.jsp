@@ -18,6 +18,7 @@ if (debeModificaEquipo == null || debeModificaEquipo.length()<1){
 String ModificaEquipoID = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_ID);
 String ModificaEquipoNB = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_NB);
 String ModificaEquipoSG = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_SG);
+String ModificaEquipoPA = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_MODIFICAR_PA);
 
 
 String debeInsertarEquipo = (String)request.getAttribute(Ctes.EQUIPO_ADMIN_MOSTRAR_INSERTAR);
@@ -35,23 +36,25 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
    	
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Administrador de Equipos</title>
+<title>Administrador de Equipos Reales</title>
 
 	<link media="screen" href="css/estilos.css" type="text/css" rel="stylesheet"/>
 	<link href="css/redmond/jquery-ui-1.9.0.custom.css" type="text/css" rel="stylesheet">
 	<script src="js/jquery-1.8.2.js"></script>
 	<script src="js/jquery-ui-1.9.0.custom.js"></script>
 	<script type="text/javascript" src="js/jquery.tablednd.0.7.min.js"></script>
+	<script type="text/javascript" src="js/error.js"></script>
 	
 <script language="JavaScript">
 
-	function modificarEquipo(idEquipoModificar, equipoNombre, equipoSiglas){
+	function modificarEquipo(idEquipoModificar, equipoNombre, equipoSiglas, equipoPatrocinio){
 		
 		//alert("Equipo a Modificar:" + idEquipoModificar);
 		
 		document.formModificarEquipo.idEquipoModificar.value=idEquipoModificar;
 		document.formModificarEquipo.equipoNombre.value=equipoNombre;
 		document.formModificarEquipo.equipoSiglas.value=equipoSiglas;
+		document.formModificarEquipo.equipoPatrocinio.value=equipoPatrocinio;
 		
 		document.formModificarEquipo.submit();	
 	}
@@ -65,6 +68,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 		document.formConfirmarModificarEquipo.idEquipoModificar.value=idEquipoModificar;
 		document.formConfirmarModificarEquipo.equipoNombre.value=ModificaEquipoNBConfirmar.value;
 		document.formConfirmarModificarEquipo.equipoSiglas.value=ModificaEquipoSGConfirmar.value;
+		document.formConfirmarModificarEquipo.equipoPatrocinio.value=ModificaEquipoPAConfirmar.value;
 		document.formConfirmarModificarEquipo.submit();
 	}	
 
@@ -78,6 +82,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 	{
 		document.formConfirmarInsertarEquipo.equipoNombre.value=InsertaEquipoNBConfirmar.value;
 		document.formConfirmarInsertarEquipo.equipoSiglas.value=InsertaEquipoSGConfirmar.value;
+		document.formConfirmarInsertarEquipo.equipoPatrocinio.value=InsertaEquipoPAConfirmar.value;
 		document.formConfirmarInsertarEquipo.submit();
 	}
 	
@@ -130,6 +135,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 						<th>Codigo</th>
 						<th>Nombre</th>
 						<th>Siglas</th>
+						<th>Patrocinio</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -150,10 +156,11 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 				  			<td>${fila.value.codigoEquipoReal}</td>
 				  			<td>${fila.value.nombre}</td>
 				  			<td>${fila.value.siglas}</td>
+				  			<td>${fila.value.patrocinio}</td>
 
 				  			<td>
 				  				<ul id="icons" class="ui-widget ui-helper-clearfix">
-			  					<li class="ui-state-default ui-corner-all" title="modificar" onclick="modificarEquipo('${fila.value.codigoEquipoReal}','${fila.value.nombre}','${fila.value.siglas}');"><span class="ui-icon ui-icon-circle-close"></span></li>
+			  					<li class="ui-state-default ui-corner-all" title="modificar" onclick="modificarEquipo('${fila.value.codigoEquipoReal}','${fila.value.nombre}','${fila.value.siglas}','${fila.value.patrocinio}');"><span class="ui-icon ui-icon-circle-close"></span></li>
 				  				</ul>
 				  			</td>
 				  			
@@ -197,6 +204,9 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 						<p>Siglas
 						<input type="text" name="ModificaEquipoSGConfirmar" id="ModificaEquipoSGConfirmar" value="<%=ModificaEquipoSG%>" maxlength="5" size="5" class="input" />
 						</p>
+						<p>Patrocinio
+						<input type="text" name="ModificaEquipoPAConfirmar" id="ModificaEquipoPAConfirmar" value="<%=ModificaEquipoPA%>" maxlength="5" size="5" class="input" />
+						</p>						
 						<p>
 						<input type="button" name="botonModificar" value="Modificar" maxlength="10" size="10" class="input" onclick="javascript:confirmarModificarEquipo('<%=ModificaEquipoID%>')" />
 						</p>
@@ -214,6 +224,9 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 						<p>Siglas
 						<input type="text" name="InsertaEquipoSGConfirmar" id="InsertaEquipoSGConfirmar" value="" maxlength="5" size="5" class="input" />
 						</p>
+						<p>Patrocinio
+						<input type="text" name="InsertaEquipoPAConfirmar" id="InsertaEquipoPAConfirmar" value="" maxlength="5" size="5" class="input" />
+						</p>						
 						<p>
 						<input type="button" name="botonInsertar" value="Insertar" maxlength="10" size="10" class="input" onclick="javascript:confirmarInsertarEquipo();" />
 						</p>
@@ -225,14 +238,27 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 				
 			<% }else{ %>
 			
-				<!-- Se redigira a error... -->
-				<%
-					objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
-				
-					String redirectURL = "error";
-					response.sendRedirect(redirectURL);
-				%>
-				
+				<div id="menuPeticion">
+					<!-- Se redigira a error... -->
+					<%
+						objSesion.setAttribute(ConstantesSesion.OPERACION_ERROR,"Administracion de Equipos.");
+						objSesion.setAttribute(ConstantesSesion.DETALLE_ERROR," No se puede acceder a la opcion de menu sin estar identificado como Administrador.");
+					%>		
+							
+					<h3>Error producido en administracion de equipos</h3>
+					
+					<table>
+						<tr>
+							<td>
+								<input type="button" name="botonError" value="Ver Detalle" 
+										maxlength="10" size="10" class="input" 
+										onclick="javascript:redireccionarAError('<%=objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR)%>',
+																				'<%=objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR)%>');" />
+							
+							</td>
+						</tr>						
+					</table>	
+				</div>
 			<% } %>
 		
 
@@ -251,6 +277,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 	<input type="hidden" name="idEquipoModificar" value="" />
 	<input type="hidden" name="equipoNombre" value="" />
 	<input type="hidden" name="equipoSiglas" value="" />
+	<input type="hidden" name="equipoPatrocinio" value="" />
 	
 </form>
 
@@ -260,6 +287,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 	<input type="hidden" name="idEquipoModificar" value="" />
 	<input type="hidden" name="equipoNombre" value="" />
 	<input type="hidden" name="equipoSiglas" value="" />
+	<input type="hidden" name="equipoPatrocinio" value="" />
 	
 </form>
 
@@ -272,6 +300,7 @@ if (debeInsertarEquipo == null || debeInsertarEquipo.length()<1){
 	
 	<input type="hidden" name="equipoNombre" value="" />
 	<input type="hidden" name="equipoSiglas" value="" />
+	<input type="hidden" name="equipoPatrocinio" value="" />
 </form>
   	
 

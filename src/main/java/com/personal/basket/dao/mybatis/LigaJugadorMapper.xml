@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.LigaJugadorMapper" >
+
+<!--     <resultMap id="result" type="com.personal.basket.model.LigaJugadorModelDTO"> -->
+<!--         <result property="codLiga" column="codliga"/> -->
+<!--         <result property="codJugador" column="codjugador"/> -->
+<!--         <result property="fecalta" column="fecalta" javaType="java.util.Date" jdbcType="DATE"/> -->
+<!--         <result property="activo" column="activo"/> -->
+<!--         <result property="dinero" column="dinero"/> -->
+<!--         <result property="codEquipo" column="codequipo"/>        -->
+<!--     </resultMap> -->
+
+<!-- http://www.mybatis.org/core/es/statement-builders.html#SelectBuilder -->
+
+    <insert id="asignarJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO">
+    
+        insert into LIGAJUGADOR (CODLIGA, CODJUGADOR, FECALTA, ACTIVO, DINERO, CODEQUIPO) 
+        			values (#{codLiga},#{codJugador},now(),#{activo},#{dinero},#{codEquipo});
+    </insert>
+       
+    <update id="cambiarEstadoJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO">
+        update LIGAJUGADOR set
+        	activo = #{activo}
+        where codjugador = #{codJugador}        
+    </update>
+   
+<!--     <select id="getJugadoresActivos" parameterType="String" resultType="com.personal.basket.model.LigaJugadorModelDTO"> -->
+<!--         SELECT CODJUGADOR, DINERO, CODEQUIPO FROM LIGAJUGADOR where CODLIGA=#{codLiga} AND ACTIVO='S'; -->
+<!--     </select> -->
+    
+
+
+</mapper>
+

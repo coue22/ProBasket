@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.OperacionMapper" >
+    
+    <resultMap id="result" type="com.personal.basket.model.OperacionModelDTO">
+        <result property="codOpera" column="codopera"/>
+        <result property="descripcion" column="descripcion"/>
+    </resultMap>
+
+
+    <select id="getOperacion" parameterType="int" resultMap="result">
+        SELECT codopera, descripcion FROM operacion;
+    </select>
+
+<!-- 	<insert id="insert" parameterType="com.personal.basket.model.ConfiguracionModelDTO">		 -->
+<!-- 		insert into configuracion (parametro, valor) values (#{parametro},#{valor}); -->
+<!-- 	</insert> -->
+	
+
+	
+	
+<!-- http://www.javacodegeeks.com/2012/02/mybatis-3-spring-integration-tutorial.html -->
+</mapper>
+

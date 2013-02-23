@@ -19,45 +19,44 @@ import com.personal.basket.dtos.UsuarioDTO;
 import com.personal.basket.dtos.MenuDTO;
 
 import com.personal.basket.dao.ConfiguracionMapper;
+import com.personal.basket.dao.DetEconomiaMapper;
+import com.personal.basket.dao.EconomiaMapper;
 import com.personal.basket.dao.MenuMapper;
+import com.personal.basket.dao.UsuarioMapper;
 
-import com.personal.basket.model.ConfiguracionDTO;
+import com.personal.basket.model.ConfiguracionModelDTO;
+import com.personal.basket.model.DetEconomiaModelDTO;
+import com.personal.basket.model.EconomiaModelDTO;
 import com.personal.basket.model.MenuModelDTO;
+import com.personal.basket.model.UsuarioModelDTO;
 
 @Service("catalogoServicio")
 public class CatalogoServicios implements ICatalogoServicios{
 
 
-	//@Autowired
-	@Resource
-	ConfiguracionMapper configuracionMapper;
-	
 	@Resource
 	MenuMapper menuMapper;
-/*
-	public ConfiguracionMapper getConfiguracionMapper() {
-		return configuracionMapper;
-	}
-
-	public void setConfiguracionMapper(ConfiguracionMapper configuracionMapper) {
-		this.configuracionMapper = configuracionMapper;
-	}	
-*/	
+	@Resource
+	UsuarioMapper usuarioMapper;
+	@Resource
+	EconomiaMapper economiaMapper;
+	@Resource
+	DetEconomiaMapper detEconomiaMapper;	
 	
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	// 								SERVICIOS DE MENU									   //
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //	
 
+	@Transactional(readOnly=true)
 	public ArrayList<MenuDTO> mostrarMenu(String idTipoMenu)throws Exception{
 		
 		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
 		
+		// Se realiza una llamada al modelo de datos para devolver el
+		// contenido del menu a pintar
 		List<MenuModelDTO> lModelMenuDTO = menuMapper.getMenus(idTipoMenu);
 		
 
+		// Se recorre la lista para ir rellenando el DTO para la vista.
 		for( MenuModelDTO s : lModelMenuDTO ){
+			
 			MenuDTO menu = new MenuDTO();
 			
 			menu.setIdentificador(s.getCodigo());
@@ -71,198 +70,89 @@ public class CatalogoServicios implements ICatalogoServicios{
 	}
 	
 	
-/*
-	public ArrayList<MenuDTO> mostrarMenu()throws Exception{
-		
-		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
-		
-		
-		MenuDTO mDTO1 = new MenuDTO();
-		mDTO1.setIdentificador(Ctes.MENU_EQUIPO);
-		mDTO1.setNombre("Equipo");
-				
-		MenuDTO mDTO2 = new MenuDTO();
-		mDTO2.setIdentificador(Ctes.MENU_LIGA);
-		mDTO2.setNombre("Liga");
-		
-		
-		lMenu.add(mDTO1);
-		lMenu.add(mDTO2);
-		
-		return lMenu;
-	}
-*/
-	
-/*	
-	public ArrayList<MenuDTO> mostrarMenuDraft()throws Exception{
-		
-		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
-		
-		
-		MenuDTO mDTO1 = new MenuDTO();
-		mDTO1.setIdentificador(Ctes.MENU_DRAFT);
-		mDTO1.setNombre("Draft");
-
-		
-		
-		lMenu.add(mDTO1);
-
-		
-		return lMenu;
-	}	
-*/
-	
-/*	
 	@Transactional
-	public ArrayList<MenuDTO> mostrarMenuNoLiga()throws Exception{
-		
-
-		
-		
-		
-		
-		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
-
-		MenuDTO mDTO1 = new MenuDTO();
-		mDTO1.setIdentificador(Ctes.MENU_NOLIGA_CREAR_LIGA);
-		mDTO1.setNombre("Crear Liga");			
-
-		MenuDTO mDTO2 = new MenuDTO();
-		mDTO2.setIdentificador(Ctes.MENU_NOLIGA_INSCRIBIRSE_LIGA);
-		mDTO2.setNombre("Inscribirse");
-
-		lMenu.add(mDTO1);
-		lMenu.add(mDTO2);
-
-		
-		return lMenu;
-	}	
-*/
-/*
-	public ArrayList<MenuDTO> mostrarMenuAdministrador()throws Exception{
-		
-		ArrayList<MenuDTO> lMenu = new ArrayList<MenuDTO>();
-
-	
-		
-		
-		MenuDTO mDTO1 = new MenuDTO();
-		mDTO1.setIdentificador(Ctes.MENU_ADMIN_CONFIG);
-		mDTO1.setNombre("Configuracion");
-
-		MenuDTO mDTO2 = new MenuDTO();
-		mDTO2.setIdentificador(Ctes.MENU_ADMIN_NACION);
-		mDTO2.setNombre("Nacionalidades");
-		
-		MenuDTO mDTO3 = new MenuDTO();
-		mDTO3.setIdentificador(Ctes.MENU_ADMIN_OPERAC);
-		mDTO3.setNombre("Operaciones");		
-		
-		MenuDTO mDTO4 = new MenuDTO();
-		mDTO4.setIdentificador(Ctes.MENU_ADMIN_ROLES);
-		mDTO4.setNombre("Roles");		
-		
-		MenuDTO mDTO5 = new MenuDTO();
-		mDTO5.setIdentificador(Ctes.MENU_ADMIN_EQUIPOS);
-		mDTO5.setNombre("Equipo");
-
-		MenuDTO mDTO6 = new MenuDTO();
-		mDTO6.setIdentificador(Ctes.MENU_ADMIN_JUGADORES);
-		mDTO6.setNombre("Jugadores");
-		
-		lMenu.add(mDTO1);
-		lMenu.add(mDTO2);
-		lMenu.add(mDTO3);
-		lMenu.add(mDTO4);
-		lMenu.add(mDTO5);
-		lMenu.add(mDTO6);
-
-		
-		return lMenu;
-	}		
-*/	
-
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	// 								OPERACIONES DE EQUIPO								   //
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-/*	
-	public EquipoRealDTO mostrarEquipo()throws Exception{
-		
-		// No se refiere a este equipo.
-		
-		EquipoRealDTO eq1 = new EquipoRealDTO();
-		eq1.setCodigo("00001");
-		eq1.setNombre("Los ventolines");
-		
-		return eq1;
-	
-		
-		
-		return null;
-	}
-*/	
-	
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	// 								SERVICIOS DE LOGIN 									   //
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //	
-	public boolean existeUsuario(String login)throws Exception{
-		
-		// Debe ir a BBDD a comprobar si existe el login
-		
-		//return true; // Existe ya ese login y por lo tanto no se puede continuar con el alta.
-		return false;
-	}
-	
-	public UsuarioDTO registrarse(String login, String pass, 
+	public boolean registrarse(String login, String pass, 
 							   String email, String anoNac, 
-							   String sex, String codigoEcono)throws Exception{
+							   String sex, double dineroInicial)throws Exception{
 		
 
 		
-		UsuarioDTO dPers = new UsuarioDTO();
+		// Comprueba si existe el usuario en BBDD, si no hay un usuario con ese 
+		// login entonces se pueden realizar la insercion de usuario.
+		int nUsuarios = usuarioMapper.existeUsuario(login);
+		if (nUsuarios == 0){
+			
+			// Se obtiene el codigo de economia.
+			String codigoEconomia = economiaMapper.getSecuenciaEconomiaHSQL();
+			
+			// Se genera una Economia con el dinero establecido.
+			EconomiaModelDTO ecDTO = new EconomiaModelDTO();
+			ecDTO.setCodEcono(codigoEconomia);
+			ecDTO.setDinero(dineroInicial);
+			economiaMapper.InicializarEconomia(ecDTO);
+			
+			// Se inserta en el Detalle de la Economia el movimiento.
+			String codigoDetEconomia = detEconomiaMapper.getSecuenciaDetEconomiaHSQL();
+			DetEconomiaModelDTO decDTO = new DetEconomiaModelDTO();
+			decDTO.setCodDetEconomia(codigoDetEconomia);;
+			decDTO.setCodigoEcono(codigoEconomia);
+			decDTO.setCodigoOpera("1");
+			decDTO.setDetalle("Se registra el usuario " + login);
+			//decDTO.setFecha(fecha)
+			detEconomiaMapper.setDetEconomia(decDTO);
+			
+			// Se registra un usuario.
+			UsuarioModelDTO usrModelDTO = new UsuarioModelDTO();
+			usrModelDTO.setLogin(login);
+			usrModelDTO.setPassword(pass);
+			usrModelDTO.setEmail(email);
+			usrModelDTO.setAnoNac(anoNac);
+			usrModelDTO.setSexo(sex);
+			usrModelDTO.setActivo(Ctes.SI);
+			usrModelDTO.setAdministrador(Ctes.NO);
+			usrModelDTO.setCodEcono(codigoEconomia);
+			usrModelDTO.setCodLiga(Ctes.NO_ASIGNADO_LIGA);
+			usrModelDTO.setCodEquipo(Ctes.NO_ASIGNADO_EQUIPO);
+			
+			usuarioMapper.registrar(usrModelDTO);
+			
+			return true;
+		}
+			
 		
-		// Datos de entrada para el registro.
-		dPers.setLogin(login);
-		dPers.setPassword(pass);
-		dPers.setEmail(email);
-		dPers.setEmail(anoNac);
-		dPers.setEmail(sex);
-		dPers.setCodigoEcono(codigoEcono);
-		
-		// Aqui se debe llamar al metodo SQL para registrarse en BBDD.
-		// Se llamda al servicio para registrarse.
-		//boolean bRegistrado = true;
-		
-		//Datos de salida fijos si el servicio funciona.
-		//if (bRegistrado == true){
-		//	dPers.setRegistrado(bRegistrado);
-		//	dPers.setsErrorRegistrado("");			
-		//}else{
-		//	dPers.setRegistrado(false);
-		//	dPers.setsErrorRegistrado("No se puede registrar porque ya existe un usuario con ese login.");	
-		//}
-		
-		
-		
-		// VAlores que siempre son asi pero le dare una vuelta porque luego ni se usan 
-		// para meterlos en sesion, ya que se meten fijos.
-		dPers.setLogado(false);
-		dPers.setCodigoLiga(Ctes.NO_ASIGNADO_LIGA);
-		dPers.setCodigoEquipo(Ctes.NO_ASIGNADO_EQUIPO);
-		dPers.setAdministrador(false);
-		
-		return dPers;
+		return false;
+
 	}
-
+	
+	@Transactional(readOnly=true)
 	public UsuarioDTO loggearse(String log, String pass)throws Exception{
+	
+
+		// Se realiza un select para ver si se puede logar o no.
+		UsuarioModelDTO umDTO = new UsuarioModelDTO();
+		umDTO.setLogin(log);
+		umDTO.setPassword(pass);
+		UsuarioModelDTO umSalDTO = usuarioMapper.logarse(umDTO);
 		
+		if (umSalDTO == null)
+			return null;
+	
+		// Se devuelve el usuario 
 		UsuarioDTO dPers = new UsuarioDTO();
 		dPers.setLogin(log);
-		dPers.setPassword(pass);
+		dPers.setPassword(pass);		
+		dPers.setLogado(true);
+		dPers.setCodigoLiga(umSalDTO.getCodLiga());
+		dPers.setCodigoEquipo(umSalDTO.getCodEquipo());
+		dPers.setCodigoEcono(umSalDTO.getCodEcono());
+		if (umSalDTO.getAdministrador().equalsIgnoreCase(Ctes.SI))
+			dPers.setAdministrador(true);
+		else
+			dPers.setAdministrador(false);
+		
+		
+		return dPers;
+		
 		
 		// Aqui se debe llamar al metodo SQL para logearse en BBDD.
 		
@@ -295,12 +185,12 @@ public class CatalogoServicios implements ICatalogoServicios{
 		//		
 		//		sesion.setAttribute(ConstantesSesion.MI_LIGA, "Codigo de la liga.");
 		//		sesion.setAttribute(ConstantesSesion.MI_EQUIPO, "Codigo de tu equipo.");
-
+/*
 		dPers.setLogado(true);
 		dPers.setCodigoLiga(Ctes.NO_ASIGNADO_LIGA);
 		dPers.setCodigoEquipo(Ctes.NO_ASIGNADO_EQUIPO);
 		dPers.setAdministrador(false);
-			
+*/			
 		
 		//*****************************************************************************
 		//*****************************************************************************		
@@ -309,51 +199,19 @@ public class CatalogoServicios implements ICatalogoServicios{
 		//*****************************************************************************
 		//*****************************************************************************
 		// Perteneces a una liga y tienes un equipo.
-/*		
+/*
 		dPers.setLogado(true);
 		dPers.setCodigoLiga("0000000001");
 		dPers.setCodigoEquipo("0000000021");
 		dPers.setAdministrador(false);
-*/	
+*/
 		
 
-	
-		return dPers;
+
+
+		
 	}
-	
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	// 								SERVICIOS DE ROLE 									   //
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
 
 
-	
-	
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	// 								SERVICIOS DE ECONOMIA								   //
-	// ----------------------------------------------------------------------------------- //
-	// ----------------------------------------------------------------------------------- //
-	public EconomiaDTO setEconomia()throws Exception{
-		
-		// Se accede a base de datos a insertar un registro con el codigo de economia.
-		// Un secuencia para insertar sería lo suyo.
-		
-		EconomiaDTO eDTO = new EconomiaDTO();
-
-		// Devuelve el codigo de la economia.
-		eDTO.setCodigoEcono("0000000024");
-		eDTO.setDinero(Ctes.ECONOMIA_INICIAL);
-		
-		//eDTO.setCodigoEcono(Ctes.NO_ASIGNADO_ECONOMIA);
-		//eDTO.setDinero(Ctes.ECONOMIA_INICIAL); // Este valor cuando va mal no tiene sentido.
-		
-		return eDTO;
-
-	}
-	
-	
-	
 	
 }

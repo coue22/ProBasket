@@ -5,6 +5,7 @@ public class ConstantesSesion {
 	
 	public static final String ADMINISTRADOR 	= "Administrador";		//(NO|SI)
 	public static final String IDENTIFICADO 	= "Identificado";		//(NO|SI)
+	public static final String LOGIN_USUARIO	= "Usuario";			//(0000000000|login de usuario)
 
 	public static final String PERTENECE_LIGA 	= "PerteneceLiga";		//(NO|SI)
 	public static final String TIENE_EQUIPO 	= "TieneEquipo";		//(NO|SI)

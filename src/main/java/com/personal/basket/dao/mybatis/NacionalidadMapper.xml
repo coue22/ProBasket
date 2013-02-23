@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.NacionalidadMapper" >
+    
+    <resultMap id="result" type="com.personal.basket.model.NacionalidadModelDTO">
+        <result property="codNacionalidad" column="codnacionalidad"/>
+        <result property="descripcion" column="descripcion"/>
+    </resultMap>
+
+
+    <select id="getNacionalidad" parameterType="int" resultMap="result">
+        SELECT codnacionalidad, descripcion FROM nacionalidad order by descripcion;
+    </select>
+
+	<insert id="insertarNacionalidad" parameterType="com.personal.basket.model.NacionalidadModelDTO">		
+		insert into nacionalidad (codnacionalidad, descripcion) 
+				values (#{codNacionalidad},#{descripcion});
+	</insert>
+	
+	<delete id="eliminarNacionalidad" parameterType="com.personal.basket.model.NacionalidadModelDTO">		
+		delete from nacionalidad where codnacionalidad = #{codNacionalidad} 
+	</delete>	
+	
+<!--     <update id="modificarRole" parameterType="com.personal.basket.model.NacionalidadModelDTO"> -->
+<!--         update nacionalidad set -->
+<!--         	descripcion = #{descripcion} -->
+<!--         where codnacionalidad = #{codNacionalidad}         -->
+<!--     </update>	 -->
+    	
+
+	
+<!-- http://www.javacodegeeks.com/2012/02/mybatis-3-spring-integration-tutorial.html -->
+</mapper>
+

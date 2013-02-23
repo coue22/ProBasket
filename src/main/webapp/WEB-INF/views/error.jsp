@@ -2,8 +2,8 @@
 	
 <%
 HttpSession objSesion = request.getSession(false);
-String detError = (String)objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR);
 String opError = (String)objSesion.getAttribute(ConstantesSesion.OPERACION_ERROR);
+String detError = (String)objSesion.getAttribute(ConstantesSesion.DETALLE_ERROR);
 
 %>
 

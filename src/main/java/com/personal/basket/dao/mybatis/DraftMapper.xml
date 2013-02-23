@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.DraftMapper" >
+
+    <resultMap id="resultDraft" type="com.personal.basket.model.DraftModelDTO">
+        <result property="codLiga" column="CODLIGA"/>
+        <result property="codEquipo" column="CODEQUIPO"/>
+        <result property="codJugador" column="CODJUGADOR"/>
+        <result property="orden" column="ORDEN"/>
+    </resultMap>
+    
+    
+    <insert id="guardarEleccionDraft" parameterType="com.personal.basket.model.DraftModelDTO">
+    
+        insert into DRAFT (CODLIGA, CODEQUIPO, CODJUGADOR, ORDEN) 
+        			values (#{codLiga},#{codEquipo},#{codJugador},#{orden});
+    </insert>
+    
+	<delete id="eliminarEleccionDraft" parameterType="com.personal.basket.model.DraftModelDTO">		
+		delete from DRAFT where CODLIGA = #{codLiga}  and CODEQUIPO = #{codEquipo}
+	</delete>
+        
+    <select id="getDraftEquipo" parameterType="com.personal.basket.model.DraftModelDTO" resultMap="resultDraft">
+        select CODJUGADOR, ORDEN FROM DRAFT where CODLIGA = #{codLiga}  and CODEQUIPO = #{codEquipo} order by orden asc
+    </select> 
+    
+</mapper>
+
