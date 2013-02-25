@@ -26,11 +26,19 @@
         where codjugador = #{codJugador}        
     </update>
    
-<!--     <select id="getJugadoresActivos" parameterType="String" resultType="com.personal.basket.model.LigaJugadorModelDTO"> -->
-<!--         SELECT CODJUGADOR, DINERO, CODEQUIPO FROM LIGAJUGADOR where CODLIGA=#{codLiga} AND ACTIVO='S'; -->
-<!--     </select> -->
-    
+    <select id="getJugadoresActivosSinEquipo" parameterType="String" resultType="com.personal.basket.model.LigaJugadorModelDTO">
+        SELECT CODJUGADOR, DINERO FROM LIGAJUGADOR where CODLIGA=#{codLiga}  AND ACTIVO='S' AND CODEQUIPO='0000000000' order by dinero asc
+    </select>
 
+    <select id="getLigaJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO" resultType="com.personal.basket.model.LigaJugadorModelDTO">
+        SELECT CODLIGA, CODJUGADOR, FECALTA, ACTIVO, DINERO, CODEQUIPO FROM LIGAJUGADOR where CODLIGA=#{codLiga} AND CODJUGADOR=#{codJugador}
+    </select>
+
+    <update id="asignarEquipoAJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO">
+        update LIGAJUGADOR set
+        	CODEQUIPO = #{codEquipo}
+        where CODLIGA = #{codLiga} AND CODJUGADOR = #{codJugador} 
+    </update>
 
 </mapper>
 

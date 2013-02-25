@@ -24,6 +24,16 @@
     <select id="getDraftEquipo" parameterType="com.personal.basket.model.DraftModelDTO" resultMap="resultDraft">
         select CODJUGADOR, ORDEN FROM DRAFT where CODLIGA = #{codLiga}  and CODEQUIPO = #{codEquipo} order by orden asc
     </select> 
+
+	<delete id="eliminarJugadorDelDraft" parameterType="com.personal.basket.model.DraftModelDTO">		
+		delete from DRAFT where CODLIGA = #{codLiga}  and CODJUGADOR = #{codJugador}
+	</delete>
     
+    <delete id="eliminarJugadorEquipoDelDraft" parameterType="com.personal.basket.model.DraftModelDTO">		
+		delete from DRAFT where CODLIGA = #{codLiga}  and CODEQUIPO = #{codEquipo} and CODJUGADOR = #{codJugador}
+	</delete>
+
+	
+	
 </mapper>
 

@@ -100,11 +100,7 @@ public class HomeController {
 	
 	@Autowired
 	ServiciosDraft serviciosDraft;
-	
-	
-	
-	
-	
+
 
 	public CatalogoServicios getCatalogoServicio() {
 		return catalogoServicio;
@@ -113,8 +109,6 @@ public class HomeController {
 		this.catalogoServicio = catalogoServicio;
 	}
 
-
-	
 	public ServiciosAdministracion getServicioAdministracion() {
 		return servicioAdministracion;
 	}
@@ -122,7 +116,6 @@ public class HomeController {
 			ServiciosAdministracion servicioAdministracion) {
 		this.servicioAdministracion = servicioAdministracion;
 	}
-	
 
 	public ServiciosGestionLigas getServicioGestionLigas() {
 		return servicioGestionLigas;
@@ -131,17 +124,12 @@ public class HomeController {
 		this.servicioGestionLigas = servicioGestionLigas;
 	}
 	
-	
-	
 	public ServiciosSingleton getServicioSingleton() {
 		return servicioSingleton;
 	}
 	public void setServicioSingleton(ServiciosSingleton servicioSingleton) {
 		this.servicioSingleton = servicioSingleton;
 	}
-	
-	
-	
 	
 	public ServiciosDraft getServiciosDraft() {
 		return serviciosDraft;
@@ -1238,6 +1226,18 @@ public class HomeController {
 				// sus elecciones.				
 				if (parametro.equalsIgnoreCase(Ctes.MAPA_CONFIGURACION_DRAFT) 
 						&& valor.equalsIgnoreCase(Ctes.SI)){
+					
+					
+					// Se realiza una comprobacion de cortesia para saber si existe la variable de entorno turno draft.
+					ConfiguracionDTO cDTOTurnoDraft = null;
+					try {
+						cDTOTurnoDraft = Util.getValorMapaConfiguracion(hmConfiguracion, Ctes.MAPA_CONFIGURACION_TURNO_DRAFT);
+					} catch (Exception e1) {
+						sesion.setAttribute(ConstantesSesion.OPERACION_ERROR, "Error al generar los turnos del draft.");
+						sesion.setAttribute(ConstantesSesion.DETALLE_ERROR, "Sin la variable de entorno del TurnoDraft no se puede continuar.");
+						return "error";
+					}	
+					
 					
 					System.out.println("ESTABLECER eleccion de draft para cada liga.");
 					try {

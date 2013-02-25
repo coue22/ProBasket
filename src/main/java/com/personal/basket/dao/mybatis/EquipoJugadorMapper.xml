@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.personal.basket.dao.EquipoJugadorMapper" >
+
+    <resultMap id="result" type="com.personal.basket.model.EquipoJugadorModelDTO">
+        <result property="codEquipo" column="codequipo"/>
+        <result property="codJugador" column="codjugador"/>
+        <result property="fecalta" column="fecalta" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="fecbaja" column="fecbaja" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="precioventa" column="precioventa"/>
+        <result property="indemnizacion" column="indemnizacion"/>
+        <result property="valoraciontemp" column="valoraciontemp"/>
+        <result property="nomina" column="nomina"/>
+        <result property="codRole" column="codrole"/>       
+    </resultMap>
+    
+ 
+	    
+    <insert id="asignarJugador" parameterType="com.personal.basket.model.EquipoJugadorModelDTO">
+    
+        insert into EQUIPOJUGADOR (CODEQUIPO, CODJUGADOR, FECALTA, FECBAJA, precioventa, indemnizacion, valoraciontemp,nomina,codRole ) 
+        			values (#{codEquipo},#{codJugador},#{fecalta},#{fecbaja},#{precioventa},#{indemnizacion},#{valoraciontemp},#{nomina},#{codRole});
+    </insert>
+    
+<!-- http://www.mybatis.org/core/es/statement-builders.html#SelectBuilder -->
+ 
+<!--     <insert id="asignarJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO"> -->
+    
+<!--         insert into LIGAJUGADOR (CODLIGA, CODJUGADOR, FECALTA, ACTIVO, DINERO, CODEQUIPO)  -->
+<!--         			values (#{codLiga},#{codJugador},now(),#{activo},#{dinero},#{codEquipo}); -->
+<!--     </insert> -->
+       
+<!--     <update id="cambiarEstadoJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO"> -->
+<!--         update LIGAJUGADOR set -->
+<!--         	activo = #{activo} -->
+<!--         where codjugador = #{codJugador}         -->
+<!--     </update> -->
+   
+<!--     <select id="getJugadoresActivosSinEquipo" parameterType="String" resultType="com.personal.basket.model.LigaJugadorModelDTO"> -->
+<!--         SELECT CODJUGADOR, DINERO FROM LIGAJUGADOR where CODLIGA=#{codLiga}  AND ACTIVO='S' AND CODEQUIPO='0000000000' -->
+<!--     </select> -->
+
+<!--     <select id="getLigaJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO" resultType="com.personal.basket.model.LigaJugadorModelDTO"> -->
+<!--         SELECT CODLIGA, CODJUGADOR, FECALTA, ACTIVO, DINERO, CODEQUIPO FROM LIGAJUGADOR where CODLIGA=#{codLiga} AND CODJUGADOR=#{codJugador} -->
+<!--     </select> -->
+
+<!--     <update id="asignarEquipoAJugador" parameterType="com.personal.basket.model.LigaJugadorModelDTO"> -->
+<!--         update LIGAJUGADOR set -->
+<!--         	CODEQUIPO = #{codEquipo} -->
+<!--         where CODLIGA = #{codLiga} AND CODJUGADOR = #{codJugador}  -->
+<!--     </update> -->
+
+</mapper>
+

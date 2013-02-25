@@ -37,7 +37,11 @@
         	FROM USUARIO
         where login=#{login};
     </select>
-            
+    
+    <select id="getDatosUsuarioPorLigayEquipo" parameterType="com.personal.basket.model.UsuarioModelDTO" resultType="com.personal.basket.model.UsuarioModelDTO">
+        SELECT password, email, nacimiento, sexo, activo, administrador, codecono, codliga, codequipo 
+        	FROM USUARIO where codliga = #{codLiga} AND codequipo = #{codEquipo}
+    </select>
 	
 </mapper>
 

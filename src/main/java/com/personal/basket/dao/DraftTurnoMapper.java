@@ -13,5 +13,8 @@ public interface DraftTurnoMapper {
 	// no falle.
 	void eliminarTurnosDraft();
 	
+	// A partir de una liga y un turno, se obtiene el equipo al cual le toca seleccionar.
+	DraftTurnoModelDTO getEquipoTurnoDraft(DraftTurnoModelDTO dtmDTO);
+	
 } 
 

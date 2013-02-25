@@ -2,14 +2,16 @@ package com.personal.basket.dao;
 
 import java.util.List;
 
-import com.personal.basket.model.LigaJugadorModelDTO;
+import com.personal.basket.model.EquipoJugadorModelDTO;
 
 
 
 
-public interface LigaJugadorMapper {
+public interface EquipoJugadorMapper {
 
-
+	void asignarJugador(EquipoJugadorModelDTO ejmDTO);
+ 
+/*
 	// Se asignan jugador a una liga. 
 	// Utilizada 
 	//		crear un liga.
@@ -29,7 +31,7 @@ public interface LigaJugadorMapper {
 	
 	// Se asigna a un equipo para un jugador de una liga.
 	void asignarEquipoAJugador(LigaJugadorModelDTO jrmDTO);	
-	
+*/	
 	
 	
 } 

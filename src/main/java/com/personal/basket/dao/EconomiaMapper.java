@@ -12,9 +12,14 @@ public interface EconomiaMapper {
 	String getSecuenciaEconomiaHSQL();
 	
 	// Se inicializa la economia de un usuario.
-	void InicializarEconomia(EconomiaModelDTO eco);
+	void InicializarEconomia(EconomiaModelDTO ecomDTO);
 	
+	// Devuelve una economia.
 	EconomiaModelDTO getEconomia( String codEcono);
+	
+	// Realiza restas a la economia.
+	void restarEconomia(EconomiaModelDTO ecomDTO);
+	
 
 	
 } 

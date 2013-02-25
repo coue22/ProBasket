@@ -63,8 +63,12 @@ public interface IServiciosDraft {
 	// VARIAS TABLAS
 	// **************************************************************************
 	// **************************************************************************
+	// Establece los turnos del draft para una liga y todos los equipos.
 	@Transactional
 	public void setDraft()throws Exception;
-
+	
+	// Establece el jugador que le toca a un equipo.
+	@Transactional
+	public void setDraftJugadorAEquipo()throws Exception;
 	
 }

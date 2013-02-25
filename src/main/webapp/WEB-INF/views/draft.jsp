@@ -225,9 +225,7 @@ if (errorCrearLiga == null || errorCrearLiga.length()<1){
 						<h3>Preseleccion de jugadores</h3>
 						
 						<table>
-							
 
-					
 							<tr>
 								<th>Jugador 1</th>
 								<th>

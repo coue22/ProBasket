@@ -9,6 +9,10 @@
         <result property="turno" column="TURNO"/>
     </resultMap>
     
+    <resultMap id="resultDraftTurnoEquipo" type="com.personal.basket.model.DraftTurnoModelDTO">
+        <result property="codEquipo" column="CODEQUIPO"/>
+    </resultMap>
+        
     
     <insert id="guardarTurnoDraft" parameterType="com.personal.basket.model.DraftTurnoModelDTO">
     
@@ -19,6 +23,13 @@
     <delete id="eliminarTurnosDraft">		
 		delete from DRAFTTURNO
 	</delete>
+	
+	<select id="getEquipoTurnoDraft" parameterType="com.personal.basket.model.DraftTurnoModelDTO" resultMap="resultDraftTurnoEquipo">
+        SELECT CODEQUIPO FROM DRAFTTURNO WHERE CODLIGA=#{codLiga} AND TURNO = #{turno};
+    </select>
+	
+	
+	
     
 </mapper>
 

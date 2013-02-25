@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.personal.basket.ctes.Ctes;
+import com.personal.basket.ctes.CtesOperacion;
 
 import com.personal.basket.dtos.EconomiaDTO;
 import com.personal.basket.dtos.UsuarioDTO;
@@ -96,8 +97,8 @@ public class CatalogoServicios implements ICatalogoServicios{
 			DetEconomiaModelDTO decDTO = new DetEconomiaModelDTO();
 			decDTO.setCodDetEconomia(codigoDetEconomia);;
 			decDTO.setCodigoEcono(codigoEconomia);
-			decDTO.setCodigoOpera("1");
-			decDTO.setDetalle("Se registra el usuario " + login);
+			decDTO.setCodigoOpera(CtesOperacion.ABONO_INICIALIZACION_CUENTA_REGISTRO);
+			decDTO.setDetalle(CtesOperacion.TXT_ABONO_INICIALIZACION_CUENTA_REGISTRO + login);
 			//decDTO.setFecha(fecha)
 			detEconomiaMapper.setDetEconomia(decDTO);
 			

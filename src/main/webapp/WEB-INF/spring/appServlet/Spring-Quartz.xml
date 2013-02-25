@@ -26,12 +26,12 @@
 	</beans:bean>
 	
 	<!-- Simple Trigger, run every 5 seconds -->
-	<beans:bean id="simpleTrigger" 
-                class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-		<beans:property name="jobDetail" ref="runMeJob" />
-		<beans:property name="repeatInterval" value="5000" />
-		<beans:property name="startDelay" value="1000" />
-	</beans:bean>
+<!-- 	<beans:bean id="simpleTrigger"  -->
+<!--                 class="org.springframework.scheduling.quartz.SimpleTriggerBean"> -->
+<!-- 		<beans:property name="jobDetail" ref="runMeJob" /> -->
+<!-- 		<beans:property name="repeatInterval" value="5000" /> -->
+<!-- 		<beans:property name="startDelay" value="1000" /> -->
+<!-- 	</beans:bean> -->
 	
 	<!-- http://quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-06 -->
 <!-- 
@@ -44,17 +44,18 @@
 	Fire at 2:10pm and at 2:44pm every Wednesday in the month of March. 
 -->
 	<!-- Cron Trigger, run every 5 seconds -->
-<!-- 	<beans:bean id="cronTrigger" -->
-<!-- 		class="org.springframework.scheduling.quartz.CronTriggerBean"> -->
-<!-- 		<beans:property name="jobDetail" ref="runMeJob" /> -->
-<!-- 		<beans:property name="cronExpression" value="0/5 * * * * ?" /> -->
-<!-- 	</beans:bean>	 -->
-	
-	<beans:bean id="cronTrigger2"
+	<beans:bean id="cronTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<beans:property name="jobDetail" ref="runMeJob" />
-		<beans:property name="cronExpression" value="0 44 12 * * ?" />
-	</beans:bean>		
+<!-- 		<beans:property name="cronExpression" value="0/30 * * * * ?" /> -->
+		<beans:property name="cronExpression" value="0/5 * * * * ?" />
+	</beans:bean>	
+	
+<!-- 	<beans:bean id="cronTrigger2" -->
+<!-- 		class="org.springframework.scheduling.quartz.CronTriggerBean"> -->
+<!-- 		<beans:property name="jobDetail" ref="runMeJob" /> -->
+<!-- 		<beans:property name="cronExpression" value="0 44 12 * * ?" /> -->
+<!-- 	</beans:bean>		 -->
 	
 	<beans:bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<beans:property name="jobDetails">
@@ -65,8 +66,8 @@
 	
 		<beans:property name="triggers">
 	    	<beans:list>
-<!-- 				<beans:ref bean="cronTrigger" /> -->
-				<beans:ref bean="cronTrigger2" />
+				<beans:ref bean="cronTrigger" />
+<!-- 				<beans:ref bean="cronTrigger2" /> -->
 	    	</beans:list>	    	
 		</beans:property>
 	

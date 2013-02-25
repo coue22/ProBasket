@@ -236,6 +236,12 @@
 		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</beans:bean>	
 
+	<beans:bean id="equipoJugadorMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="mapperInterface" value="com.personal.basket.dao.EquipoJugadorMapper" />
+		<beans:property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>	
+
+
 	
 	
 </beans:beans>

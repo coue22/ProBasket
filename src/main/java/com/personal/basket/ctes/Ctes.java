@@ -80,6 +80,7 @@ public class Ctes {
 	public static final String MAPA_CONFIGURACION_JORNADA	 		= "jornada";
 	public static final String MAPA_CONFIGURACION_TEMPORADA	 		= "temporada";
 	public static final String MAPA_CONFIGURACION_DRAFT	 			= "draft";
+	public static final String MAPA_CONFIGURACION_TURNO_DRAFT		= "turnodraft";
 	public static final String MAPA_CONFIGURACION_DINEROINI			= "dineroInicial";
 	
 	

@@ -18,5 +18,8 @@ public interface UsuarioMapper {
 	
 	// Devuelve los datos del usuario (crear liga,...)
 	UsuarioModelDTO getDatosUsuario(String login);
+	
+	// Devuelve los datos del usuario filtrado por codigo de liga y codigo de equipo.
+	UsuarioModelDTO getDatosUsuarioPorLigayEquipo(UsuarioModelDTO umDTO);
 
 } 
